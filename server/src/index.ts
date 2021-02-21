@@ -11,17 +11,21 @@ import bodyParser from 'body-parser';
 import { container } from 'cheap-di';
 import { MvcMiddleware } from 'mvc-middleware';
 
+import { configDependencies } from './configDependencies';
+
 moduleAlias.addAliases({
   '@utils': path.join(__dirname, 'utils'),
 })
 
-import { configDependencies } from './configDependencies';
-
 configDependencies(container);
+
+const appDir = path.dirname(require.main?.filename || __dirname);
+const uiBundlePath = path.join(appDir, '..', '..', 'dist');
 
 const app = express();
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+app.use(express.static(uiBundlePath));
 
 const controllersPath = path.join(__dirname, 'controllers');
 
@@ -29,7 +33,8 @@ new MvcMiddleware(app as any, Router as any, container)
   .registerControllers(controllersPath)
   .run();
 
-const port = 3000;
-app.listen(port, () => {
-  console.log(`Server is listen http://localhost:${port}`);
+const host = 'localhost';
+const port = 5000;
+app.listen(port, 'localhost',() => {
+  console.log(`Server is listen http://${host}:${port}`);
 });
