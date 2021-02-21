@@ -9,7 +9,7 @@ import { AppTheme } from '@shared/theme/AppTheme';
 import { configureApp } from '@config/configureApp';
 import { AppInitterContainer } from './AppInitter';
 import { AppRouter } from './routing';
-import { NotifierProvider } from './Notifier/NotifierProvider';
+import { NotifierProvider } from './Notifier';
 
 const {
   store,

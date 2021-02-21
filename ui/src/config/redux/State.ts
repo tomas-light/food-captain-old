@@ -4,7 +4,7 @@ import { AppInitterStore } from '@app/AppInitter/redux';
 import { NotifierStore } from '@Notifier';
 
 export interface State {
-  appInitter: AppInitterStore;
   router: RouterState;
+  appInitter: AppInitterStore;
   notifier: NotifierStore;
 }

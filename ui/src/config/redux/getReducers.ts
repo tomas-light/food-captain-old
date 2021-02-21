@@ -8,8 +8,8 @@ import { State } from '@State';
 
 export function getReducers(history: History): ReducersMapObject<State, any> {
   return {
-    appInitter: AppInitterReducer,
     router: connectRouter(history),
+    appInitter: AppInitterReducer,
     notifier: notifierReducer,
   };
 }

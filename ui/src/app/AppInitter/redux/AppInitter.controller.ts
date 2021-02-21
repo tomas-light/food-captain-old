@@ -7,7 +7,7 @@ export class AppInitterController extends ControllerBase {
     return this.dispatch(AppInitterActions.updateStore(partialStore));
   }
 
-  async initialize() {
+  initialize() {
     this.updateStore({
       initialized: true,
     });

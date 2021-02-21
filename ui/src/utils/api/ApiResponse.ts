@@ -27,6 +27,11 @@ export class ApiResponse<TData = any> {
 
   hasClientError() {
     return this.statusCode >= ApiResponseStatus.BadRequest
+      && !this.hasTimeoutError()
       && this.statusCode < ApiResponseStatus.InternalServerError;
+  }
+
+  hasTimeoutError() {
+    return this.statusCode === ApiResponseStatus.RequestTimeout;
   }
 }

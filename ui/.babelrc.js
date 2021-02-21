@@ -31,6 +31,7 @@ const plugins = [
       regenerator: true,
     },
   ],
+  'const-enum'
 ];
 
 const babelConfig = {

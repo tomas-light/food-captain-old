@@ -1,6 +1,6 @@
 import { createAction } from 'app-redux-utils';
 
-import { Notification } from '../models';
+import { Notification, NotificationKey } from '../models';
 
 export class NotifierActions {
   static readonly PREFIX = 'NOTIFIER_';
@@ -11,6 +11,6 @@ export class NotifierActions {
   static enqueueSnackbar = (notification: Notification) =>
     createAction(NotifierActions.ENQUEUE_SNACKBAR, notification);
 
-  static removeSnackbar = (key: string | number) =>
+  static removeSnackbar = (key: NotificationKey) =>
     createAction(NotifierActions.REMOVE_SNACKBAR, { key });
 }

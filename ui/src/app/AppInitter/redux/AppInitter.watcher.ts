@@ -1,8 +1,8 @@
 import { watcher } from 'app-redux-utils';
 
-import { AppInitterActions } from '@app/AppInitter/redux/AppInitter.actions';
-import { AppInitterController } from '@app/AppInitter/redux/AppInitter.controller';
 import { State } from '@State';
+import { AppInitterActions } from './AppInitter.actions';
+import { AppInitterController } from './AppInitter.controller';
 
 export const appInitterWatcher = watcher<State, AppInitterController>(
   AppInitterController,

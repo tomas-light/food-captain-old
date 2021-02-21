@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
 
 import { State } from '@State';
 import { NotifierActions } from './redux';
@@ -13,10 +12,9 @@ const mapStateToProps = (state: State): NotifierProps => ({
   notifications: state.notifier.notifications,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch): NotificationCallProps => ({
-  removeSnackbar: (key: string | number) =>
-    dispatch(NotifierActions.removeSnackbar(key)),
-});
+const mapDispatchToProps: NotificationCallProps = {
+  removeSnackbar: NotifierActions.removeSnackbar,
+};
 
 const NotifierContainer = connect(
   mapStateToProps,

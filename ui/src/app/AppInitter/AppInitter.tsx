@@ -1,10 +1,6 @@
-import React, {
-  FC,
-  PropsWithChildren,
-  useState,
-} from 'react';
+import React, { FC, useState } from 'react';
 
-import { SpinnerBlock } from '@shared/molecules/Spinner';
+import { SpinnerBlock } from '@shared/molecules';
 
 export interface AppInitterProps {
   initialized: boolean;
@@ -14,7 +10,7 @@ export interface AppInitterCallProps {
   initialize: () => void;
 }
 
-type Props = PropsWithChildren<AppInitterProps & AppInitterCallProps>;
+type Props = AppInitterProps & AppInitterCallProps;
 
 const AppInitter: FC<Props> = props => {
   const {

@@ -21,8 +21,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const NotifierProvider: FC = props => {
-  const { children } = props;
+const NotifierProvider: FC = ({ children }) => {
   const classes = useStyles();
 
   const notistackRef = React.createRef<SnackbarProvider>();

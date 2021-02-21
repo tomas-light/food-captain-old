@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { OptionsObject } from 'notistack';
+import { OptionsObject, SnackbarKey } from 'notistack';
 import { guid } from '@utils';
 
 export class Notification {
@@ -23,4 +23,4 @@ export class Notification {
   }
 }
 
-export type { OptionsObject as NotificationOptions };
+export type { SnackbarKey as NotificationKey };
