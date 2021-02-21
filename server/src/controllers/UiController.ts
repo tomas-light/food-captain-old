@@ -4,6 +4,7 @@
  * property law. Dissemination of this information or reproduction of this material is strictly forbidden,
  * unless prior written permission is obtained from EPAM Systems, Inc
  ******************************************************************************/
+import path from 'path';
 import { ControllerBase } from './base';
 
 class UiController extends ControllerBase {
@@ -11,8 +12,14 @@ class UiController extends ControllerBase {
     '/': nameof<UiController>(o => o.index),
   };
 
+  getViewPath(viewName: string) {
+    const appDir = path.dirname(require.main?.filename || __dirname);
+    const htmlPath = path.join(appDir, '..', '..', 'dist');
+    return path.join(htmlPath, `${viewName}.html`);
+  }
+
   async index() {
-    return this.ok('Server works OK');
+    return this.view('index');
   }
 }
 
