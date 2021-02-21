@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "target": "es6",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "plugins": [{ "transform": "ts-nameof", "type": "raw" }],
+    "resolveJsonModule": true,
+    "baseUrl": "src",
+    "paths": {
+      "@utils/*": ["utils/*"]
+    }
+  }
+}

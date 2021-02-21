@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "name": "food-captain",
+  "version": "1.0.0",
+  "description": "Food manager for home",
+  "repository": "git@github.com:TomasLight/food-captain.git",
+  "author": "TomasLight <art.ser.ignatiev@gmail.com>",
+  "license": "MIT",
+  "workspaces": [
+    "server"
+  ],
+  "scripts": {
+    "start:server": "yarn workspace server run start"
+  },
+  "devDependencies": {
+    "typescript": "4.1.5"
+  }
+}
