@@ -5,13 +5,10 @@
  * unless prior written permission is obtained from EPAM Systems, Inc
  ******************************************************************************/
 import { Container } from 'cheap-di';
+import { Database } from './Database';
 
-import { registerDependency as registerLogger } from './utils/loggers/registerDependency';
-import { registerDependency as registerDatabase } from './database/registerDependency';
-
-function configDependencies(container: Container) {
-  registerLogger(container);
-  registerDatabase(container);
+function registerDependency(container: Container) {
+  container.registerInstance(Database);
 }
 
-export { configDependencies };
+export { registerDependency };
