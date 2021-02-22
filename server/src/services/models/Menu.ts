@@ -7,6 +7,7 @@ interface DishInMenu extends Dish {
 
 export interface Menu {
   id: number;
+  name?: string;
   createDate: Date;
   lastUpdate: Date;
   author?: User;

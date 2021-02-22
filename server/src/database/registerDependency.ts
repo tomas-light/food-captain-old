@@ -6,9 +6,10 @@
  ******************************************************************************/
 import { Container } from 'cheap-di';
 import { Database } from './Database';
+import { PostgresDatabase } from './postgres';
 
 function registerDependency(container: Container) {
-  container.registerInstance(Database);
+  container.registerType(PostgresDatabase).as(Database);
 }
 
 export { registerDependency };

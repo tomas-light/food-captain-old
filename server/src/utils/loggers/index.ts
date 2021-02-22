@@ -5,3 +5,4 @@
  * unless prior written permission is obtained from EPAM Systems, Inc
  ******************************************************************************/
 export * from './Logger';
+export * from './registerDependency';

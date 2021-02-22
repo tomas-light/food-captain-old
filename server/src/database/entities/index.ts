@@ -11,7 +11,7 @@ export * from './Menu.entity';
 export * from './MenuInSchedule.entity';
 export * from './Recipe.entity';
 export * from './RecipeImage.entity';
-export * from './RecipeIngredient.entity';
+export * from './IngredientInRecipe.entity';
 export * from './Role.entity';
 export * from './Schedule.entity';
 export * from './User.entity';
