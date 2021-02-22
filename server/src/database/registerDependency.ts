@@ -4,5 +4,12 @@
  * property law. Dissemination of this information or reproduction of this material is strictly forbidden,
  * unless prior written permission is obtained from EPAM Systems, Inc
  ******************************************************************************/
-export * from './Logger';
-export * from './registerDependency';
+import { Container } from 'cheap-di';
+import { Database } from './Database';
+import { PostgresDatabase } from './postgres';
+
+function registerDependency(container: Container) {
+  container.registerType(PostgresDatabase).as(Database);
+}
+
+export { registerDependency };

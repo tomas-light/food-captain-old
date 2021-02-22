@@ -4,10 +4,11 @@
  * property law. Dissemination of this information or reproduction of this material is strictly forbidden,
  * unless prior written permission is obtained from EPAM Systems, Inc
  ******************************************************************************/
+import { Container } from 'cheap-di';
 import { Logger } from './Logger';
 import { ConsoleLogger } from './ConsoleLogger';
 
-function registerDependency(container) {
+function registerDependency(container: Container) {
   container.registerType(ConsoleLogger).as(Logger);
 }
 

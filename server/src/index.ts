@@ -10,12 +10,15 @@ import express, { Router } from 'express';
 import bodyParser from 'body-parser';
 import { container } from 'cheap-di';
 import { MvcMiddleware } from 'mvc-middleware';
-
-import { configDependencies } from './configDependencies';
+import dotenv from 'dotenv';
 
 moduleAlias.addAliases({
   '@utils': path.join(__dirname, 'utils'),
-})
+});
+
+import { configDependencies } from './configDependencies';
+
+dotenv.config();
 
 configDependencies(container);
 
