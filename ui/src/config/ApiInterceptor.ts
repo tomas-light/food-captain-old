@@ -47,10 +47,10 @@ export class ApiInterceptor {
     config.headers[AJAX_HEADER_KEY] = AJAX_HEADER_VALUE;
     config.headers[ACCEPT_HEADER_KEY] = ACCEPT_HEADER_VALUE;
 
-    const accessToken = localStorage.getItem(process.env.ACCESS_TOKEN);
-    if (accessToken) {
-      config.headers[AUTHORIZATION] = `Bearer ${accessToken}`;
-    }
+    // const accessToken = localStorage.getItem(process.env.ACCESS_TOKEN);
+    // if (accessToken) {
+    //   config.headers[AUTHORIZATION] = `Bearer ${accessToken}`;
+    // }
 
     return config;
   }

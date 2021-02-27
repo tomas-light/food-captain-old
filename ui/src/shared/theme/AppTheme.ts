@@ -31,9 +31,13 @@ export class AppTheme implements Theme {
   zIndex: ZIndex;
 
   colors: ThemeColors;
+  drawerWidth: number;
+  borderRadius: number;
 
   constructor() {
     this.colors = new ThemeColors();
+    this.drawerWidth = 240;
+    this.borderRadius = 6;
 
     const overriddenPalette = overrideMaterialUIPalette(this.colors);
     const overriddenComponents = overrideMaterialUIComponents(this.colors);

@@ -10,6 +10,10 @@ import { ControllerBase } from './base';
 class UiController extends ControllerBase {
   static get = {
     '/': nameof<UiController>(o => o.index),
+    '/schedule': nameof<UiController>(o => o.index),
+    '/menu': nameof<UiController>(o => o.index),
+    '/dish': nameof<UiController>(o => o.index),
+    '/user': nameof<UiController>(o => o.index),
   };
 
   getViewPath(viewName: string) {

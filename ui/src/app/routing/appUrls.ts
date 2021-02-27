@@ -1,3 +1,8 @@
 export const appUrls = {
-  rootPath: '/',
+  root: '/',
+  // tables: '/tables',
+  schedule: '/schedule',
+  menu: '/menu',
+  dish: '/dish',
+  user: '/user',
 };

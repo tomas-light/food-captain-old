@@ -2,6 +2,8 @@ import React, { FC } from 'react';
 import { makeStyles } from '@material-ui/core';
 
 import { NotifierContainer } from '@Notifier';
+import { AppBar } from './AppBar';
+import { DrawerContainer } from './Drawer';
 
 const useStyles = makeStyles(theme => ({
   layout: {
@@ -9,22 +11,49 @@ const useStyles = makeStyles(theme => ({
     height: '100vh',
     position: 'relative',
     display: 'grid',
-    gridAutoColumns: '80px 1fr',
+
+    gridTemplateAreas: `
+      "drawer navbar"
+      "drawer content"
+    `,
+    gridTemplateColumns: 'auto 1fr',
+    gridTemplateRows: 'auto 1fr',
   },
   navbar: {
-    height: '100%',
-    display: 'grid',
+    gridArea: 'navbar',
+  },
+  drawer: {
+    gridArea: 'drawer',
+  },
+  content: {
+    gridArea: 'content',
   },
 }));
 
 const Layout: FC = ({ children }) => {
   const classes = useStyles();
+
+  const [ open, setOpen ] = React.useState(false);
+  const toggle = () => setOpen((isOpen) => !isOpen);
+
   return (
     <div className={classes.layout}>
-      <div className={classes.navbar}>
-      </div>
+      <AppBar
+        className={classes.navbar}
+        // title={title}
+        // name={name}
+        open={open}
+        toggle={toggle}
+      />
 
-      {children}
+      <DrawerContainer
+        className={classes.drawer}
+        open={open}
+      />
+
+      <main className={classes.content}>
+        {children}
+      </main>
 
       <NotifierContainer/>
     </div>
