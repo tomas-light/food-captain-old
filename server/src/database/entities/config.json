@@ -1,0 +1,12 @@
+{
+  "password": "root",
+  "username": "postgres",
+  "database": "food_captain",
+  "host": "localhost",
+  "port": 5432,
+  "caseFile": "p",
+  "caseModel": "p",
+  "dialect": "postgres",
+  "lang": "ts",
+  "output": "./"
+}

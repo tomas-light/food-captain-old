@@ -1,2 +1,2 @@
 export * from './Database';
-export * from './registerDependency';
+export * from './config/registerDependency';

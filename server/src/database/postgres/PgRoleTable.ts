@@ -11,11 +11,11 @@ export class PgRoleTable extends PgTableBase<RoleEntity> implements RoleTable {
     return super.allAsync();
   }
 
-  async byIdAsync(id: number): Promise<RoleEntity | undefined> {
+  async byIdAsync(id: number): Promise<RoleEntity | null | undefined> {
     return super.byIdAsync(id);
   }
 
-  async insertAsync(entity: Omit<RoleEntity, 'id'>): Promise<number | undefined> {
+  async insertAsync(entity: Omit<RoleEntity, 'id'>): Promise<number | null | undefined> {
     const queryConfig: QueryConfig = {
       text: `
         INSERT INTO ${this.tableName} (
@@ -30,7 +30,7 @@ export class PgRoleTable extends PgTableBase<RoleEntity> implements RoleTable {
     return queryResult.rows[0].id || undefined;
   }
 
-  async updateAsync(entity: RoleEntity): Promise<RoleEntity | undefined> {
+  async updateAsync(entity: RoleEntity): Promise<RoleEntity | null | undefined> {
     const queryConfig = this.buildConfigForUpdate(entity);
     if (!queryConfig) {
       return undefined;

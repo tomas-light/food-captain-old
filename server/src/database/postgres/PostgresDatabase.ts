@@ -1,7 +1,9 @@
 import { Pool } from 'pg';
+import { Sequelize } from 'sequelize';
 
 import { Logger } from '@utils/loggers';
 import { Database } from '../Database';
+import { initEntities } from '../entities';
 
 import { PgDimensionTable } from './PgDimensionTable';
 import { PgDishTable } from './PgDishTable';
@@ -23,29 +25,43 @@ import { PgUserTable } from './PgUserTable';
 import { PgUserRoleTable } from './PgUserRoleTable';
 
 export class PostgresDatabase extends Database {
-  static __constructorParams: InstanceType<any>[] = [Logger];
+  static __constructorParams: InstanceType<any>[] = [Logger, Sequelize];
 
-  constructor(logger: Logger) {
+  private readonly sequelize: Sequelize;
+
+  constructor(
+    logger: Logger,
+    sequelize: Sequelize
+  ) {
     const pool = new Pool();
     super(
-      new PgDimensionTable(logger, pool),
-      new PgDishTable(logger, pool),
-      new PgDishInMenuTable(logger, pool),
-      new PgDishInSetTable(logger, pool),
-      new PgDishSetTable(logger, pool),
-      new PgImageTable(logger, pool),
-      new PgIngredientTable(logger, pool),
-      new PgIngredientInSetTable(logger, pool),
-      new PgIngredientSetTable(logger, pool),
-      new PgMenuTable(logger, pool),
-      new PgMenuInScheduleTable(logger, pool),
-      new PgRecipeTable(logger, pool),
-      new PgRecipeImageTable(logger, pool),
-      new PgIngredientInRecipeTable(logger, pool),
-      new PgRoleTable(logger, pool),
-      new PgScheduleTable(logger, pool),
-      new PgUserTable(logger, pool),
-      new PgUserRoleTable(logger, pool),
+      new PgDimensionTable(logger, pool, sequelize),
+      new PgDishTable(logger, pool, sequelize),
+      new PgDishInMenuTable(logger, pool, sequelize),
+      new PgDishInSetTable(logger, pool, sequelize),
+      new PgDishSetTable(logger, pool, sequelize),
+      new PgImageTable(logger, pool, sequelize),
+      new PgIngredientTable(logger, pool, sequelize),
+      new PgIngredientInSetTable(logger, pool, sequelize),
+      new PgIngredientSetTable(logger, pool, sequelize),
+      new PgMenuTable(logger, pool, sequelize),
+      new PgMenuInScheduleTable(logger, pool, sequelize),
+      new PgRecipeTable(logger, pool, sequelize),
+      new PgRecipeImageTable(logger, pool, sequelize),
+      new PgIngredientInRecipeTable(logger, pool, sequelize),
+      new PgRoleTable(logger, pool, sequelize),
+      new PgScheduleTable(logger, pool, sequelize),
+      new PgUserTable(logger, pool, sequelize),
+      new PgUserRoleTable(logger, pool, sequelize),
     );
+
+    this.sequelize = sequelize;
+  }
+
+  static init(sequelize: Sequelize) {
+    initEntities(sequelize);
+    sequelize.sync().catch(error => {
+      console.error(error);
+    });
   }
 }

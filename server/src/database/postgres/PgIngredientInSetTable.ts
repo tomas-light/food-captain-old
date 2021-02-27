@@ -12,7 +12,7 @@ export class PgIngredientInSetTable extends PgTableBase<IngredientInSetEntity> i
   }
 
   // todo: possible redundant
-  async getAsync(ingredient_set_id: number, ingredient_id: number): Promise<IngredientInSetEntity | undefined> {
+  async getAsync(ingredient_set_id: number, ingredient_id: number): Promise<IngredientInSetEntity | null | undefined> {
     const queryConfig: QueryConfig = {
       text: `
         SELECT * 

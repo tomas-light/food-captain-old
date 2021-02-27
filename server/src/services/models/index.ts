@@ -9,4 +9,3 @@ export * from './Recipe';
 export * from './Role';
 export * from './Schedule';
 export * from './User';
-export * from './UserRole';

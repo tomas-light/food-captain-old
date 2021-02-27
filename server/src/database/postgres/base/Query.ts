@@ -60,6 +60,16 @@ export class Query {
     }
     catch (error) {
       this.logger.error(error);
+
+      this.logger.debug(arg1);
+
+      if (arg2) {
+        this.logger.debug(arg2);
+      }
+
+      if (arg3) {
+        this.logger.debug(arg3);
+      }
     }
 
     return undefined;

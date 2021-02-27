@@ -1,8 +1,8 @@
 import { MakeOptional } from '@utils/types';
 import { QueryConfig } from 'pg';
 
-import { DishEntity } from '../entities';
-import { DishTable } from '../DishTable';
+import { DishEntity, DishInMenuEntity } from '../entities';
+import { DishTable, MenuDishesEntity } from '../DishTable';
 import { PgTableBase } from './base';
 
 export class PgDishTable extends PgTableBase<DishEntity> implements DishTable {
@@ -12,11 +12,47 @@ export class PgDishTable extends PgTableBase<DishEntity> implements DishTable {
     return super.allAsync();
   }
 
-  async byIdAsync(id: number): Promise<DishEntity | undefined> {
+  async byIdAsync(id: number): Promise<DishEntity | null | undefined> {
     return super.byIdAsync(id);
   }
 
-  async insertAsync(entity: Omit<DishEntity, 'id'>): Promise<number | undefined> {
+  async byMenuIdAsync(menuId: number): Promise<MenuDishesEntity[]> {
+    const queryConfig: QueryConfig = {
+      text: `
+        SELECT 
+          _dm.${nameof<DishInMenuEntity>(o => o.menu_id)},
+          _dish.*, 
+          _dm.${nameof<DishInMenuEntity>(o => o.order_number)} 
+        FROM ${this.tableName} _dish
+        JOIN dish_in_menu _dm on _dish.${nameof<DishEntity>(o => o.id)} = _dm.${nameof<DishInMenuEntity>(o => o.dish_id)}
+        WHERE ${nameof<DishInMenuEntity>(o => o.menu_id)} == $1;
+      `,
+      values: [menuId]
+    };
+
+    const queryResult = await this.query<MenuDishesEntity>(queryConfig);
+    return queryResult.rows;
+  }
+
+  async byMenuIdsAsync(menuIds: number[]): Promise<MenuDishesEntity[]> {
+    const queryConfig: QueryConfig = {
+      text: `
+        SELECT 
+          _dm.${nameof<DishInMenuEntity>(o => o.menu_id)},
+          _dish.*, 
+          _dm.${nameof<DishInMenuEntity>(o => o.order_number)} 
+        FROM ${this.tableName} _dish
+        JOIN dish_in_menu _dm on _dish.${nameof<DishEntity>(o => o.id)} = _dm.${nameof<DishInMenuEntity>(o => o.dish_id)}
+        WHERE ${nameof<DishInMenuEntity>(o => o.menu_id)} in ($1);
+      `,
+      values: menuIds
+    };
+
+    const queryResult = await this.query<MenuDishesEntity>(queryConfig);
+    return queryResult.rows;
+  }
+
+  async insertAsync(entity: Omit<DishEntity, 'id'>): Promise<number | null | undefined> {
     const queryConfig: QueryConfig = {
       text: `
         INSERT INTO ${this.tableName} (
@@ -28,8 +64,8 @@ export class PgDishTable extends PgTableBase<DishEntity> implements DishTable {
       `,
       values: [
         entity.name,
-        entity.description || 'NULL',
-        entity.image_id || 'NULL',
+        entity.description,
+        entity.image_id,
       ]
     };
 
@@ -37,7 +73,7 @@ export class PgDishTable extends PgTableBase<DishEntity> implements DishTable {
     return queryResult.rows[0].id || undefined;
   }
 
-  async updateAsync(entity: MakeOptional<DishEntity, 'name'>): Promise<DishEntity | undefined> {
+  async updateAsync(entity: MakeOptional<DishEntity, 'name'>): Promise<DishEntity | null | undefined> {
     const queryConfig = this.buildConfigForUpdate(entity);
     if (!queryConfig) {
       return undefined;

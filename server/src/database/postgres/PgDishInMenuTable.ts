@@ -11,7 +11,7 @@ export class PgDishInMenuTable extends PgTableBase<DishInMenuEntity> implements 
     return super.allAsync();
   }
 
-  async getAsync(menu_id: number, dish_id: number): Promise<DishInMenuEntity | undefined> {
+  async getAsync(menu_id: number, dish_id: number): Promise<DishInMenuEntity | null | undefined> {
     const queryConfig: QueryConfig = {
       text: `
         SELECT * 
@@ -39,7 +39,7 @@ export class PgDishInMenuTable extends PgTableBase<DishInMenuEntity> implements 
       values: [
         entity.menu_id,
         entity.dish_id,
-        entity.order_number || 'NULL',
+        entity.order_number,
       ]
     };
 
@@ -47,7 +47,7 @@ export class PgDishInMenuTable extends PgTableBase<DishInMenuEntity> implements 
     return queryResult.rowCount > 0;
   }
 
-  async updateAsync(entity: DishInMenuEntity): Promise<DishInMenuEntity | undefined> {
+  async updateAsync(entity: DishInMenuEntity): Promise<DishInMenuEntity | null | undefined> {
     const queryConfig: QueryConfig = {
       text: `
         UPDATE ${this.tableName} 
@@ -70,6 +70,45 @@ export class PgDishInMenuTable extends PgTableBase<DishInMenuEntity> implements 
         AND ${nameof<DishInMenuEntity>(o => o.dish_id)} = $2;
       `,
       values: [entity.menu_id, entity.dish_id]
+    };
+
+    const queryResult = await this.query(queryConfig);
+    return queryResult.rowCount > 0;
+  }
+
+  async deleteByIdsAsync(dish_ids: number[]): Promise<boolean> {
+    const queryConfig: QueryConfig = {
+      text: `
+        DELETE FROM ${this.tableName} 
+        WHERE ${nameof<DishInMenuEntity>(o => o.dish_id)} in ($1);
+      `,
+      values: dish_ids
+    };
+
+    const queryResult = await this.query(queryConfig);
+    return queryResult.rowCount > 0;
+  }
+
+  async deleteAllByMenuIdAsync(menu_id: number): Promise<boolean> {
+    const queryConfig: QueryConfig = {
+      text: `
+        DELETE FROM ${this.tableName} 
+        WHERE ${nameof<DishInMenuEntity>(o => o.menu_id)} = $1;
+      `,
+      values: [menu_id]
+    };
+
+    const queryResult = await this.query(queryConfig);
+    return queryResult.rowCount > 0;
+  }
+
+  async deleteAllByDishIdAsync(dish_id: number): Promise<boolean> {
+    const queryConfig: QueryConfig = {
+      text: `
+        DELETE FROM ${this.tableName} 
+        WHERE ${nameof<DishInMenuEntity>(o => o.dish_id)} = $1;
+      `,
+      values: [dish_id]
     };
 
     const queryResult = await this.query(queryConfig);

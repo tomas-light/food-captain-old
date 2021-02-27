@@ -1,15 +1,25 @@
-import { QueryConfig } from 'pg';
+import { Logger } from '@utils/loggers';
+import { Pool, QueryConfig } from 'pg';
+import { Sequelize } from 'sequelize';
 import { Query } from './Query';
 
 export class PgTableBase<TEntity> extends Query {
   protected tableName?: string;
+
+  constructor(
+    logger: Logger,
+    pool: Pool,
+    protected readonly sequelize: Sequelize
+  ) {
+    super(logger, pool);
+  }
 
   protected async allAsync(): Promise<TEntity[]> {
     const queryResult = await this.query<TEntity>(`SELECT * from ${this.tableName}`);
     return queryResult.rows || [];
   }
 
-  protected async byIdAsync(id: number): Promise<TEntity | undefined> {
+  protected async byIdAsync(id: number): Promise<TEntity | undefined | null> {
     const queryConfig: QueryConfig = {
       text: `SELECT * FROM ${this.tableName} WHERE id = $1;`,
       values: [id]
@@ -30,7 +40,11 @@ export class PgTableBase<TEntity> extends Query {
     let valueNumber = values.length + 1;
 
     propertyNames.forEach(propertyName => {
-      values.push(entity[propertyName]);
+      let value = entity[propertyName];
+      if (value instanceof Date) {
+        value = value.toISOString();
+      }
+      values.push(value);
       params.push(`${propertyName} = $${valueNumber++}`);
     });
 

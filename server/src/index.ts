@@ -16,6 +16,7 @@ moduleAlias.addAliases({
   '@utils': path.join(__dirname, 'utils'),
 });
 
+import '@utils/ArrayExtensions';
 import { configDependencies } from './configDependencies';
 
 dotenv.config();
@@ -38,6 +39,6 @@ new MvcMiddleware(app as any, Router as any, container)
 
 const host = 'localhost';
 const port = 5000;
-app.listen(port, 'localhost',() => {
+app.listen(port, 'localhost', () => {
   console.log(`Server is listen http://${host}:${port}`);
 });

@@ -5,6 +5,7 @@
  * unless prior written permission is obtained from EPAM Systems, Inc
  ******************************************************************************/
 import { UserService } from '../services';
+import { User } from '../services/models';
 import { ControllerBase } from './base';
 
 class UserController extends ControllerBase {
@@ -39,12 +40,12 @@ class UserController extends ControllerBase {
     return this.ok(result);
   }
 
-  async addUserAsync(user) {
+  async addUserAsync(user: User) {
     const result = await this.userService.addAsync(user);
     return this.ok(result);
   }
 
-  async updateUserAsync(userId: number, user) {
+  async updateUserAsync(userId: number, user: User) {
     const result = await this.userService.updateAsync(user);
     return this.ok(result);
   }
@@ -56,7 +57,10 @@ class UserController extends ControllerBase {
     }
 
     const result = await this.userService.deleteAsync(user);
-    return this.ok(`Deleted ${result} user(-s)`);
+    if (result) {
+      return this.noContent();
+    }
+    return this.badRequest('Deletion is failed');
   }
 }
 

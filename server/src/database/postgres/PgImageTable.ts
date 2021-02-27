@@ -11,11 +11,11 @@ export class PgImageTable extends PgTableBase<ImageEntity> implements ImageTable
     return super.allAsync();
   }
 
-  async byIdAsync(id: number): Promise<ImageEntity | undefined> {
+  async byIdAsync(id: number): Promise<ImageEntity | null | undefined> {
     return super.byIdAsync(id);
   }
 
-  async insertAsync(entity: Omit<ImageEntity, 'id'>): Promise<number | undefined> {
+  async insertAsync(entity: Omit<ImageEntity, 'id'>): Promise<number | null | undefined> {
     const queryConfig: QueryConfig = {
       text: `
         INSERT INTO ${this.tableName} (
@@ -30,7 +30,7 @@ export class PgImageTable extends PgTableBase<ImageEntity> implements ImageTable
     return queryResult.rows[0].id || undefined;
   }
 
-  async updateAsync(entity: ImageEntity): Promise<ImageEntity | undefined> {
+  async updateAsync(entity: ImageEntity): Promise<ImageEntity | null | undefined> {
     const queryConfig = this.buildConfigForUpdate(entity);
     if (!queryConfig) {
       return undefined;

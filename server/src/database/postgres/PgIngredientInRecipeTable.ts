@@ -11,7 +11,7 @@ export class PgIngredientInRecipeTable extends PgTableBase<IngredientInRecipeEnt
     return super.allAsync();
   }
 
-  async getAsync(recipe_id: number, ingredient_id: number): Promise<IngredientInRecipeEntity | undefined> {
+  async getAsync(recipe_id: number, ingredient_id: number): Promise<IngredientInRecipeEntity | null | undefined> {
     const queryConfig: QueryConfig = {
       text: `
         SELECT * 
@@ -40,8 +40,8 @@ export class PgIngredientInRecipeTable extends PgTableBase<IngredientInRecipeEnt
       values: [
         entity.recipe_id,
         entity.ingredient_id,
-        entity.dimension_id || 'NULL',
-        entity.size || 'NULL',
+        entity.dimension_id,
+        entity.size,
       ]
     };
 
@@ -49,7 +49,7 @@ export class PgIngredientInRecipeTable extends PgTableBase<IngredientInRecipeEnt
     return queryResult.rowCount > 0;
   }
 
-  async updateAsync(entity: IngredientInRecipeEntity): Promise<IngredientInRecipeEntity | undefined> {
+  async updateAsync(entity: IngredientInRecipeEntity): Promise<IngredientInRecipeEntity | null | undefined> {
     const queryConfig: QueryConfig = {
       text: `
         UPDATE ${this.tableName} 
@@ -59,8 +59,8 @@ export class PgIngredientInRecipeTable extends PgTableBase<IngredientInRecipeEnt
         AND ${nameof<IngredientInRecipeEntity>(o => o.ingredient_id)}  = $4;
       `,
       values: [
-        entity.dimension_id || 'NULL',
-        entity.size || 'NULL',
+        entity.dimension_id,
+        entity.size,
         entity.recipe_id,
         entity.ingredient_id,
       ]

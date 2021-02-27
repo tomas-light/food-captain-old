@@ -5,6 +5,7 @@ interface IngredientSetWithImageEntity extends IngredientSetEntity {
   image?: string;
 }
 
+// @ts-ignore
 interface IngredientSetWithIngredientsEntity extends IngredientSetWithImageEntity, Omit<IngredientEntity, 'id' | 'name'> {
   ingredient_id: number;
   ingredient_name: string;
@@ -14,12 +15,12 @@ interface IngredientSetWithIngredientsEntity extends IngredientSetWithImageEntit
 
 interface IngredientSetTable {
   allAsync(): Promise<IngredientSetWithImageEntity[]>;
-  byIdAsync(id: number): Promise<IngredientSetWithImageEntity | undefined>;
+  byIdAsync(id: number): Promise<IngredientSetWithImageEntity | null | undefined>;
 
-  getWithIngredientsByIdAsync(id: number): Promise<IngredientSetWithIngredientsEntity | undefined>;
+  getWithIngredientsByIdAsync(id: number): Promise<IngredientSetWithIngredientsEntity | null | undefined>;
 
-  insertAsync(entity: Omit<IngredientSetEntity, 'id'>): Promise<number | undefined>;
-  updateAsync(entity: MakeOptional<IngredientSetEntity, 'name' | 'image_id'>): Promise<IngredientSetWithImageEntity | undefined>;
+  insertAsync(entity: Omit<IngredientSetEntity, 'id'>): Promise<number | null | undefined>;
+  updateAsync(entity: MakeOptional<IngredientSetEntity, 'name' | 'image_id'>): Promise<IngredientSetWithImageEntity | null | undefined>;
   deleteAsync(id: number): Promise<boolean>;
 }
 

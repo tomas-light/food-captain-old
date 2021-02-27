@@ -14,12 +14,12 @@ interface RecipeWithIngredientsEntity extends RecipeWithImageEntity, Omit<Ingred
 
 interface RecipeTable {
   allAsync(): Promise<RecipeWithImageEntity[]>;
-  byIdAsync(id: number): Promise<RecipeWithImageEntity | undefined>;
+  byIdAsync(id: number): Promise<RecipeWithImageEntity | null | undefined>;
 
-  getWithIngredientsByIdAsync(id: number): Promise<RecipeWithIngredientsEntity | undefined>;
+  getWithIngredientsByIdAsync(id: number): Promise<RecipeWithIngredientsEntity | null | undefined>;
 
-  insertAsync(entity: Omit<RecipeEntity, 'id'>): Promise<number | undefined>;
-  updateAsync(entity: MakeOptional<RecipeEntity, 'name' | 'dish_id' | 'image_id'>): Promise<RecipeWithImageEntity | undefined>;
+  insertAsync(entity: Omit<RecipeEntity, 'id'>): Promise<number | null | undefined>;
+  updateAsync(entity: MakeOptional<RecipeEntity, 'name' | 'dish_id' | 'image_id'>): Promise<RecipeWithImageEntity | null | undefined>;
   deleteAsync(id: number): Promise<boolean>;
 }
 

@@ -12,8 +12,22 @@ export class PgUserTable extends PgTableBase<UserEntity> implements UserTable {
     return super.allAsync();
   }
 
-  async byIdAsync(id: number): Promise<UserEntity | undefined> {
+  async byIdAsync(id: number): Promise<UserEntity | null | undefined> {
     return super.byIdAsync(id);
+  }
+
+  async byIdsAsync(ids: number[]): Promise<UserEntity[]> {
+    const queryConfig: QueryConfig = {
+      text: `
+        SELECT * 
+        FROM ${this.tableName} 
+        WHERE ${nameof<UserEntity>(o => o.id)} in ($1);
+      `,
+      values: ids
+    };
+
+    const queryResult = await this.query<UserEntity>(queryConfig);
+    return queryResult.rows;
   }
 
   async allWithRoleAsync(): Promise<UserWithRoleEntity[]> {
@@ -25,7 +39,7 @@ export class PgUserTable extends PgTableBase<UserEntity> implements UserTable {
     return queryResult.rows || [];
   }
 
-  async byIdWithRoleAsync(id: number): Promise<UserWithRoleEntity | undefined> {
+  async byIdWithRoleAsync(id: number): Promise<UserWithRoleEntity | null | undefined> {
     const queryConfig: QueryConfig = {
       text: `
         SELECT _user.*, _ur.${nameof<UserRoleEntity>(o => o.role_id)} 
@@ -41,7 +55,7 @@ export class PgUserTable extends PgTableBase<UserEntity> implements UserTable {
   }
 
 
-  async insertAsync(entity: Omit<UserEntity, 'id'>): Promise<number | undefined> {
+  async insertAsync(entity: Omit<UserEntity, 'id'>): Promise<number | null | undefined> {
     const queryConfig: QueryConfig = {
       text: `
         INSERT INTO ${this.tableName} (
@@ -58,14 +72,14 @@ export class PgUserTable extends PgTableBase<UserEntity> implements UserTable {
     return queryResult.rows[0].id || undefined;
   }
 
-  async updateAsync(entity: MakeOptional<UserEntity, 'name' | 'email' | 'password'>): Promise<UserEntity | undefined> {
+  async updateAsync(entity: MakeOptional<UserEntity, 'name' | 'email' | 'password'>): Promise<UserEntity | null | undefined> {
     const queryConfig = this.buildConfigForUpdate(entity);
     if (!queryConfig) {
       return undefined;
     }
 
     await this.query<UserEntity>(queryConfig);
-    return this.byIdAsync(entity.id);
+    return this.byIdWithRoleAsync(entity.id);
   }
 
   async deleteAsync(id: number): Promise<boolean> {

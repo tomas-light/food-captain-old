@@ -16,11 +16,11 @@ export class PgRecipeTable extends PgTableBase<RecipeEntity> implements RecipeTa
     return super.allAsync();
   }
 
-  async byIdAsync(id: number): Promise<RecipeWithImageEntity | undefined> {
+  async byIdAsync(id: number): Promise<RecipeWithImageEntity | null | undefined> {
     return super.byIdAsync(id);
   }
 
-  async getWithIngredientsByIdAsync(id: number): Promise<RecipeWithIngredientsEntity | undefined> {
+  async getWithIngredientsByIdAsync(id: number): Promise<RecipeWithIngredientsEntity | null | undefined> {
     const queryConfig: QueryConfig = {
       text: `
         SELECT 
@@ -46,7 +46,7 @@ export class PgRecipeTable extends PgTableBase<RecipeEntity> implements RecipeTa
     return queryResult.rows[0];
   }
 
-  async insertAsync(entity: Omit<RecipeEntity, 'id'>): Promise<number | undefined> {
+  async insertAsync(entity: Omit<RecipeEntity, 'id'>): Promise<number | null | undefined> {
     const queryConfig: QueryConfig = {
       text: `
         INSERT INTO ${this.tableName} (
@@ -58,10 +58,10 @@ export class PgRecipeTable extends PgTableBase<RecipeEntity> implements RecipeTa
         VALUES($1, $2, $3, $4) RETURNING ${nameof<RecipeEntity>(o => o.id)};
       `,
       values: [
-        entity.name || 'NULL',
-        entity.description || 'NULL',
+        entity.name,
+        entity.description,
         entity.dish_id,
-        entity.image_id || 'NULL'
+        entity.image_id
       ]
     };
 
@@ -69,7 +69,7 @@ export class PgRecipeTable extends PgTableBase<RecipeEntity> implements RecipeTa
     return queryResult.rows[0].id || undefined;
   }
 
-  async updateAsync(entity: MakeOptional<RecipeEntity, 'name' | 'dish_id' | 'image_id'>): Promise<RecipeWithImageEntity | undefined> {
+  async updateAsync(entity: MakeOptional<RecipeEntity, 'name' | 'dish_id' | 'image_id'>): Promise<RecipeWithImageEntity | null | undefined> {
     const queryConfig = this.buildConfigForUpdate(entity);
     if (!queryConfig) {
       return undefined;

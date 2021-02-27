@@ -11,11 +11,11 @@ export class PgDimensionTable extends PgTableBase<DimensionEntity> implements Di
     return super.allAsync();
   }
 
-  async byIdAsync(id: number): Promise<DimensionEntity | undefined> {
+  async byIdAsync(id: number): Promise<DimensionEntity | null | undefined> {
     return super.byIdAsync(id);
   }
 
-  async insertAsync(entity: Omit<DimensionEntity, 'id'>): Promise<number | undefined> {
+  async insertAsync(entity: Omit<DimensionEntity, 'id'>): Promise<number | null | undefined> {
     const queryConfig: QueryConfig = {
       text: `
         INSERT INTO ${this.tableName} (
@@ -30,7 +30,7 @@ export class PgDimensionTable extends PgTableBase<DimensionEntity> implements Di
     return queryResult.rows[0].id || undefined;
   }
 
-  async updateAsync(entity: DimensionEntity): Promise<DimensionEntity | undefined> {
+  async updateAsync(entity: DimensionEntity): Promise<DimensionEntity | null | undefined> {
     const queryConfig = this.buildConfigForUpdate(entity);
     if (!queryConfig) {
       return undefined;
