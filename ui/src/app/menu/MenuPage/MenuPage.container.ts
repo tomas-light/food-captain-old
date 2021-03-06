@@ -1,8 +1,8 @@
-import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { State } from '@State';
+import { Dispatch } from 'redux';
 
-import { MenuActions } from '@app/MenuPage/redux';
+import { State } from '@State';
+import { MenuActions } from '@app/menu/redux';
 import {
     MenuPage,
     MenuPageProps,

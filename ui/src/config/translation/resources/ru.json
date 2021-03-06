@@ -1,0 +1,17 @@
+{
+  "menu": "меню",
+  "id": "ID",
+  "name": "имя",
+  "title": "название",
+  "author": "автор",
+  "create date": "дата создания",
+  "last update": "последнее обновление",
+  "dishes": "блюда",
+  "add new menu": "добавить новое меню",
+  "edit selected menu": "редактировать выбранное меню",
+  "remove selected menus": "удалить выбранные меню",
+
+  "required field": "oбязательное поле.",
+  "invalid field": "неправильно заполнено поле.",
+  "drag or click": "перетащите или кликните"
+}

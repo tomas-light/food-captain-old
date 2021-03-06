@@ -1,8 +1,9 @@
 export const appUrls = {
   root: '/',
-  // tables: '/tables',
   schedule: '/schedule',
   menu: '/menu',
+  menuDetails: '/menu/:menuId',
+  getMenuDetailsPath: (menuId: number) => `/menu/${menuId}`,
   dish: '/dish',
   user: '/user',
 };

@@ -12,6 +12,7 @@ class UiController extends ControllerBase {
     '/': nameof<UiController>(o => o.index),
     '/schedule': nameof<UiController>(o => o.index),
     '/menu': nameof<UiController>(o => o.index),
+    '/menu/:id': nameof<UiController>(o => o.index),
     '/dish': nameof<UiController>(o => o.index),
     '/user': nameof<UiController>(o => o.index),
   };

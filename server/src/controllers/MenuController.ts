@@ -15,6 +15,7 @@ class MenuController extends ControllerBase {
   static area = '/api/menu';
   static get = {
     '': nameof<MenuController>(o => o.getMenusAsync),
+    ':menuId': nameof<MenuController>(o => o.getMenuByIdAsync),
   };
   static post = {
     '': nameof<MenuController>(o => o.addMenuAsync),
@@ -40,18 +41,23 @@ class MenuController extends ControllerBase {
     return this.ok(result);
   }
 
+  async getMenuByIdAsync(menuId: string) {
+    const result = await this.menuService.getMenuByIdAsync(parseInt(menuId, 10));
+    return this.ok(result);
+  }
+
   async addMenuAsync(menu: Menu) {
     const result = await this.menuService.addAsync(menu);
     return this.ok(result);
   }
 
-  async updateMenuAsync(menuId: number, menu: Menu) {
+  async updateMenuAsync(menuId: string, menu: Menu) {
     const result = await this.menuService.updateAsync(menu);
     return this.ok(result);
   }
 
-  async deleteMenuAsync(menuId: number) {
-    const menu = await this.menuService.getMenuByIdAsync(menuId);
+  async deleteMenuAsync(menuId: string) {
+    const menu = await this.menuService.getMenuByIdAsync(parseInt(menuId, 10));
     if (!menu) {
       return this.notFound('menu not found');
     }
