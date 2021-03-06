@@ -1,12 +1,16 @@
 import { Watcher } from 'app-redux-utils';
 
 import { appInitterWatcher } from '@app/AppInitter/redux';
-import { menuWatcher } from '@app/MenuPage/redux';
 import { State } from '@State';
+import { menuWatcher } from '@app/menu/redux';
+import { userWatcher } from '@app/user/redux';
+import { dishWatcher } from '@app/dish/redux';
 
 const controllerWatchers: Watcher<State, any>[] = [
   appInitterWatcher,
   menuWatcher,
+  userWatcher,
+  dishWatcher,
 ];
 
 export { controllerWatchers };

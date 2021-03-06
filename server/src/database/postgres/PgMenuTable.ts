@@ -70,7 +70,7 @@ export class PgMenuTable extends PgTableBase<MenuEntity> implements MenuTable {
         LEFT JOIN dish_in_menu _dm on _menu.${nameof<MenuEntity>(o => o.id)} = _dm.${nameof<DishInMenuEntity>(o => o.menu_id)} 
         JOIN dish _dish on _dm.${nameof<DishInMenuEntity>(o => o.dish_id)} = _dish.${nameof<DishEntity>(o => o.id)} 
         LEFT JOIN image _image on _dish.${nameof<DishEntity>(o => o.image_id)} = _image.${nameof<ImageEntity>(o => o.id)} 
-        WHERE id = $1;
+        WHERE _menu.${nameof<MenuEntity>(o => o.id)} = $1;
       `,
       values: [id]
     };

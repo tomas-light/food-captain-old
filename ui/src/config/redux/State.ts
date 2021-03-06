@@ -1,12 +1,16 @@
-import { MenuStore } from '@app/MenuPage/redux';
 import { RouterState } from 'connected-react-router';
 
 import { AppInitterStore } from '@app/AppInitter/redux';
 import { NotifierStore } from '@Notifier';
+import { MenuStore } from '@app/menu/redux';
+import { UserStore } from '@app/user/redux';
+import { DishStore } from '@app/dish/redux';
 
 export interface State {
   router: RouterState;
   appInitter: AppInitterStore;
   notifier: NotifierStore;
   menu: MenuStore;
+  user: UserStore;
+  dish: DishStore;
 }
