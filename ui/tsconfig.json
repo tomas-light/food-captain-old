@@ -24,12 +24,17 @@
       "@api/*": ["api/*"],
       "@app/*": ["app/*"],
       "@config/*": ["config/*"],
+      "@selectors/*": ["selectors/*"],
+      "@select/*": ["shared/organisms/fields/Select/*"],
       "@shared/*": ["shared/*"],
       "@utils/*": ["utils/*"],
 
       "@api": ["api/index"],
       "@env": ["config/environment/index"],
+      "@models": ["app/models/index"],
       "@Notifier": ["app/Notifier/index"],
+      "@selectors": ["selectors/index"],
+      "@select": ["shared/organisms/fields/Select/index"],
       "@State": ["config/redux/State"],
       "@utils": ["utils/index"]
     }

@@ -11,7 +11,7 @@ import { ClassNameMap } from '@utils/types';
 
 const useStyles = makeStyles({
   hidden: {
-    display: 'none',
+    display: 'none !important',
   },
 });
 
@@ -35,12 +35,13 @@ const Spinner = (props: Props) => {
     <CircularProgress
       color="primary"
       classes={{
-        root: clsx(!visible && loaderClasses.hidden, classes.root),
         ...classes,
+        root: clsx(!visible && loaderClasses.hidden, classes.root),
       }}
       {...rest}
     />
   );
 };
 
+export type { Props as SpinnerProps };
 export { Spinner };
