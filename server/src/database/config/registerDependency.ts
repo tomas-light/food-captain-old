@@ -18,7 +18,7 @@ function registerDependency(container: Container) {
       host: process.env.PGHOST || 'localhost',
       port: parseInt(process.env.PGPORT || '5432', 10),
       dialect: 'postgres',
-      logging: false,
+      // logging: false,
     }
   );
 

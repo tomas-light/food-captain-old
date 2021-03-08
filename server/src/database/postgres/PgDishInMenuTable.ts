@@ -2,6 +2,7 @@ import { QueryConfig } from 'pg';
 
 import { DishInMenuEntity } from '../entities';
 import { DishInMenuTable } from '../DishInMenuTable';
+import { DishInMenuAttributes } from '../entities/DishInMenu.entity';
 import { PgTableBase } from './base';
 
 export class PgDishInMenuTable extends PgTableBase<DishInMenuEntity> implements DishInMenuTable {
@@ -26,7 +27,7 @@ export class PgDishInMenuTable extends PgTableBase<DishInMenuEntity> implements 
     return queryResult.rows[0];
   }
 
-  async insertAsync(entity: DishInMenuEntity): Promise<boolean> {
+  async insertAsync(entity: DishInMenuAttributes): Promise<boolean> {
     const queryConfig: QueryConfig = {
       text: `
         INSERT INTO ${this.tableName} (
@@ -47,7 +48,7 @@ export class PgDishInMenuTable extends PgTableBase<DishInMenuEntity> implements 
     return queryResult.rowCount > 0;
   }
 
-  async updateAsync(entity: DishInMenuEntity): Promise<DishInMenuEntity | null | undefined> {
+  async updateAsync(entity: DishInMenuAttributes): Promise<DishInMenuEntity | null | undefined> {
     const queryConfig: QueryConfig = {
       text: `
         UPDATE ${this.tableName} 
@@ -62,7 +63,7 @@ export class PgDishInMenuTable extends PgTableBase<DishInMenuEntity> implements 
     return this.getAsync(entity.menu_id, entity.dish_id);
   }
 
-  async deleteAsync(entity: Pick<DishInMenuEntity, 'menu_id' | 'dish_id'>): Promise<boolean> {
+  async deleteAsync(entity: Pick<DishInMenuAttributes, 'menu_id' | 'dish_id'>): Promise<boolean> {
     const queryConfig: QueryConfig = {
       text: `
         DELETE FROM ${this.tableName} 

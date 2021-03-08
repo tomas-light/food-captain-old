@@ -1,3 +1,5 @@
+import { Menu } from '@models';
+import { Typography } from '@shared/atoms';
 import React, { useEffect } from 'react';
 import { DefaultFieldSubscription, useForm } from 'final-form-app-form';
 import { useTranslation } from 'react-i18next';
@@ -33,6 +35,7 @@ const useStyles = makeStyles({
 });
 
 interface EditMenuPageProps {
+  openedMenu: Menu;
   initialValues: EditMenuFormValues;
   authorOptions: SelectFieldOption<number>[];
   dishOptions: SelectFieldOption<number>[];
@@ -49,9 +52,11 @@ type Props = EditMenuPageProps & EditMenuPageCallProps
 
 const EditMenuPage = (props: Props) => {
   const {
+    openedMenu,
     initialValues,
     authorOptions,
     dishOptions,
+
     loadMenu,
     loadDishes,
     loadAuthors,
@@ -68,11 +73,15 @@ const EditMenuPage = (props: Props) => {
   }, [])
 
   const { t } = useTranslation();
-  const [Form, submitOnClick] = useForm<EditMenuFormValues>(
+  const [Form] = useForm<EditMenuFormValues>(
     onSave,
     new EditMenuValidation(t),
     { resetValidationErrorOnActiveField: true }
   );
+
+  if (!openedMenu) {
+    return null;
+  }
 
   return (
     <Form initialValues={initialValues} subscribe={{ pristine: true }}>
@@ -95,7 +104,18 @@ const EditMenuPage = (props: Props) => {
             // sideOnChange={onChange}
           />
 
-          <TextFormField
+          {!openedMenu.createDate ? null : (
+            <Typography>
+              {t('create date', { date: openedMenu.createDate.toLocaleDateString() })}
+            </Typography>
+          )}
+
+          {!openedMenu.lastUpdate ? null : (
+            <Typography>
+              {t('last update', { date: openedMenu.lastUpdate.toLocaleDateString() })}
+            </Typography>
+          )}
+          {/*<TextFormField
             name={nameof<EditMenuFormValues>(o => o.createDate)}
             label={t('create date')}
             subscription={DefaultFieldSubscription}
@@ -104,10 +124,10 @@ const EditMenuPage = (props: Props) => {
 
           <TextFormField
             name={nameof<EditMenuFormValues>(o => o.lastUpdate)}
-            label={t('create date')}
+            label={t('last update')}
             subscription={DefaultFieldSubscription}
             readonly
-          />
+          />*/}
 
           <SelectFormField
             name={nameof<EditMenuFormValues>(o => o.author)}
@@ -142,8 +162,8 @@ const EditMenuPage = (props: Props) => {
 
           <Button
             // variant="form"
-            onClick={submitOnClick}
             // className={classes.button}
+            type="submit"
             state={{
               // loading: isSaving,
               pristine: state.pristine,

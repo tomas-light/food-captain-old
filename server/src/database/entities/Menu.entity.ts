@@ -1,5 +1,5 @@
 import Sequelize, { DataTypes, Model, Optional } from 'sequelize';
-import { DishEntity } from './Dish.entity';
+import { DishAttributes, DishEntity } from './Dish.entity';
 import type { DishInMenuEntity } from './DishInMenu.entity';
 import type { MenuInScheduleEntity } from './MenuInSchedule.entity';
 import type { UserEntity, UserId } from './UserEntity';
@@ -16,13 +16,18 @@ export type MenuPk = 'id';
 export type MenuId = MenuEntity[MenuPk];
 export type MenuCreationAttributes = Optional<MenuAttributes, MenuPk>;
 
-export class MenuEntity extends Model<MenuAttributes, MenuCreationAttributes> implements MenuAttributes {
+export class MenuEntity
+  extends Model<MenuAttributes, MenuCreationAttributes>
+  implements MenuAttributes,
+  Partial<Pick<DishInMenuEntity, 'order_number'>> {
+
   id!: number;
   create_date!: string;
   last_update!: string;
   author_id?: number;
   name?: string;
 
+  order_number?: number;
 /*
   // Menu hasMany DishInMenu via menu_id
   dish_in_menus!: DishInMenuEntity[];

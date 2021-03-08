@@ -20,16 +20,20 @@ export const menuWatcher = watcher<State, MenuController>(
       'loadMenu',
     ],
     [
-      MenuActions.OPEN_MENU_FOR_CREATION,
-      'openMenuForCreation',
+      MenuActions.ADD_MENU,
+      'addMenu',
     ],
     [
-      MenuActions.OPEN_MENU_FOR_EDITING,
-      'openMenuForEditing',
+      MenuActions.EDIT_MENU,
+      'editMenu',
     ],
     [
-      MenuActions.OPEN_MENU_FOR_DELETING,
-      'openMenuForDeleting',
+      MenuActions.DELETE_MENUS,
+      'deleteMenus',
+    ],
+    [
+      MenuActions.SAVE,
+      'save',
     ],
   ]
 );

@@ -15,9 +15,9 @@ export class MenuActions {
   static GET_MENU_LIST = `${MenuActions.PREFIX}GET_MENU_LIST`;
   static SELECT_MENU = `${MenuActions.PREFIX}SELECT_MENU`;
 
-  static OPEN_MENU_FOR_CREATION = `${MenuActions.PREFIX}OPEN_MENU_FOR_CREATION`;
-  static OPEN_MENU_FOR_EDITING = `${MenuActions.PREFIX}OPEN_MENU_FOR_EDITING`;
-  static OPEN_MENU_FOR_DELETING = `${MenuActions.PREFIX}OPEN_MENU_FOR_DELETING`;
+  static ADD_MENU = `${MenuActions.PREFIX}ADD_MENU`;
+  static EDIT_MENU = `${MenuActions.PREFIX}EDIT_MENU`;
+  static DELETE_MENUS = `${MenuActions.PREFIX}DELETE_MENUS`;
   static LOAD_MENU = `${MenuActions.PREFIX}LOAD_MENU`;
 
   static SAVE = `${MenuActions.PREFIX}SAVE`;
@@ -28,9 +28,9 @@ export class MenuActions {
   static getMenus = () => createAction(MenuActions.GET_MENU_LIST);
   static selectMenu = (payload: SelectMenuActionPayload) => createAction(MenuActions.SELECT_MENU, payload);
 
-  static openMenuForCreation = () => createAction(MenuActions.OPEN_MENU_FOR_CREATION);
-  static openMenuForEditing = () => createAction(MenuActions.OPEN_MENU_FOR_EDITING);
-  static openMenuForDeleting = () => createAction(MenuActions.OPEN_MENU_FOR_DELETING);
+  static addMenu = () => createAction(MenuActions.ADD_MENU);
+  static editMenu = () => createAction(MenuActions.EDIT_MENU);
+  static deleteMenus = () => createAction(MenuActions.DELETE_MENUS);
   static loadMenu = (payload: LoadMenuActionPayload) => createAction(MenuActions.LOAD_MENU, payload);
 
   static save = (payload: SaveActionPayload) => createAction(MenuActions.SAVE, payload);

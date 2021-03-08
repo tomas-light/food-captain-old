@@ -12,16 +12,17 @@ import {
  } from './EditMenuPage';
 
 const mapStateToProps = (state: State): EditMenuPageProps => ({
+  initialValues: state.menu.menuFormValues,
+  openedMenu: state.menu.openedMenu,
   dishOptions: state.dish.dishOptions,
   authorOptions: state.user.userOptions,
-  initialValues: state.menu.menuFormValues,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): EditMenuPageCallProps => ({
   loadMenu: menuId => dispatch(MenuActions.loadMenu({ menuId })),
   loadAuthors: () => dispatch(UserActions.loadUsers()),
   loadDishes: () => dispatch(DishActions.loadDishes()),
-  onSave: (formValues) => dispatch(MenuActions.save({ formValues })),
+  onSave: formValues => dispatch(MenuActions.save({ formValues })),
 });
 
 const EditMenuPageContainer = connect(

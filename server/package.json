@@ -8,6 +8,7 @@
     "prod": "ts-node --compiler ttypescript src/index.ts"
   },
   "dependencies": {
+    "@tomas_light/mapper-js": "1.0.1",
     "body-parser": "1.19.0",
     "cheap-di": "1.1.0",
     "express": "4.17.1",

@@ -15,9 +15,9 @@ const mapStateToProps = (state: State): MenuButtonsProps => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): MenuButtonsCallProps => ({
-  onAdd: () => dispatch(MenuActions.openMenuForCreation()),
-  onEdit: () => dispatch(MenuActions.openMenuForEditing()),
-  onRemove: () => dispatch(MenuActions.openMenuForDeleting()),
+  onAdd: () => dispatch(MenuActions.addMenu()),
+  onEdit: () => dispatch(MenuActions.editMenu()),
+  onRemove: () => dispatch(MenuActions.deleteMenus()),
 });
 
 const MenuButtonsContainer = connect(

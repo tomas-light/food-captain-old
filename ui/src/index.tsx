@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import '@utils/types/Array.extensions';
-import '@utils/types/String.extensions';
+import '../../extensions/Array.extensions';
+import '../../extensions/String.extensions';
 
 import { App } from './app';
 

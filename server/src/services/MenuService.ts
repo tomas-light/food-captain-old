@@ -1,6 +1,8 @@
 import { MakeOptional } from '@utils/types';
+import { Mapper } from '@tomas_light/mapper-js';
 import { Database } from '../database';
-import { DishEntity, DishInMenuEntity } from '../database/entities';
+import { DishEntity, DishInMenuEntity, MenuEntity } from '../database/entities';
+import { DishInMenuAttributes } from '../database/entities/DishInMenu.entity';
 import { DishService } from './DishService';
 import { ImageService } from './ImageService';
 import { DishInMenu, Image, Menu, User } from './models';
@@ -66,7 +68,7 @@ export class MenuService {
             name: dish.name,
             description: dish.description,
             image: dishEntity.image,
-            order: dishEntity.menu?.order_number,
+            order: dishEntity.order_number,
           };
         }),
       } as Menu;
@@ -165,8 +167,13 @@ export class MenuService {
   async updateAsync(menu: MakeOptional<Menu, 'createDate' | 'lastUpdate'>): Promise<Menu | undefined> {
     menu.lastUpdate = this.getDateNow();
 
-// @ts-ignore
-    const menuEntity = await this.db.menu.updateAsync(menu);
+    const entity = Mapper.map<MenuEntity>(
+      nameof<Menu>(),
+      nameof<MenuEntity>(),
+      menu
+    );
+
+    const menuEntity = await this.db.menu.updateAsync(entity);
     if (!menuEntity) {
       return undefined;
     }
@@ -183,11 +190,10 @@ export class MenuService {
 
     const dishesIdBeforeUpdate = menuDishes.map(dish => dish.id);
 
-    const dishesForAdding: Omit<DishInMenuEntity, 'menu_id'>[] = [];
+    const dishesForAdding: Omit<DishInMenuAttributes, 'menu_id'>[] = [];
     currentDishIds.forEach(id => {
       if (!dishesIdBeforeUpdate.includes(id)) {
         const dish = menu.dishes!.find(_dish => _dish.id === id);
-// @ts-ignore
         dishesForAdding.push({
           dish_id: id,
           order_number: dish!.order,
@@ -195,10 +201,11 @@ export class MenuService {
       }
     });
 
-    await this.db.dishInMenu.deleteByIdsAsync(dishesIdForDelete);
+    if (dishesIdForDelete.length) {
+      await this.db.dishInMenu.deleteByIdsAsync(dishesIdForDelete);
+    }
 
     await dishesForAdding.forEachAsync(async dish => {
-// @ts-ignore
       await this.db.dishInMenu.insertAsync({
         menu_id: menuEntity.id,
         dish_id: dish.dish_id,
@@ -206,29 +213,25 @@ export class MenuService {
       });
     });
 
-    let author: User | undefined;
+    let author: User | undefined | null;
     if (menuEntity.author_id) {
-// @ts-ignore
       author = await this.userService.getUserByIdAsync(menuEntity.author_id);
     }
 
     const updatedMenu: Menu = {
       id: menuEntity.id,
       name: menuEntity.name,
-// @ts-ignore
-      createDate: menuEntity.create_date,
-// @ts-ignore
-      lastUpdate: menuEntity.last_update,
-      author,
+      createDate: new Date(menuEntity.create_date),
+      lastUpdate: new Date(menuEntity.last_update),
+      author: author as User | undefined,
       dishes: []
     };
 
     menuDishes = await this.db.dish.byMenuIdAsync(menuEntity.id);
 
     await menuDishes.forEachAsync(async entity => {
-      let image: Image | undefined;
+      let image: Image | undefined | null;
       if (entity.image_id) {
-// @ts-ignore
         image = await this.imageService.getImageByIdAsync(entity.image_id);
       }
 
@@ -237,7 +240,7 @@ export class MenuService {
         name: entity.name,
         description: entity.description,
         order: entity.order_number,
-        image,
+        image: image as Image | undefined,
       });
     });
   }

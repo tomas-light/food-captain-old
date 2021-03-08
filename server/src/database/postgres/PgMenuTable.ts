@@ -1,8 +1,15 @@
-import { MakeOptional } from '@utils/types';
 import { QueryConfig } from 'pg';
-import { ModelType, QueryTypes } from 'sequelize';
+import { ModelType, QueryTypes, literal } from 'sequelize';
 
-import { DishEntity, DishInMenuEntity, ImageEntity, MenuEntity, MenuInScheduleEntity, UserEntity, } from '../entities';
+import { MakeOptional } from '@utils/types';
+import {
+  DishEntity,
+  DishInMenuEntity,
+  ImageEntity,
+  MenuEntity,
+  MenuInScheduleEntity,
+  UserEntity,
+} from '../entities';
 import { MenuTable, MenuWithDateEntity, MenuWithDishesEntity, } from '../MenuTable';
 import { PgTableBase } from './base';
 
@@ -17,14 +24,23 @@ export class PgMenuTable extends PgTableBase<MenuEntity> implements MenuTable {
           as: 'dishes',
           through: {
             as: 'menu',
-            attributes: ['order_number'],
           },
+          attributes: [
+            nameof<DishEntity>(o => o.id),
+            nameof<DishEntity>(o => o.name),
+            nameof<DishEntity>(o => o.description),
+            nameof<DishEntity>(o => o.image_id),
+            [
+              literal(`"dishes->menu"."${nameof<DishInMenuEntity>(o => o.order_number)}"`),
+              nameof<DishInMenuEntity>(o => o.order_number),
+            ],
+            [
+              literal(`"dishes->menu"."${nameof<DishInMenuEntity>(o => o.menu_id)}"`),
+              nameof<DishInMenuEntity>(o => o.menu_id),
+            ],
+          ],
         },
-        {
-          model: UserEntity as ModelType,
-          as: 'author',
-        },
-      ]
+      ],
     });
   }
 

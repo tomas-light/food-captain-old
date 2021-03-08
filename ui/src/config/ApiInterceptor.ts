@@ -85,7 +85,7 @@ export class ApiInterceptor {
 
     if (!error.response) {
       return new ApiResponse({
-        error: error.code,
+        error: error.message || error.code,
         statusCode: ApiResponseStatus.Unknown,
       });
     }

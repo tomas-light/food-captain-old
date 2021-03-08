@@ -1,7 +1,8 @@
-import { MakeOptional } from '@utils/types';
 import { QueryConfig } from 'pg';
+import { ModelType, literal } from 'sequelize';
 
-import { DishEntity, DishInMenuEntity } from '../entities';
+import { MakeOptional } from '@utils/types';
+import { DishEntity, DishInMenuEntity, MenuEntity } from '../entities';
 import { DishTable, MenuDishesEntity } from '../DishTable';
 import { PgTableBase } from './base';
 
@@ -16,22 +17,48 @@ export class PgDishTable extends PgTableBase<DishEntity> implements DishTable {
     return super.byIdAsync(id);
   }
 
-  async byMenuIdAsync(menuId: number): Promise<MenuDishesEntity[]> {
-    const queryConfig: QueryConfig = {
-      text: `
-        SELECT 
-          _dm.${nameof<DishInMenuEntity>(o => o.menu_id)},
-          _dish.*, 
-          _dm.${nameof<DishInMenuEntity>(o => o.order_number)} 
-        FROM ${this.tableName} _dish
-        JOIN dish_in_menu _dm on _dish.${nameof<DishEntity>(o => o.id)} = _dm.${nameof<DishInMenuEntity>(o => o.dish_id)}
-        WHERE ${nameof<DishInMenuEntity>(o => o.menu_id)} == $1;
-      `,
-      values: [menuId]
-    };
+  /*async*/ byMenuIdAsync(menuId: number): Promise<MenuDishesEntity/*any*/[]> {
+    return DishEntity.findAll({
+      include: [
+        {
+          model: MenuEntity as ModelType,
+          as: 'menus',
+          through: {
+            as: 'dish',
+          },
+          attributes: [
+            nameof<MenuEntity>(o => o.id),
+            nameof<MenuEntity>(o => o.create_date),
+            nameof<MenuEntity>(o => o.last_update),
+            nameof<MenuEntity>(o => o.author_id),
+            nameof<MenuEntity>(o => o.name),
+            [
+              literal(`"menus->dish"."${nameof<DishInMenuEntity>(o => o.order_number)}"`),
+              nameof<DishInMenuEntity>(o => o.order_number),
+            ],
+          ],
+        },
+      ],
+      where: {
+        [`$menus.${nameof<MenuEntity>(o => o.id)}$`]: menuId,
+      },
+    }) as Promise<MenuDishesEntity[]>;
 
-    const queryResult = await this.query<MenuDishesEntity>(queryConfig);
-    return queryResult.rows;
+    // const queryConfig: QueryConfig = {
+    //   text: `
+    //     SELECT
+    //       _dm.${nameof<DishInMenuEntity>(o => o.menu_id)},
+    //       _dish.*,
+    //       _dm.${nameof<DishInMenuEntity>(o => o.order_number)}
+    //     FROM ${this.tableName} _dish
+    //     JOIN dish_in_menu _dm on _dish.${nameof<DishEntity>(o => o.id)} = _dm.${nameof<DishInMenuEntity>(o => o.dish_id)}
+    //     WHERE ${nameof<DishInMenuEntity>(o => o.menu_id)} == $1;
+    //   `,
+    //   values: [menuId]
+    // };
+    //
+    // const queryResult = await this.query<MenuDishesEntity>(queryConfig);
+    // return queryResult.rows;
   }
 
   async byMenuIdsAsync(menuIds: number[]): Promise<MenuDishesEntity[]> {

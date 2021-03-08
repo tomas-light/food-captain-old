@@ -18,7 +18,8 @@ export class ApiResponse<TData = any> {
   }
 
   hasError(): boolean {
-    return this.statusCode >= ApiResponseStatus.BadRequest;
+    return this.statusCode >= ApiResponseStatus.BadRequest
+      || this.statusCode === ApiResponseStatus.Unknown;
   }
 
   hasServerError() {

@@ -16,12 +16,15 @@ moduleAlias.addAliases({
   '@utils': path.join(__dirname, 'utils'),
 });
 
-import '@utils/ArrayExtensions';
+import '../../extensions/Array.extensions';
+import '../../extensions/String.extensions';
 import { configDependencies } from './configDependencies';
+import { configureMapper } from './mapping';
 
 dotenv.config();
 
 configDependencies(container);
+configureMapper();
 
 const appDir = path.dirname(require.main?.filename || __dirname);
 const uiBundlePath = path.join(appDir, '..', '..', 'dist');

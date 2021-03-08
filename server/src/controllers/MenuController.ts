@@ -4,9 +4,11 @@
  * property law. Dissemination of this information or reproduction of this material is strictly forbidden,
  * unless prior written permission is obtained from EPAM Systems, Inc
  ******************************************************************************/
+import { Mapper } from '@tomas_light/mapper-js';
 import { MenuService } from '../services';
 import { Menu } from '../services/models';
 import { ControllerBase } from './base';
+import { MenuDto } from './dto';
 
 class MenuController extends ControllerBase {
   static __constructorParams: InstanceType<any>[] = [MenuService]
@@ -46,12 +48,22 @@ class MenuController extends ControllerBase {
     return this.ok(result);
   }
 
-  async addMenuAsync(menu: Menu) {
+  async addMenuAsync(dto: MenuDto) {
+    const menu = Mapper.map<Menu>(
+      nameof<MenuDto>(),
+      nameof<Menu>(),
+      dto
+    );
     const result = await this.menuService.addAsync(menu);
     return this.ok(result);
   }
 
-  async updateMenuAsync(menuId: string, menu: Menu) {
+  async updateMenuAsync(menuId: string, dto: MenuDto) {
+    const menu = Mapper.map<Menu>(
+      nameof<MenuDto>(),
+      nameof<Menu>(),
+      dto
+    );
     const result = await this.menuService.updateAsync(menu);
     return this.ok(result);
   }

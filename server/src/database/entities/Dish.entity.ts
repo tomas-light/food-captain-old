@@ -15,11 +15,17 @@ export type DishPk = 'id';
 export type DishId = DishEntity[DishPk];
 export type DishCreationAttributes = Optional<DishAttributes, DishPk>;
 
-export class DishEntity extends Model<DishAttributes, DishCreationAttributes> implements DishAttributes {
+export class DishEntity
+  extends Model<DishAttributes, DishCreationAttributes>
+  implements DishAttributes, Partial<Pick<DishInMenuEntity, 'order_number' | 'menu_id'>> {
+
   id!: number;
   name!: string;
   description?: string;
   image_id?: number;
+
+  order_number?: number;
+  menu_id?: number;
 /*
 
   // Dish hasMany DishInMenu via dish_id
