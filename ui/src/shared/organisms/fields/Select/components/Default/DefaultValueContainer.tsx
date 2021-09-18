@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { components } from 'react-select';
 import { ValueContainerProps } from 'react-select/src/components/containers';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from '@shared/theme';
 
 import { SelectFieldOption } from '../../types';
 

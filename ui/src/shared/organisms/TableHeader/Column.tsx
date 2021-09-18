@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import React from 'react';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from '@shared/theme';
 import TableCell from '@material-ui/core/TableCell';
 
 import { ColumnSettings } from '@shared/designOrganisms/Table/models';

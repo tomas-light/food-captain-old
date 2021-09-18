@@ -1,6 +1,5 @@
 import { controllerMiddleware } from 'app-redux-utils';
-import { routerMiddleware } from 'connected-react-router';
-import { createBrowserHistory, History } from 'history';
+import { container } from 'cheap-di';
 import { applyMiddleware, combineReducers, compose, createStore, } from 'redux';
 
 import { ApiInterceptor } from './ApiInterceptor';
@@ -10,11 +9,8 @@ import { configureTranslation } from './translation';
 
 function configureApp() {
   const composer = getComposer();
-
-  const history: History = createBrowserHistory();
-  const reducers = makeReducers(history);
-
-  const middleware = makeMiddleware(history);
+  const reducers = makeReducers();
+  const middleware = makeMiddleware();
   const enhancer = composer(middleware);
 
   const store = createStore(reducers, enhancer);
@@ -23,10 +19,7 @@ function configureApp() {
 
   configureTranslation();
 
-  return {
-    store,
-    history,
-  };
+  return store;
 }
 
 function getComposer() {
@@ -38,15 +31,14 @@ function getComposer() {
   return compose;
 }
 
-function makeReducers(history: History) {
-  const reducers = getReducers(history);
+function makeReducers() {
+  const reducers = getReducers();
   return combineReducers(reducers);
 }
 
-function makeMiddleware(history: History) {
+function makeMiddleware() {
   return applyMiddleware(
-    routerMiddleware(history),
-    controllerMiddleware(controllerWatchers)
+    controllerMiddleware(controllerWatchers, container)
   );
 }
 

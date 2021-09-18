@@ -1,10 +1,11 @@
 {
-  "compileOnSave": false,
+  "compileOnSave": true,
   "compilerOptions": {
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "checkJs": false,
     "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
     "jsx": "react-jsx",

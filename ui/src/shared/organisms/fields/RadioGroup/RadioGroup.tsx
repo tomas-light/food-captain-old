@@ -1,11 +1,11 @@
 import React from 'react';
 import {
   Grid,
-  makeStyles,
   Radio,
   RadioGroup as MuiRadioGroup,
   StyledComponentProps,
 } from '@material-ui/core';
+import { makeStyles } from '@shared/theme';
 import { RadioGroupProps as MuiRadioGroupProps } from '@material-ui/core/RadioGroup/RadioGroup';
 
 import { RadioGroupChild } from './RadioGroupChild';

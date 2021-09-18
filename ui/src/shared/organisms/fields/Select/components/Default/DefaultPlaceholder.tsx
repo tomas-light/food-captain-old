@@ -2,7 +2,8 @@ import clsx from 'clsx';
 import React, { FC } from 'react';
 import { components } from 'react-select';
 import { PlaceholderProps } from 'react-select/src/components/Placeholder';
-import { makeStyles, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
+import { makeStyles } from '@shared/theme';
 
 import { SelectFieldOption } from '../../types';
 

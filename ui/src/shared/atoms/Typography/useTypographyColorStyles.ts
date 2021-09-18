@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from '@shared/theme';
 
 import { TypographyColorVariant } from './TypographyColorVariant';
 

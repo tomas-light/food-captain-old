@@ -4,9 +4,9 @@ import {
   IconButtonClassKey,
   StyledComponentProps,
   Tooltip,
-  withStyles,
 } from '@material-ui/core';
 import { IconButtonProps as MuiIconButtonProps } from '@material-ui/core/IconButton/IconButton';
+import { withStyles } from '@shared/theme';
 
 import { Spinner } from '@shared/molecules/Spinner';
 import { ButtonState } from '../ButtonState';

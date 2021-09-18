@@ -1,9 +1,9 @@
 import clsx from 'clsx';
 import React, { MouseEvent } from 'react';
-import { makeStyles } from '@material-ui/core';
 import TableCell from '@material-ui/core/TableCell';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 
+import { makeStyles } from '@shared/theme';
 import { ColumnSettings } from '@shared/designOrganisms/Table/models';
 import { OrderVariant } from '@utils/types';
 

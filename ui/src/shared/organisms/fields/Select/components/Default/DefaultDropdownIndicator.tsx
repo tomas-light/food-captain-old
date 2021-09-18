@@ -1,7 +1,7 @@
 import React from 'react';
 import { components } from 'react-select';
 import { IndicatorProps } from 'react-select/src/components/indicators';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from '@shared/theme';
 
 import { ChevronDownIcon, ChevronUpIcon } from '@shared/atoms/icons';
 import { FieldOption } from '../../types';

@@ -1,8 +1,6 @@
-import { makeStyles } from '@material-ui/core';
-
-import { Typography } from '@shared/atoms/Typography';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Typography } from '@shared/atoms/Typography';
+import { makeStyles } from '@shared/theme';
 import { MenuButtonsContainer } from './MenuButtons';
 
 const useStyles = makeStyles({

@@ -1,5 +1,6 @@
 import { MenuButton } from '@app/Layout/AppBar/MenuButton';
-import { AppBar as MuiAppBar, makeStyles, Toolbar, Typography } from '@material-ui/core';
+import { AppBar as MuiAppBar, Toolbar, Typography } from '@material-ui/core';
+import { makeStyles } from '@shared/theme';
 import clsx from 'clsx';
 import React, { FC } from 'react';
 

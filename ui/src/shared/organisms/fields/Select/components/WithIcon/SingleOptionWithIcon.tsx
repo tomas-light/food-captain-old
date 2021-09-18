@@ -1,11 +1,11 @@
 import React, { FC, ReactElement } from 'react';
 import { components, OptionProps } from 'react-select';
 import {
-  makeStyles,
   MenuItem,
   Tooltip,
   Typography,
 } from '@material-ui/core';
+import { makeStyles } from '@shared/theme';
 
 import { FieldOption } from '../../types';
 

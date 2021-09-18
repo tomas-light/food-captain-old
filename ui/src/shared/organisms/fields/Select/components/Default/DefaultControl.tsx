@@ -3,7 +3,7 @@ import React from 'react';
 import { components } from 'react-select';
 import { ControlProps as ControlComponentProps } from 'react-select/src/components/Control';
 import { Props as SelectProps } from 'react-select/src/Select';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from '@shared/theme';
 
 import { FieldBase, FieldBaseProps } from '@shared/organisms/fields/FieldBase';
 import { ClassNameMap } from '@utils/types';

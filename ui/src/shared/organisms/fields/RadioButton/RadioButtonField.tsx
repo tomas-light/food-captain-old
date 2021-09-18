@@ -1,13 +1,13 @@
 import clsx from 'clsx';
 import React from 'react';
 import {
-  createStyles,
   FormControlLabel,
   Radio,
   RadioGroup,
   StyledComponentProps,
-  withStyles,
 } from '@material-ui/core';
+import { createStyles } from '@material-ui/styles';
+import { withStyles } from '@shared/theme';
 
 import { RadioButtonItem } from './RadioButtonItem';
 

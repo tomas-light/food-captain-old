@@ -1,10 +1,11 @@
 import React, { CSSProperties, ReactElement } from 'react';
-import { StyledComponentProps, withStyles } from '@material-ui/core';
+import { StyledComponentProps } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import MuiTable from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableContainer from '@material-ui/core/TableContainer';
 import Toolbar from '@material-ui/core/Toolbar';
+import { withStyles } from '@shared/theme';
 
 import { OrderVariant } from '@utils/types';
 import { TableHeader } from '../TableHeader';

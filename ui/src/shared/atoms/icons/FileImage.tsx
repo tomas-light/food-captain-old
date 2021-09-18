@@ -1,8 +1,6 @@
-import { withStyles } from '@material-ui/core';
-
 import { SvgIconProps } from '@material-ui/core/SvgIcon';
 import SvgIcon from '@material-ui/core/SvgIcon/SvgIcon';
-import React from 'react';
+import { withStyles } from '@shared/theme';
 
 type Props = SvgIconProps;
 

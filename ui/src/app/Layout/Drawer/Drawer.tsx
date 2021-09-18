@@ -1,7 +1,8 @@
 import { appUrls } from '@app/routing/appUrls';
-import { Drawer as MuiDrawer, List, ListItem, ListItemText, makeStyles } from '@material-ui/core';
+import { Drawer as MuiDrawer, List, ListItem, ListItemText } from '@material-ui/core';
 import clsx from 'clsx';
 import React from 'react';
+import { makeStyles } from '@shared/theme';
 
 const menuItems = [
   {

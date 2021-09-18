@@ -4,9 +4,9 @@ import {
   CircularProgress,
   CircularProgressClassKey,
   CircularProgressProps,
-  makeStyles,
 } from '@material-ui/core';
 
+import { makeStyles } from '@shared/theme';
 import { ClassNameMap } from '@utils/types';
 
 const useStyles = makeStyles({

@@ -1,6 +1,7 @@
 import React from 'react';
 import { IndicatorProps } from 'react-select/src/components/indicators';
-import { IconButton, makeStyles } from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
+import { makeStyles } from '@shared/theme';
 import Close from '@material-ui/icons/Close';
 
 import { FieldOption } from '../../types';

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { CircularProgress, makeStyles, Typography, withStyles } from '@material-ui/core';
+import { CircularProgress, Typography } from '@material-ui/core';
+import { makeStyles, withStyles } from '@shared/theme';
 
 import { FileImageIcon } from '@shared/atoms/icons';
 import {

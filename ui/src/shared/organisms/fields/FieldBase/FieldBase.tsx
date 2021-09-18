@@ -1,7 +1,7 @@
 import clsx from 'clsx';
-import React, { FC, ReactNode } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { FC, ReactNode } from 'react';
 
+import { makeStyles } from '@shared/theme';
 import { EndAdornment } from '@shared/atoms';
 import {
   FieldError,

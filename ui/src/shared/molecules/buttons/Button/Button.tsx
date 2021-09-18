@@ -5,8 +5,8 @@ import {
   ButtonProps as MuiButtonProps,
   CircularProgress,
   StyledComponentProps,
-  withStyles,
 } from '@material-ui/core';
+import { withStyles } from '@shared/theme';
 
 import { ButtonState } from '../ButtonState';
 import { ButtonWrapper } from './ButtonWrapper';

@@ -5,8 +5,8 @@ import {
   FilledInputClassKey,
   FilledInputProps,
   InputBaseComponentProps,
-  makeStyles,
 } from '@material-ui/core';
+import { makeStyles } from '@shared/theme';
 
 import { guid } from '@utils';
 import {

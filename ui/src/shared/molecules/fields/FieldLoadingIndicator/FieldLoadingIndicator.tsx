@@ -1,9 +1,7 @@
 import React from 'react';
-import {
-  createStyles,
-  StyledComponentProps,
-  withStyles,
-} from '@material-ui/core';
+import { StyledComponentProps } from '@material-ui/core';
+import { createStyles } from '@material-ui/styles';
+import { withStyles } from '@shared/theme';
 
 import { Spinner, SpinnerProps } from '../../Spinner';
 

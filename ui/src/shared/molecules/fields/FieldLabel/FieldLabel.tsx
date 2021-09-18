@@ -2,9 +2,9 @@ import React from 'react';
 import {
   InputLabel,
   StyledComponentProps,
-  withStyles,
 } from '@material-ui/core';
 import { InputLabelClassKey } from '@material-ui/core/InputLabel/InputLabel';
+import { withStyles } from '@shared/theme';
 
 interface FieldLabelProps {
   label?: string;

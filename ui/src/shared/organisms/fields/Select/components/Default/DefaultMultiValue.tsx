@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { components } from 'react-select';
 import { MultiValueProps } from 'react-select';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from '@shared/theme';
 
 import { FieldOption } from '@select/types';
 

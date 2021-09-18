@@ -1,24 +1,20 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { State } from '@State';
 import { MenuActions } from '@app/menu/redux';
 import {
     MenuPage,
-    MenuPageProps,
-    MenuPageCallProps,
+    Props,
  } from './MenuPage';
 
-const mapStateToProps = (state: State): MenuPageProps => ({
-  menus: state.menu.menus,
-});
+type DispatchProps = Omit<Props, 'menus'>
 
-const mapDispatchToProps = (dispatch: Dispatch): MenuPageCallProps => ({
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   loadMenu: () => dispatch(MenuActions.getMenus()),
 });
 
 const MenuPageContainer = connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(MenuPage);
 

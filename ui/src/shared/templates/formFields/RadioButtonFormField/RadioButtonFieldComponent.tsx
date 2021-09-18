@@ -1,6 +1,7 @@
 import React from 'react';
 import { FieldRenderProps } from 'react-final-form';
-import { FormControl, makeStyles, Typography } from '@material-ui/core';
+import { FormControl, Typography } from '@material-ui/core';
+import { makeStyles } from '@shared/theme';
 
 import { RadioButtonFieldProps, RadioButtonField } from '@shared/organisms/fields';
 import { FieldComponentCallProps } from '../FieldComponentCallProps';

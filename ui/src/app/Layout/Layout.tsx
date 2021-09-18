@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-import { makeStyles } from '@material-ui/core';
 
+import { makeStyles } from '@shared/theme';
 import { NotifierContainer } from '@Notifier';
 import { AppBar } from './AppBar';
 import { DrawerContainer } from './Drawer';

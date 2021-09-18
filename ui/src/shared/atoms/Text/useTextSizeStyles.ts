@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from '@shared/theme';
 import { TextSizeVariant } from './TextSizeVariant';
 
 const useTextSizeStyles = makeStyles<TextSizeVariant>({

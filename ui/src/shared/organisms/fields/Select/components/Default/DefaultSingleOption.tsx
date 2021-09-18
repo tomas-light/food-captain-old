@@ -1,7 +1,7 @@
-import { makeStyles, MenuItem, Tooltip, Typography } from '@material-ui/core';
-import React from 'react';
+import { MenuItem, Tooltip, Typography } from '@material-ui/core';
 import { components } from 'react-select';
 import { OptionProps } from 'react-select/src/components/Option';
+import { makeStyles } from '@shared/theme';
 
 import { FieldOption } from '../../types';
 

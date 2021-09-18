@@ -6,7 +6,8 @@ import React, {
     useRef,
     useState,
 } from 'react';
-import { StyledComponentProps, withStyles } from '@material-ui/core';
+import { StyledComponentProps } from '@material-ui/core';
+import { withStyles } from '@shared/theme';
 
 import { guid } from '@utils';
 import { FileHelper } from '@utils/files';

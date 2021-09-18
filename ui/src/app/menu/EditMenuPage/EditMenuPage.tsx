@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { DefaultFieldSubscription, useForm } from 'final-form-app-form';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from '@shared/theme';
 
 import { SelectFieldOption } from '@select';
 import { Button } from '@shared/molecules/buttons';

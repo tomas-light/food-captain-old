@@ -6,9 +6,11 @@ import { OptionProps } from 'react-select/src/components/Option';
 
 import {
   Checkbox,
-  makeStyles,
-  MenuItem, Tooltip, Typography
+  MenuItem,
+  Tooltip,
+  Typography,
 } from '@material-ui/core';
+import { makeStyles } from '@shared/theme';
 
 import { FieldOption } from '@select/types';
 

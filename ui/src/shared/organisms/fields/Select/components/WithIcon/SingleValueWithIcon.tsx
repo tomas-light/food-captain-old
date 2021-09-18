@@ -1,7 +1,8 @@
 import clsx from 'clsx';
 import React, { ReactElement } from 'react';
 import { components, SingleValueProps } from 'react-select';
-import { makeStyles, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
+import { makeStyles } from '@shared/theme';
 
 import { FieldOption } from '../../types';
 

@@ -1,6 +1,6 @@
-import { IconButton, StyledComponentProps, withStyles } from '@material-ui/core';
+import { IconButton, StyledComponentProps } from '@material-ui/core';
 import { ChevronLeft, Menu } from '@material-ui/icons';
-import React from 'react';
+import { withStyles } from '@shared/theme';
 
 interface IMenuButtonProps {
   open: boolean;

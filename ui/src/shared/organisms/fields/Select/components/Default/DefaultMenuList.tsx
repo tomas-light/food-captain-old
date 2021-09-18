@@ -1,7 +1,8 @@
 import React, { FC, useEffect, useState } from 'react';
 import { MenuListComponentProps } from 'react-select/src/components/Menu';
 import { List } from 'react-virtualized';
-import { makeStyles, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
+import { makeStyles } from '@shared/theme';
 
 import { guid } from '@utils';
 import { FieldOption } from '../../types';
