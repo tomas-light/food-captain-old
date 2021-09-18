@@ -2,6 +2,7 @@ import { Pool } from 'pg';
 import { Sequelize } from 'sequelize';
 
 import { Logger } from '@utils/loggers';
+import { metadata } from '@utils/metadata';
 import { Database } from '../Database';
 import { initEntities } from '../entities';
 
@@ -24,9 +25,8 @@ import { PgScheduleTable } from './PgScheduleTable';
 import { PgUserTable } from './PgUserTable';
 import { PgUserRoleTable } from './PgUserRoleTable';
 
+@metadata
 export class PostgresDatabase extends Database {
-  static __constructorParams: InstanceType<any>[] = [Logger, Sequelize];
-
   private readonly sequelize: Sequelize;
 
   constructor(

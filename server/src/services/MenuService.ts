@@ -1,3 +1,4 @@
+import { metadata } from '@utils/metadata';
 import { MakeOptional } from '@utils/types';
 import { Mapper } from '@tomas_light/mapper-js';
 import { Database } from '../database';
@@ -8,9 +9,8 @@ import { ImageService } from './ImageService';
 import { DishInMenu, Image, Menu, User } from './models';
 import { UserService } from './UserService';
 
+@metadata
 export class MenuService {
-  static __constructorParams: InstanceType<any>[] = [Database, DishService, UserService, ImageService];
-
   constructor(
     private readonly db: Database,
     private readonly dishService: DishService,

@@ -5,15 +5,15 @@
  * unless prior written permission is obtained from EPAM Systems, Inc
  ******************************************************************************/
 import { Mapper } from '@tomas_light/mapper-js';
+import { Logger } from '@utils/loggers';
+import { metadata } from '@utils/metadata';
 import { MenuService } from '../services';
 import { Menu } from '../services/models';
 import { ControllerBase } from './base';
 import { MenuDto } from './dto';
 
+@metadata
 class MenuController extends ControllerBase {
-  static __constructorParams: InstanceType<any>[] = [MenuService]
-    .concat(ControllerBase.__constructorParams);
-
   static area = '/api/menu';
   static get = {
     '': nameof<MenuController>(o => o.getMenusAsync),
@@ -31,7 +31,7 @@ class MenuController extends ControllerBase {
 
   constructor(
     private readonly menuService: MenuService,
-    logger,
+    logger: Logger,
     request,
     response
   ) {

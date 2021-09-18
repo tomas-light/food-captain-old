@@ -4,14 +4,14 @@
  * property law. Dissemination of this information or reproduction of this material is strictly forbidden,
  * unless prior written permission is obtained from EPAM Systems, Inc
  ******************************************************************************/
+import { Logger } from '@utils/loggers';
+import { metadata } from '@utils/metadata';
 import { DishService } from '../services';
 import { Dish } from '../services/models';
 import { ControllerBase } from './base';
 
+@metadata
 class DishController extends ControllerBase {
-  static __constructorParams: InstanceType<any>[] = [DishService]
-    .concat(ControllerBase.__constructorParams);
-
   static area = '/api/dish';
   static get = {
     '': nameof<DishController>(o => o.getDishesAsync),
@@ -28,7 +28,7 @@ class DishController extends ControllerBase {
 
   constructor(
     private readonly dishService: DishService,
-    logger,
+    logger: Logger,
     request,
     response
   ) {

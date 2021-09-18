@@ -3,6 +3,8 @@
     "allowJs": true,
     "target": "es6",
     "module": "commonjs",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "esModuleInterop": true,
     "strict": true,
     "noImplicitAny": false,

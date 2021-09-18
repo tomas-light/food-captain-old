@@ -58,7 +58,7 @@ export class Query {
 
       return queryResult;
     }
-    catch (error) {
+    catch (error: any) {
       this.logger.error(error);
 
       this.logger.debug(arg1);

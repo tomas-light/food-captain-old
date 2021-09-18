@@ -4,14 +4,14 @@
  * property law. Dissemination of this information or reproduction of this material is strictly forbidden,
  * unless prior written permission is obtained from EPAM Systems, Inc
  ******************************************************************************/
+import { Logger } from '@utils/loggers';
+import { metadata } from '@utils/metadata';
 import { UserService } from '../services';
 import { User } from '../services/models';
 import { ControllerBase } from './base';
 
+@metadata
 class UserController extends ControllerBase {
-  static __constructorParams: InstanceType<any>[] = [UserService]
-    .concat(ControllerBase.__constructorParams);
-
   static area = '/api/user';
   static get = {
     '': nameof<UserController>(o => o.getUsersAsync),
@@ -28,7 +28,7 @@ class UserController extends ControllerBase {
 
   constructor(
     private readonly userService: UserService,
-    logger,
+    logger: Logger,
     request,
     response
   ) {

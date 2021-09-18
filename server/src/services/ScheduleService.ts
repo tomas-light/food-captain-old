@@ -1,4 +1,5 @@
 import { Logger } from '@utils/loggers';
+import { metadata } from '@utils/metadata';
 import { MakeOptional } from '@utils/types';
 import { Database } from '../database';
 import { DishInMenuEntity, MenuInScheduleEntity } from '../database/entities';
@@ -6,9 +7,8 @@ import { MenuService } from './MenuService';
 import { Image, Schedule, User } from './models';
 import { UserService } from './UserService';
 
+@metadata
 export class ScheduleService {
-  static __constructorParams: InstanceType<any>[] = [Database, Logger, MenuService, UserService];
-
   constructor(
     private readonly db: Database,
     private readonly logger: Logger,
@@ -86,7 +86,7 @@ export class ScheduleService {
             date: menu.date,
           });
         }
-        catch (error) {
+        catch (error: any) {
           this.logger.error(error);
         }
       });

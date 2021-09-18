@@ -1,10 +1,10 @@
+import { metadata } from '@utils/metadata';
 import { MakeOptional } from '@utils/types';
 import { Database } from '../database';
 import { User } from './models';
 
+@metadata
 export class UserService {
-  static __constructorParams: InstanceType<any>[] = [Database];
-
   constructor(private readonly db: Database) {
   }
 

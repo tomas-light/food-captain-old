@@ -7,20 +7,16 @@
 import { Request, Response } from 'express';
 import { MvcController } from 'mvc-middleware';
 import { Logger } from '@utils/loggers';
+import { metadata } from '@utils/metadata';
 
+@metadata
 export class ControllerBase extends MvcController {
-  static __constructorParams: InstanceType<any>[] = [Logger];
-
-  protected readonly logger: Logger;
-
-  constructor(logger: Logger, request: Request, response: Response) {
+  constructor(protected readonly logger: Logger, request: Request, response: Response) {
     super(request, response);
 
     if (new.target === ControllerBase) {
       throw new TypeError('Cannot construct ControllerBase instances directly');
     }
-
-    this.logger = logger;
 
     const message = `${request.method.toUpperCase()}: ${request.url}`;
     this.logger.info(message);

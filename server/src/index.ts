@@ -1,7 +1,7 @@
 import moduleAlias from 'module-alias';
 import path from 'path';
-import express, { Router } from 'express';
-import bodyParser from 'body-parser';
+import express, { Router, RequestHandler } from 'express';
+import { json, urlencoded } from 'body-parser';
 import { container } from 'cheap-di';
 import { MvcMiddleware } from 'mvc-middleware';
 import dotenv from 'dotenv';
@@ -24,8 +24,8 @@ const appDir = path.dirname(require.main?.filename || __dirname);
 const uiBundlePath = path.join(appDir, '..', '..', 'dist');
 
 const app = express();
-app.use(bodyParser.json({ limit: '50mb' }));
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+app.use(json({ limit: '50mb' }) as RequestHandler);
+app.use(urlencoded({ limit: '50mb', extended: true }) as RequestHandler);
 app.use(express.static(uiBundlePath));
 
 const controllersPath = path.join(__dirname, 'controllers');
