@@ -1,7 +1,7 @@
-import { appUrls } from '@app/routing/appUrls';
-import { Drawer as MuiDrawer, List, ListItem, ListItemText } from '@material-ui/core';
 import clsx from 'clsx';
-import React from 'react';
+import { Drawer as MuiDrawer, List, ListItem, ListItemText } from '@material-ui/core';
+
+import { appUrls } from '@app/routing/appUrls';
 import { makeStyles } from '@shared/theme';
 
 const menuItems = [
@@ -28,16 +28,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface DrawerProps {
+type Props = {
   className: string;
   open: boolean;
-}
-
-interface DrawerCallProps {
   redirect: (url: string) => void;
 }
-
-type Props = DrawerProps & DrawerCallProps;
 
 const Drawer = (props: Props) => {
   const { className, open, redirect } = props;
@@ -70,4 +65,5 @@ const Drawer = (props: Props) => {
   );
 };
 
-export { Drawer, DrawerProps, DrawerCallProps };
+export type { Props };
+export { Drawer };

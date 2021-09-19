@@ -1,14 +1,18 @@
-import { push } from 'connected-react-router';
 import { ComponentType } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { Drawer, DrawerCallProps, DrawerProps } from './Drawer';
 
-const mapDispatchToProps = (dispatch: Dispatch): DrawerCallProps => ({
-  redirect: (url: string) => dispatch(push(url)),
+import { RouterActions } from '@app/routing';
+import { Drawer, Props } from './Drawer';
+
+type OwnProps = Omit<Props, 'redirect'>;
+type CallProps = Pick<Props, 'redirect'>;
+
+const mapDispatchToProps = (dispatch: Dispatch): CallProps => ({
+  redirect: (url: string) => dispatch(RouterActions.redirect(url)),
 });
 
-const DrawerContainer: ComponentType<DrawerProps> = connect(
+const DrawerContainer: ComponentType<OwnProps> = connect(
   null,
   mapDispatchToProps
 )(Drawer);

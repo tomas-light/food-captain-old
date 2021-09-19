@@ -1,21 +1,16 @@
-import React, { SyntheticEvent } from 'react';
+import { SyntheticEvent } from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
 import TableCell from '@material-ui/core/TableCell';
 import MuiTableRow from '@material-ui/core/TableRow';
 
-import { ColumnSettings } from '@shared/designOrganisms/Table/models';
+import { ColumnSettings } from '../Table/models';
 
-interface SelectableRowProps {
+type Props = {
   columns: ColumnSettings[];
   row: any;
   selectedRows: any[];
-}
-
-interface SelectableRowCallProps {
   onRowClick: (event: SyntheticEvent<HTMLTableRowElement, MouseEvent>) => void;
-}
-
-type Props = SelectableRowProps & SelectableRowCallProps;
+};
 
 const SelectableRow = (props: Props) => {
   const {
@@ -43,7 +38,7 @@ const SelectableRow = (props: Props) => {
         <TableCell
           key={`cell-${column.propertyName}`}
           align={column.isNumeric ? 'right' : 'left'}
-          padding={column.disablePadding ? 'none' : 'default'}
+          padding={column.disablePadding ? 'none' : 'normal'}
         >
           {column.Component
             ? (
@@ -58,4 +53,5 @@ const SelectableRow = (props: Props) => {
   );
 };
 
+export type { Props as SelectableRowProps };
 export { SelectableRow };

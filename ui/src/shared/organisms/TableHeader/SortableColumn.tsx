@@ -1,11 +1,11 @@
 import clsx from 'clsx';
-import React, { MouseEvent } from 'react';
+import { MouseEvent } from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 
 import { makeStyles } from '@shared/theme';
-import { ColumnSettings } from '@shared/designOrganisms/Table/models';
 import { OrderVariant } from '@utils/types';
+import { ColumnSettings } from '../Table/models';
 
 const useStyles = makeStyles({
   padding: {
@@ -13,17 +13,12 @@ const useStyles = makeStyles({
   },
 });
 
-interface SortableColumnProps {
+type Props = {
   column: ColumnSettings;
   order: OrderVariant;
   orderBy: string;
-}
-
-interface SortableColumnCallProps {
   onSort: (event: MouseEvent) => void;
-}
-
-type Props = SortableColumnProps & SortableColumnCallProps;
+};
 
 const SortableColumn = (props: Props) => {
   const {
@@ -38,7 +33,7 @@ const SortableColumn = (props: Props) => {
     <TableCell
       key={column.propertyName}
       align={column.isNumeric ? 'right' : 'left'}
-      padding={column.disablePadding ? 'none' : 'default'}
+      padding={column.disablePadding ? 'none' : 'normal'}
       sortDirection={column.sortable && orderBy === column.propertyName ? order : false}
       className={clsx({
         [classes.padding]: !column.disablePadding,
@@ -56,6 +51,5 @@ const SortableColumn = (props: Props) => {
   );
 };
 
+export type { Props as SortableColumnProps };
 export { SortableColumn };
-
-

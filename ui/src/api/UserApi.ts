@@ -5,4 +5,7 @@ export class UserApi extends ApiBase {
   static getAllAsync() {
     return this.get<User[]>('/user');
   }
+  static getCurrentAsync() {
+    return this.get<User>('/user/current');
+  }
 }

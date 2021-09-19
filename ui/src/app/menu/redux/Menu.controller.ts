@@ -41,6 +41,27 @@ export class MenuController extends ControllerBase {
   }
 
   async loadMenu(action: Action<LoadMenuActionPayload>) {
+    const isCreateMenu = action.payload.menuId === null || action.payload.menuId.toString() === 'null';
+
+    if (isCreateMenu) {
+      const date = new Date();
+      const { currentUser } = this.getState().user;
+
+      const newMenu = new MenuInstance({
+        id: null,
+        createDate: date,
+        lastUpdate: date,
+        author: currentUser,
+      });
+
+      this.updateStore({
+        openedMenu: newMenu,
+        menuFormValues: this.mapMenuToFormValues(newMenu),
+      });
+
+      return;
+    }
+
     const response = await MenuApi.getByIdAsync(action.payload.menuId);
     if (response.hasError()) {
       this.updateStore({

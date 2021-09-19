@@ -1,10 +1,9 @@
 import clsx from 'clsx';
-import React from 'react';
-import { makeStyles } from '@shared/theme';
 import TableCell from '@material-ui/core/TableCell';
 import MuiTableRow from '@material-ui/core/TableRow';
 
-import { ColumnSettings } from '@shared/designOrganisms/Table/models';
+import { makeStyles } from '@shared/theme';
+import { ColumnSettings } from '../Table/models';
 
 const useStyles = makeStyles({
   padding: {
@@ -12,12 +11,10 @@ const useStyles = makeStyles({
   },
 });
 
-interface RowProps {
+type Props = {
   columns: ColumnSettings[];
   row: any;
-}
-
-type Props = RowProps;
+};
 
 const Row = (props: Props) => {
   const { columns, row } = props;
@@ -29,7 +26,7 @@ const Row = (props: Props) => {
         <TableCell
           key={`cell-${column.propertyName}`}
           align={column.isNumeric ? 'right' : 'left'}
-          padding={column.disablePadding ? 'none' : 'default'}
+          padding={column.disablePadding ? 'none' : 'normal'}
           className={clsx({
             [classes.padding]: !column.disablePadding,
           })}
@@ -47,4 +44,5 @@ const Row = (props: Props) => {
   );
 };
 
+export type { Props as RowProps };
 export { Row };

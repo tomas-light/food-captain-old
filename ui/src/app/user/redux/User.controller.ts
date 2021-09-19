@@ -35,4 +35,25 @@ export class UserController extends ControllerBase {
       usersAreLoading: false,
     });
   }
+
+  async loadCurrentUser() {
+    this.updateStore({
+      currentUserIsLoading: true,
+    });
+
+    const response = await UserApi.getCurrentAsync();
+    if (response.hasError()) {
+      this.updateStore({
+        currentUser: null,
+        currentUserIsLoading: false,
+      });
+
+      return;
+    }
+
+    this.updateStore({
+      currentUser: response.data,
+      currentUserIsLoading: false,
+    });
+  }
 }

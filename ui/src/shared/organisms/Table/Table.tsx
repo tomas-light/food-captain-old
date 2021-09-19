@@ -1,49 +1,37 @@
-import React, { CSSProperties, ReactElement } from 'react';
+import { CSSProperties, ReactElement } from 'react';
 import { StyledComponentProps } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import MuiTable from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableContainer from '@material-ui/core/TableContainer';
 import Toolbar from '@material-ui/core/Toolbar';
-import { withStyles } from '@shared/theme';
 
-import { OrderVariant } from '@utils/types';
-import { TableHeader } from '../TableHeader';
-import { TableRow } from '../TableRow';
-import { ColumnSettings } from './models';
-import { OnSortClick } from './useOrdering';
+import { withStyles } from '@shared/theme';
+import { TableHeader, TableHeaderProps } from '../TableHeader';
+import { TableRow, TableRowProps } from '../TableRow';
 
 type ClassKey =
   | 'paper'
   | 'toolbar'
   ;
 
-interface TableProps {
-  columns: ColumnSettings[];
+type Props = StyledComponentProps<ClassKey>
+  & Pick<TableHeaderProps, 'columns' | 'selectable' | 'order' | 'orderBy' | 'onSort'>
+  & Pick<TableRowProps, 'selectedRows' | 'onRowClick'>
+  & {
   rows: any[];
   rowLength?: number;
   idPropertyName: string;
   title: string | ReactElement;
 
-  order?: OrderVariant;
-  orderBy?: string;
-
-  selectable?: boolean;
-  selectedRows?: any[];
   selectedTitle?: string | ReactElement;
 
   Pagination?: ReactElement;
   style?: CSSProperties;
   className?: string;
-}
 
-interface TableCallProps {
-  onRowClick?: (row: any) => void;
   onSelectAll?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onSort?: OnSortClick<any>;
-}
-
-type Props = TableProps & TableCallProps & StyledComponentProps<ClassKey>;
+};
 
 const Table = (props: Props) => {
   const {

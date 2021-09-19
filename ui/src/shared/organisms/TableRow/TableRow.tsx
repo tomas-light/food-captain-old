@@ -1,21 +1,16 @@
 import React from 'react';
 
-import { ColumnSettings } from '@shared/designOrganisms/Table/models';
+import { ColumnSettings } from '../Table/models';
 import { SelectableRow } from './SelectableRow';
 import { Row } from './Row';
 
-interface TableRowProps {
+type Props = {
   columns: ColumnSettings[];
   row: any;
   selectable?: boolean;
   selectedRows: any[];
-}
-
-interface TableRowCallProps {
   onRowClick?: (row: any) => void;
-}
-
-type Props = TableRowProps & TableRowCallProps;
+};
 
 const TableRow = (props: Props) => {
   const {
@@ -49,4 +44,5 @@ const TableRow = (props: Props) => {
   );
 };
 
+export type { Props as TableRowProps };
 export { TableRow };

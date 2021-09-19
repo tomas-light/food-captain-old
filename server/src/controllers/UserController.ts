@@ -15,6 +15,7 @@ class UserController extends ControllerBase {
   static area = '/api/user';
   static get = {
     '': nameof<UserController>(o => o.getUsersAsync),
+    'current': nameof<UserController>(o => o.getCurrentUserAsync),
   };
   static post = {
     '': nameof<UserController>(o => o.addUserAsync),
@@ -37,6 +38,11 @@ class UserController extends ControllerBase {
 
   async getUsersAsync() {
     const result = await this.userService.getAllAsync();
+    return this.ok(result);
+  }
+
+  async getCurrentUserAsync() {
+    const result = await this.userService.getUserByIdAsync(1); // todo: get authorized user
     return this.ok(result);
   }
 

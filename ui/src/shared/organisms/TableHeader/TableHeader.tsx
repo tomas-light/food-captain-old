@@ -1,15 +1,15 @@
-import React, { MouseEvent, ChangeEvent } from 'react';
+import { MouseEvent, ChangeEvent } from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-import { ColumnSettings } from '@shared/designOrganisms/Table/models';
 import { OrderVariant } from '@utils/types';
+import { ColumnSettings } from '../Table/models';
 import { Column } from './Column';
 import { SortableColumn } from './SortableColumn';
 
-interface TableHeaderProps {
+type Props = {
   columns: ColumnSettings[];
 
   selectable?: boolean;
@@ -18,14 +18,9 @@ interface TableHeaderProps {
 
   order?: OrderVariant;
   orderBy?: string;
-}
-
-interface TableHeaderCallProps {
   onSort?: (event: MouseEvent, propertyName: string) => void;
   onCheck?: (event: ChangeEvent<HTMLInputElement>) => void;
-}
-
-type Props = TableHeaderProps & TableHeaderCallProps;
+};
 
 function TableHeader(props: Props) {
   const {
@@ -84,4 +79,5 @@ function TableHeader(props: Props) {
   );
 }
 
+export type { Props as TableHeaderProps };
 export { TableHeader };

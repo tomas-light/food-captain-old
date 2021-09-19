@@ -8,16 +8,11 @@ import { getComparator } from '@utils/comparison';
 import { TableTitle } from './TableTitle';
 import { tableColumns } from './tableColumns';
 
-interface MenuTableProps {
+type Props = {
   menus: Menu[];
   selectedMenus: Menu[];
-}
-
-interface MenuTableCallProps {
   onSelectMenu: (menu: Menu[]) => void;
-}
-
-type Props = MenuTableProps & MenuTableCallProps
+};
 
 const MenuTable = (props: Props) => {
   const { menus, selectedMenus, onSelectMenu } = props;
@@ -67,5 +62,5 @@ const MenuTable = (props: Props) => {
   );
 };
 
-export type { MenuTableProps, MenuTableCallProps };
+export type { Props as MenuTableProps };
 export { MenuTable };

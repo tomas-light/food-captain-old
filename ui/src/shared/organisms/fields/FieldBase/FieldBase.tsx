@@ -20,7 +20,6 @@ const useStyles = makeStyles<RootClassKey>({
   root: {
     display: 'grid',
     gridAutoFlow: 'row',
-    gridGap: 8,
   },
   control: {
     position: 'relative',

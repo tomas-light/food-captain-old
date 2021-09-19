@@ -5,20 +5,19 @@ import { State } from '@State';
 import { DishActions } from '@app/dish/redux';
 import { UserActions } from '@app/user/redux';
 import { MenuActions } from '../redux';
-import {
-    EditMenuPage,
-    EditMenuPageProps,
-    EditMenuPageCallProps,
- } from './EditMenuPage';
+import { EditMenuPage, EditMenuPageProps } from './EditMenuPage';
 
-const mapStateToProps = (state: State): EditMenuPageProps => ({
+type StateProps = Pick<EditMenuPageProps, 'openedMenu' | 'initialValues' | 'authorOptions' | 'dishOptions'>;
+type CallProps = Pick<EditMenuPageProps, 'loadMenu' | 'loadDishes' | 'loadAuthors' | 'onSave'>;
+
+const mapStateToProps = (state: State): StateProps => ({
   initialValues: state.menu.menuFormValues,
   openedMenu: state.menu.openedMenu,
   dishOptions: state.dish.dishOptions,
   authorOptions: state.user.userOptions,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch): EditMenuPageCallProps => ({
+const mapDispatchToProps = (dispatch: Dispatch): CallProps => ({
   loadMenu: menuId => dispatch(MenuActions.loadMenu({ menuId })),
   loadAuthors: () => dispatch(UserActions.loadUsers()),
   loadDishes: () => dispatch(DishActions.loadDishes()),

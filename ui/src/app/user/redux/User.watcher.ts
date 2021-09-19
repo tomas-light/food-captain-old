@@ -7,9 +7,7 @@ import { UserController } from './User.controller';
 export const userWatcher = watcher<State, UserController>(
   UserController,
   [
-    [
-      UserActions.LOAD_USERS,
-      'loadUsers',
-    ],
+    [UserActions.LOAD_USERS, 'loadUsers'],
+    [UserActions.LOAD_CURRENT_USER, 'loadCurrentUser'],
   ]
 );

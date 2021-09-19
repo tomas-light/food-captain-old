@@ -1,12 +1,12 @@
-import { Menu } from '@models';
-import { Typography } from '@shared/atoms';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { DefaultFieldSubscription, useForm } from 'final-form-app-form';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
-import { makeStyles } from '@shared/theme';
 
+import { Menu } from '@models';
 import { SelectFieldOption } from '@select';
+import { Typography } from '@shared/atoms';
+import { makeStyles } from '@shared/theme';
 import { Button } from '@shared/molecules/buttons';
 import { SelectFormField, TextFormField } from '@shared/templates/formFields';
 import { EditMenuFormValues } from './models';
@@ -15,40 +15,21 @@ import { EditMenuValidation } from './validation';
 const useStyles = makeStyles({
   root: {
     display: 'grid',
-    // gridTemplateAreas: `
-    //   '.' 'siteName' '.'
-    //   'domain' '.'
-    //   'favicon' '.'
-    //   'openGraph' '.'
-    //   'colors' '.'
-    //   'stepper'
-    // `,
-    // gridTemplateRows: `
-    //   48px auto 64px
-    //   auto 60px
-    //   auto 132px
-    //   auto 264px
-    //   auto 80px
-    //   auto
-    // `,
+    padding: 40,
+    gridRowGap: 16,
   }
 });
 
-interface EditMenuPageProps {
+type Props = {
   openedMenu: Menu;
   initialValues: EditMenuFormValues;
   authorOptions: SelectFieldOption<number>[];
   dishOptions: SelectFieldOption<number>[];
-}
-
-interface EditMenuPageCallProps {
   loadMenu: (menuId: number) => void;
   loadDishes: () => void;
   loadAuthors: () => void;
   onSave: (formValues: EditMenuFormValues) => void;
 }
-
-type Props = EditMenuPageProps & EditMenuPageCallProps
 
 const EditMenuPage = (props: Props) => {
   const {
@@ -90,10 +71,6 @@ const EditMenuPage = (props: Props) => {
           <TextFormField
             name={nameof<EditMenuFormValues>(o => o.name)}
             label={t('title')}
-            // InputProps={{
-            //   placeholder: t('Вкусный кофе и булочки!'),
-            // }}
-
             subscription={DefaultFieldSubscription}
             required
             // classes={{
@@ -135,7 +112,7 @@ const EditMenuPage = (props: Props) => {
             variant="single-simple"
             options={authorOptions}
             subscription={DefaultFieldSubscription}
-            // required
+            required
             // classes={{
             //   root: {
             //     root: classes.field,
@@ -177,5 +154,5 @@ const EditMenuPage = (props: Props) => {
   );
 };
 
-export type { EditMenuPageProps, EditMenuPageCallProps };
+export type { Props as EditMenuPageProps };
 export { EditMenuPage };
