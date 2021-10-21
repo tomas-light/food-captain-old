@@ -1,13 +1,13 @@
-import { Components } from '@material-ui/core/styles/components';
+import { Components } from '@shared/reexport';
 
 export function overrideDialog(): Components {
-  return {
-    MuiDialog: {
-      styleOverrides: {
-        paperWidthSm: {
-          width: 600,
-        },
-      },
-    },
-  };
+	return {
+		MuiDialog: {
+			styleOverrides: {
+				paperWidthSm: {
+					width: 600,
+				},
+			},
+		},
+	};
 }

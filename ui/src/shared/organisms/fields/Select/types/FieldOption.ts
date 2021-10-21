@@ -2,29 +2,28 @@ import { Option } from './Option';
 import { OptionValueType } from './OptionValueType';
 
 export interface FieldOption<TOptionValue = OptionValueType, TInnerValue = OptionValueType>
-  extends Option<TOptionValue> {
+	extends Option<TOptionValue> {
+	emptySingleValue(): TOptionValue;
 
-  emptySingleValue(): TOptionValue;
+	emptyMultiValue(): TOptionValue[];
 
-  emptyMultiValue(): TOptionValue[];
+	emptyOption(): FieldOption<TOptionValue, TInnerValue>;
 
-  emptyOption(): FieldOption<TOptionValue, TInnerValue>;
+	isEmptyOption(): boolean;
 
-  isEmptyOption(): boolean;
+	isNullOrEmptySingle(): boolean;
 
-  isNullOrEmptySingle(): boolean;
+	isNullOrEmptySingleValue(value: any): boolean;
 
-  isNullOrEmptySingleValue(value: any): boolean;
+	isNullOrEmptyMulti(): boolean;
 
-  isNullOrEmptyMulti(): boolean;
+	isNullOrEmptyMultiValue(value: any): boolean;
 
-  isNullOrEmptyMultiValue(value: any): boolean;
+	isEquals(value: TInnerValue): boolean;
 
-  isEquals(value: TInnerValue): boolean;
+	getValue(): TInnerValue;
 
-  getValue(): TInnerValue;
+	setValue(value: TInnerValue): void;
 
-  setValue(value: TInnerValue): void;
-
-  getSearchTags(): string[];
+	getSearchTags(): string[];
 }

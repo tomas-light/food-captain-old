@@ -1,79 +1,70 @@
 import React from 'react';
 import {
-  Grid,
-  Radio,
-  RadioGroup as MuiRadioGroup,
-  StyledComponentProps,
-} from '@material-ui/core';
+	Grid,
+	Radio,
+	RadioGroup as MuiRadioGroup,
+	RadioGroupProps as MuiRadioGroupProps,
+	StyledComponentProps,
+} from '@shared/reexport';
 import { makeStyles } from '@shared/theme';
-import { RadioGroupProps as MuiRadioGroupProps } from '@material-ui/core/RadioGroup/RadioGroup';
 
 import { RadioGroupChild } from './RadioGroupChild';
 
 const useStyles = makeStyles({
-  itemContainer: {
-    display: 'flex',
-  },
-  radio: {
-    margin: 'auto 0',
-  },
+	itemContainer: {
+		display: 'flex',
+	},
+	radio: {
+		margin: 'auto 0',
+	},
 });
 
 type RadioButtonClassKey = 'itemContainer' | 'radio';
 
 interface RadioGroupProps extends MuiRadioGroupProps {
-  items: RadioGroupChild[];
-  disabled?: boolean;
+	items: RadioGroupChild[];
+	disabled?: boolean;
 }
 
 interface RadioGroupCallProps {
-  onChange: (value: any) => void;
+	onChange: (value: any) => void;
 }
 
 type Props = RadioGroupProps & RadioGroupCallProps & StyledComponentProps<RadioButtonClassKey>;
 
 const RadioGroup = (props: Props) => {
-  const {
-    classes,
-    className,
-    disabled,
-    items,
-    name,
-    value,
-    onChange,
-    ...rest
-  } = props;
+	const { classes, className, disabled, items, name, value, onChange, ...rest } = props;
 
-  const _classes = {
-    classes,
-    ...useStyles({}),
-  };
+	const _classes = {
+		classes,
+		...useStyles({}),
+	};
 
-  const handleOnChange = (id: number) => () => {
-    onChange(id);
-  };
+	const handleOnChange = (id: number) => () => {
+		onChange(id);
+	};
 
-  return (
-    <MuiRadioGroup {...rest} name={name} value={value} className={className}>
-      {items.map((child: RadioGroupChild) => {
-        return (
-          <Grid item className={_classes.itemContainer} key={`radio-item-${child.id}`}>
-            <Radio
-              id={`radio-item-${child.id}`}
-              color={'secondary'}
-              className={_classes.radio}
-              disabled={disabled}
-              checked={child.id === value}
-              onClick={handleOnChange(child.id)}
-              value={child.id}
-            />
+	return (
+		<MuiRadioGroup {...rest} name={name} value={value} className={className}>
+			{items.map((child: RadioGroupChild) => {
+				return (
+					<Grid item className={_classes.itemContainer} key={`radio-item-${child.id}`}>
+						<Radio
+							id={`radio-item-${child.id}`}
+							color={'secondary'}
+							className={_classes.radio}
+							disabled={disabled}
+							checked={child.id === value}
+							onClick={handleOnChange(child.id)}
+							value={child.id}
+						/>
 
-            {child.component}
-          </Grid>
-        );
-      })}
-    </MuiRadioGroup>
-  );
+						{child.component}
+					</Grid>
+				);
+			})}
+		</MuiRadioGroup>
+	);
 };
 
 export { RadioGroup };

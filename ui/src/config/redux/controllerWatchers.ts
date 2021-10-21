@@ -8,11 +8,11 @@ import { dishWatcher } from '@app/dish/redux';
 import { routerWatcher } from '@app/routing';
 
 const controllerWatchers: Watcher<State, any>[] = [
-  appInitterWatcher,
-  menuWatcher,
-  userWatcher,
-  dishWatcher,
-  routerWatcher,
+	appInitterWatcher,
+	menuWatcher,
+	userWatcher,
+	dishWatcher,
+	routerWatcher,
 ];
 
 export { controllerWatchers };

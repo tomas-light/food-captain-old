@@ -1,17 +1,17 @@
 export function findNode(id: string, parentDeepLayers: number) {
-  const listNode: HTMLElement = document.getElementById(id);
-  if (!listNode) {
-    return;
-  }
+	const listNode: HTMLElement = document.getElementById(id);
+	if (!listNode) {
+		return;
+	}
 
-  let node: HTMLElement = listNode;
-  for (let i = 0; i < parentDeepLayers; i++) {
-    if (!node) {
-      break;
-    }
+	let node: HTMLElement = listNode;
+	for (let i = 0; i < parentDeepLayers; i++) {
+		if (!node) {
+			break;
+		}
 
-    node = node.parentElement;
-  }
+		node = node.parentElement;
+	}
 
-  return node;
+	return node;
 }

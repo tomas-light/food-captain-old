@@ -7,239 +7,228 @@ import { appUrls } from '@app/routing';
 import { Menu, MenuInstance } from '@models';
 import { ControllerBase } from '@utils/controller';
 
-import {
-  LoadMenuActionPayload, SaveActionPayload,
-  SelectMenuActionPayload,
-} from './Menu.actions.types';
+import { LoadMenuActionPayload, SaveActionPayload, SelectMenuActionPayload } from './Menu.actions.types';
 import { MenuActions } from './Menu.actions';
 import { MenuStore } from './Menu.store';
 
 export class MenuController extends ControllerBase {
-  private updateStore(partialStore: Partial<MenuStore>) {
-    this.dispatch(MenuActions.updateStore(partialStore));
-  }
+	async getMenus() {
+		const response = await MenuApi.getAllAsync();
+		if (response.hasError()) {
+			this.updateStore({
+				menus: [],
+			});
 
-  async getMenus() {
-    const response = await MenuApi.getAllAsync();
-    if (response.hasError()) {
-      this.updateStore({
-        menus: [],
-      });
+			return;
+		}
 
-      return;
-    }
+		this.updateStore({
+			menus: response.data.map((menu) => new MenuInstance(menu)),
+		});
+	}
 
-    this.updateStore({
-      menus: response.data.map(menu => new MenuInstance(menu)),
-    });
-  }
+	selectMenu(action: Action<SelectMenuActionPayload>) {
+		this.updateStore({
+			selectedMenus: action.payload.selectedMenus,
+		});
+	}
 
-  selectMenu(action: Action<SelectMenuActionPayload>) {
-    this.updateStore({
-      selectedMenus: action.payload.selectedMenus,
-    });
-  }
+	async loadMenu(action: Action<LoadMenuActionPayload>) {
+		const isCreateMenu = action.payload.menuId === null || action.payload.menuId.toString() === 'null';
 
-  async loadMenu(action: Action<LoadMenuActionPayload>) {
-    const isCreateMenu = action.payload.menuId === null || action.payload.menuId.toString() === 'null';
+		if (isCreateMenu) {
+			const date = new Date();
+			const { currentUser } = this.getState().user;
 
-    if (isCreateMenu) {
-      const date = new Date();
-      const { currentUser } = this.getState().user;
+			const newMenu = new MenuInstance({
+				id: null,
+				createDate: date,
+				lastUpdate: date,
+				author: currentUser,
+			});
 
-      const newMenu = new MenuInstance({
-        id: null,
-        createDate: date,
-        lastUpdate: date,
-        author: currentUser,
-      });
+			this.updateStore({
+				openedMenu: newMenu,
+				menuFormValues: this.mapMenuToFormValues(newMenu),
+			});
 
-      this.updateStore({
-        openedMenu: newMenu,
-        menuFormValues: this.mapMenuToFormValues(newMenu),
-      });
+			return;
+		}
 
-      return;
-    }
+		const response = await MenuApi.getByIdAsync(action.payload.menuId);
+		if (response.hasError()) {
+			this.updateStore({
+				menus: [],
+			});
 
-    const response = await MenuApi.getByIdAsync(action.payload.menuId);
-    if (response.hasError()) {
-      this.updateStore({
-        menus: [],
-      });
+			return;
+		}
 
-      return;
-    }
+		this.updateStore({
+			openedMenu: new MenuInstance(response.data),
+			menuFormValues: this.mapMenuToFormValues(response.data),
+		});
+	}
 
-    this.updateStore({
-      openedMenu: new MenuInstance(response.data),
-      menuFormValues: this.mapMenuToFormValues(response.data),
-    });
-  }
+	addMenu() {
+		const now = new Date(Date.now());
 
-  private mapMenuToFormValues(menu: Menu): EditMenuFormValues {
-    return {
-      name: menu.name,
-      author: menu.author?.id || null,
-      dishes: menu.dishes?.map(dish => dish.id) || [],
-    };
-  }
+		const newMenu: Menu = {
+			id: null,
+			createDate: now,
+			lastUpdate: now,
+			name: '',
+			dishes: [],
+			author: null,
+		};
 
-  addMenu() {
-    const now = new Date(Date.now());
+		this.openMenuEditingPage(newMenu);
+	}
 
-    const newMenu: Menu = {
-      id: null,
-      createDate: now,
-      lastUpdate: now,
-      name: '',
-      dishes: [],
-      author: null,
-    };
+	editMenu() {
+		const store = this.getState().menu;
+		if (store.selectedMenus.length !== 1) {
+			return;
+		}
 
-    this.openMenuEditingPage(newMenu);
-  }
+		this.openMenuEditingPage(store.selectedMenus[0]);
+	}
 
-  editMenu() {
-    const store = this.getState().menu;
-    if (store.selectedMenus.length !== 1) {
-      return;
-    }
+	async deleteMenus() {
+		const store = this.getState().menu;
+		if (!store.selectedMenus.length) {
+			return;
+		}
 
-    this.openMenuEditingPage(store.selectedMenus[0]);
-  }
+		this.updateStore({
+			menuAreDeleting: true,
+		});
 
-  private openMenuEditingPage(menu: Menu) {
-    this.updateStore({
-      openedMenu: menu,
-      menuFormValues: this.mapMenuToFormValues(menu),
-    });
+		try {
+			await store.selectedMenus.forEachAsync(async (menu) => {
+				const response = await MenuApi.deleteAsync(menu.id);
+				if (response.hasError()) {
+					if (response.hasClientError()) {
+						this.notify(response.error, { variant: 'warning' });
+					}
 
-    this.redirect(appUrls.getMenuDetailsPath(menu.id));
-  }
+					return;
+				}
+			});
+		} catch (error) {
+			const _error = error;
+			debugger;
+		}
 
-  async deleteMenus() {
-    const store = this.getState().menu;
-    if (!store.selectedMenus.length) {
-      return;
-    }
+		this.updateStore({
+			menuAreDeleting: false,
+			selectedMenus: [],
+		});
+		this.notify(i18n.t('menu deleted', { count: store.selectedMenus.length }));
 
-    this.updateStore({
-      menuAreDeleting: true,
-    });
+		this.dispatch(MenuActions.getMenus());
+	}
 
-    try {
-      await store.selectedMenus.forEachAsync(async menu => {
-        const response = await MenuApi.deleteAsync(menu.id);
-        if (response.hasError()) {
-          if (response.hasClientError()) {
-            this.notify(response.error, { variant: 'warning' });
-          }
+	async save(action: Action<SaveActionPayload>) {
+		const { formValues } = action.payload;
 
-          return;
-        }
-      });
-    }
-    catch (error) {
-      const _error = error;
-      debugger;
-    }
+		const store = this.getState().menu;
+		if (store.openedMenu.id === null) {
+			await this.createMenu(formValues);
+		} else {
+			await this.updateMenu(store.openedMenu, formValues);
+		}
+	}
 
-    this.updateStore({
-      menuAreDeleting: false,
-      selectedMenus: [],
-    });
-    this.notify(i18n.t('menu deleted', { count: store.selectedMenus.length }));
+	private updateStore(partialStore: Partial<MenuStore>) {
+		this.dispatch(MenuActions.updateStore(partialStore));
+	}
 
-    this.dispatch(MenuActions.getMenus());
-  }
+	private mapMenuToFormValues(menu: Menu): EditMenuFormValues {
+		return {
+			name: menu.name,
+			author: menu.author?.id || null,
+			dishes: menu.dishes?.map((dish) => dish.id) || [],
+		};
+	}
 
-  async save(action: Action<SaveActionPayload>) {
-    const { formValues } = action.payload;
+	private openMenuEditingPage(menu: Menu) {
+		this.updateStore({
+			openedMenu: menu,
+			menuFormValues: this.mapMenuToFormValues(menu),
+		});
 
-    const store = this.getState().menu;
-    if (store.openedMenu.id === null) {
-      await this.createMenu(formValues);
-    }
-    else {
-      await this.updateMenu(store.openedMenu, formValues);
-    }
-  }
+		this.redirect(appUrls.getMenuDetailsPath(menu.id));
+	}
 
-  private async createMenu(formValues: EditMenuFormValues) {
-    const state = this.getState();
+	private async createMenu(formValues: EditMenuFormValues) {
+		const state = this.getState();
 
-    this.updateStore({
-      menuIsCreating: true,
-    });
+		this.updateStore({
+			menuIsCreating: true,
+		});
 
-    const author = state.user.users.find(user => user.id === formValues.author);
-    const dishes = state.dish.dishes.filter(dish => formValues.dishes.includes(dish.id));
+		const author = state.user.users.find((user) => user.id === formValues.author);
+		const dishes = state.dish.dishes.filter((dish) => formValues.dishes.includes(dish.id));
 
-    const response = await MenuApi.addAsync({
-      name: formValues.name,
-      author,
-      dishes,
-    });
-    if (response.hasError()) {
-      if (response.hasClientError()) {
-        this.notify(response.error, { variant: 'warning' });
-      }
-      this.updateStore({
-        menuIsCreating: false,
-      });
-      return;
-    }
+		const response = await MenuApi.addAsync({
+			name: formValues.name,
+			author,
+			dishes,
+		});
+		if (response.hasError()) {
+			if (response.hasClientError()) {
+				this.notify(response.error, { variant: 'warning' });
+			}
+			this.updateStore({
+				menuIsCreating: false,
+			});
+			return;
+		}
 
-    const store = this.getState().menu;
-    const menus = [
-      ...store.menus,
-      new MenuInstance(response.data),
-    ];
+		const store = this.getState().menu;
+		const menus = [...store.menus, new MenuInstance(response.data)];
 
-    this.updateStore({
-      menuIsCreating: false,
-      menus,
-    });
-    this.notify(i18n.t('menu added'), { variant: 'success' });
-  }
+		this.updateStore({
+			menuIsCreating: false,
+			menus,
+		});
+		this.notify(i18n.t('menu added'), { variant: 'success' });
+	}
 
-  private async updateMenu(menu: Menu, formValues: EditMenuFormValues) {
-    const state = this.getState();
+	private async updateMenu(menu: Menu, formValues: EditMenuFormValues) {
+		const state = this.getState();
 
-    this.updateStore({
-      menuIsUpdating: true,
-    });
+		this.updateStore({
+			menuIsUpdating: true,
+		});
 
-    const author = state.user.users.find(user => user.id === formValues.author);
-    const dishes = state.dish.dishes.filter(dish => formValues.dishes.includes(dish.id));
+		const author = state.user.users.find((user) => user.id === formValues.author);
+		const dishes = state.dish.dishes.filter((dish) => formValues.dishes.includes(dish.id));
 
-    const response = await MenuApi.updateAsync({
-      ...menu,
-      name: formValues.name,
-      author,
-      dishes,
-    });
-    if (response.hasError()) {
-      if (response.hasClientError()) {
-        this.notify(response.error, { variant: 'warning' });
-      }
-      this.updateStore({
-        menuIsUpdating: false,
-      });
-      return;
-    }
+		const response = await MenuApi.updateAsync({
+			...menu,
+			name: formValues.name,
+			author,
+			dishes,
+		});
+		if (response.hasError()) {
+			if (response.hasClientError()) {
+				this.notify(response.error, { variant: 'warning' });
+			}
+			this.updateStore({
+				menuIsUpdating: false,
+			});
+			return;
+		}
 
-    const store = this.getState().menu;
-    const menus = [
-      ...store.menus.filter(_menu => _menu.id === menu.id),
-      new MenuInstance(response.data),
-    ];
+		const store = this.getState().menu;
+		const menus = [...store.menus.filter((_menu) => _menu.id === menu.id), new MenuInstance(response.data)];
 
-    this.updateStore({
-      menuIsUpdating: false,
-      menus,
-    });
-    this.notify(i18n.t('menu update'), { variant: 'success' });
-  }
+		this.updateStore({
+			menuIsUpdating: false,
+			menus,
+		});
+		this.notify(i18n.t('menu update'), { variant: 'success' });
+	}
 }

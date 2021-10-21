@@ -6,9 +6,7 @@ import { SelectFieldOption } from '@select/types';
 type Props = MultiValueRemoveProps<SelectFieldOption>;
 
 const DefaultMultiValueRemove: FunctionComponent<Props> = (props: Props) => {
-  return (
-    <></>
-  );
+	return <></>;
 };
 
 export { DefaultMultiValueRemove };

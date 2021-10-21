@@ -6,29 +6,29 @@ import { makeStyles } from '@shared/theme';
 import { SelectFieldOption } from '../../types';
 
 const useStyles = makeStyles({
-  valueContainer: {
-    display: 'flex',
-    flexWrap: 'nowrap',
-    position: 'relative',
-    overflow: 'hidden',
-    boxSizing: 'border-box',
-    flex: 1,
-    alignItems: 'center',
-  },
+	valueContainer: {
+		display: 'flex',
+		flexWrap: 'nowrap',
+		position: 'relative',
+		overflow: 'hidden',
+		boxSizing: 'border-box',
+		flex: 1,
+		alignItems: 'center',
+	},
 });
 
 type Props = ValueContainerProps<SelectFieldOption, boolean>;
 
 const DefaultValueContainer: FC<Props> = (props) => {
-  const { children, ...rest } = props;
+	const { children, ...rest } = props;
 
-  const classes = useStyles();
+	const classes = useStyles();
 
-  return (
-    <components.ValueContainer {...rest} className={classes.valueContainer}>
-      {children}
-    </components.ValueContainer>
-  );
+	return (
+		<components.ValueContainer {...rest} className={classes.valueContainer}>
+			{children}
+		</components.ValueContainer>
+	);
 };
 
 export { DefaultValueContainer };

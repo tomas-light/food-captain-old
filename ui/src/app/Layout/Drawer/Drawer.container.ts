@@ -9,11 +9,8 @@ type OwnProps = Omit<Props, 'redirect'>;
 type CallProps = Pick<Props, 'redirect'>;
 
 const mapDispatchToProps = (dispatch: Dispatch): CallProps => ({
-  redirect: (url: string) => dispatch(RouterActions.redirect(url)),
+	redirect: (url: string) => dispatch(RouterActions.redirect(url)),
 });
 
-const DrawerContainer: ComponentType<OwnProps> = connect(
-  null,
-  mapDispatchToProps
-)(Drawer);
+const DrawerContainer: ComponentType<OwnProps> = connect(null, mapDispatchToProps)(Drawer);
 export { DrawerContainer };

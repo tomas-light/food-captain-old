@@ -1,0 +1,11 @@
+# all svg files
+*.svg
+
+# all temporary files
+*.*_
+
+dist/*
+./dist/**
+**/dist/**
+
+*.d.ts

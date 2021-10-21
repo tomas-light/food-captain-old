@@ -1,3 +1,3 @@
 export interface FieldComponentCallProps {
-  sideOnChange?: (value) => void;
+	sideOnChange?: (value) => void;
 }

@@ -8,11 +8,11 @@ import { UserReducer } from '@app/user/redux';
 import { DishReducer } from '@app/dish/redux';
 
 export function getReducers(): ReducersMapObject<State, any> {
-  return {
-    appInitter: AppInitterReducer,
-    notifier: notifierReducer,
-    menu: MenuReducer,
-    user: UserReducer,
-    dish: DishReducer,
-  };
+	return {
+		appInitter: AppInitterReducer,
+		notifier: notifierReducer,
+		menu: MenuReducer,
+		user: UserReducer,
+		dish: DishReducer,
+	};
 }

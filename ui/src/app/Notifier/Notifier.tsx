@@ -4,28 +4,22 @@ import { Notification } from './models';
 import { useNotifications } from './utils';
 
 interface NotifierProps {
-  notifications: Notification[];
+	notifications: Notification[];
 }
 
 interface NotificationCallProps {
-  removeSnackbar: (key: SnackbarKey) => void;
+	removeSnackbar: (key: SnackbarKey) => void;
 }
 
 type Props = NotifierProps & NotificationCallProps;
 
 const Notifier = (props: Props) => {
-  const {
-    notifications = [],
-    removeSnackbar,
-  } = props;
+	const { notifications = [], removeSnackbar } = props;
 
-  useNotifications(notifications, removeSnackbar);
+	useNotifications(notifications, removeSnackbar);
 
-  return null;
+	return null;
 };
 
 export { Notifier };
-export type {
-  NotifierProps,
-  NotificationCallProps,
-};
+export type { NotifierProps, NotificationCallProps };

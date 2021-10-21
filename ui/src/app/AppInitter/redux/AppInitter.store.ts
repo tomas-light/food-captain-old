@@ -1,7 +1,7 @@
 export class AppInitterStore {
-  initialized: boolean;
+	initialized: boolean;
 
-  constructor() {
-    this.initialized = false;
-  }
+	constructor() {
+		this.initialized = false;
+	}
 }

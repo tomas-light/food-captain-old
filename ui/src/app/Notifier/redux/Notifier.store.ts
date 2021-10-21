@@ -1,9 +1,9 @@
 import { Notification } from '../models';
 
 export class NotifierStore {
-  notifications: Notification[];
+	notifications: Notification[];
 
-  constructor() {
-    this.notifications = [];
-  }
+	constructor() {
+		this.notifications = [];
+	}
 }

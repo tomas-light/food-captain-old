@@ -1,8 +1,4 @@
-type State =
-  | 'loading'
-  | 'disabled'
-  | 'pristine'
-  ;
+type State = 'loading' | 'disabled' | 'pristine';
 
 type ButtonState = Partial<Record<State, boolean>>;
 

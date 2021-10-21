@@ -17,7 +17,7 @@ import { registerDependency as registerDatabase } from './database';
 
 function configDependencies(container: Container) {
   registerLogger(container);
-  registerDatabase(container);
+  // registerDatabase(container);
   registerControllers(container);
   registerServices(container);
 }

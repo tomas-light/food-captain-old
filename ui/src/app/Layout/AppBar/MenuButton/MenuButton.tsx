@@ -1,46 +1,34 @@
-import { IconButton, StyledComponentProps } from '@material-ui/core';
-import { ChevronLeft, Menu } from '@material-ui/icons';
+import { IconButton, StyledComponentProps, ChevronLeftIcon, MenuIcon } from '@shared/reexport';
 import { withStyles } from '@shared/theme';
 
 interface IMenuButtonProps {
-  open: boolean;
+	open: boolean;
 }
 
 interface IMenuButtonCallProps {
-  toggle: () => void;
+	toggle: () => void;
 }
 
 type Props = IMenuButtonProps & IMenuButtonCallProps & StyledComponentProps<MenuButtonClassKey>;
 
 const MenuButton = (props: Props) => {
-  const { classes, open, toggle } = props;
+	const { classes, open, toggle } = props;
 
-  return (
-    <IconButton
-      color="inherit"
-      aria-label="open drawer"
-      onClick={toggle}
-      className={classes.root}
-    >
-      {open
-        ? (
-          <ChevronLeft/>
-        )
-        : (
-          <Menu/>
-        )
-      }
-    </IconButton>
-  );
+	return (
+		<IconButton color="inherit" aria-label="open drawer" onClick={toggle} className={classes.root}>
+			{open ? <ChevronLeftIcon /> : <MenuIcon />}
+		</IconButton>
+	);
 };
 
-type MenuButtonClassKey =
-  | 'root'
-  ;
+type MenuButtonClassKey = 'root';
 
-const componentWithStyles = withStyles<MenuButtonClassKey>((theme) => ({
-  root: {
-    padding: 6,
-  },
-}), { name: 'MenuButton' })(MenuButton);
+const componentWithStyles = withStyles<MenuButtonClassKey>(
+	(theme) => ({
+		root: {
+			padding: 6,
+		},
+	}),
+	{ name: 'MenuButton' }
+)(MenuButton);
 export { componentWithStyles as MenuButton };

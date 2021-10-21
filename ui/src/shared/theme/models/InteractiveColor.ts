@@ -1,5 +1,5 @@
 export interface InteractiveColor {
-  main: string;
-  hover: string;
-  pressed: string;
+	main: string;
+	hover: string;
+	pressed: string;
 }

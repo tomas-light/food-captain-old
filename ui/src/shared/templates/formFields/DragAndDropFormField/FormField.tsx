@@ -6,11 +6,6 @@ import { FormFieldProps } from '../FormFieldProps';
 
 type Props = FormFieldProps & DragAndDropFieldComponentProps;
 
-const FormField = (props: Props) => (
-  <Field
-    component={DragAndDropFieldComponent}
-    {...props}
-  />
-);
+const FormField = (props: Props) => <Field component={DragAndDropFieldComponent} {...props} />;
 
 export { FormField };

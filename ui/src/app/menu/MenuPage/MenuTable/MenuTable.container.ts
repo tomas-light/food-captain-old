@@ -9,17 +9,14 @@ type StateProps = Omit<MenuTableProps, 'onSelectMenu'>;
 type CallProps = Pick<MenuTableProps, 'onSelectMenu'>;
 
 const mapStateToProps = (state: State): StateProps => ({
-  menus: state.menu.menus,
-  selectedMenus: state.menu.selectedMenus,
+	menus: state.menu.menus,
+	selectedMenus: state.menu.selectedMenus,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): CallProps => ({
-  onSelectMenu: selectedMenus => dispatch(MenuActions.selectMenu({ selectedMenus }))
+	onSelectMenu: (selectedMenus) => dispatch(MenuActions.selectMenu({ selectedMenus })),
 });
 
-const MenuTableContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MenuTable);
+const MenuTableContainer = connect(mapStateToProps, mapDispatchToProps)(MenuTable);
 
 export { MenuTableContainer };

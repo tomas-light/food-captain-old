@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Provider } from 'react-redux';
-import { ThemeProvider } from '@material-ui/core';
+import { ThemeProvider } from '@shared/reexport';
 
 import { AppTheme } from '@shared/theme/AppTheme';
 import { configureApp } from '@config/configureApp';
@@ -11,19 +11,19 @@ import { NotifierProvider } from './Notifier';
 const store = configureApp();
 
 const App = () => {
-  const [theme] = useState(new AppTheme());
+	const [theme] = useState(new AppTheme());
 
-  return (
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <NotifierProvider>
-          <AppInitterContainer>
-            <AppRouter/>
-          </AppInitterContainer>
-        </NotifierProvider>
-      </ThemeProvider>
-    </Provider>
-  );
+	return (
+		<Provider store={store}>
+			<ThemeProvider theme={theme}>
+				<NotifierProvider>
+					<AppInitterContainer>
+						<AppRouter />
+					</AppInitterContainer>
+				</NotifierProvider>
+			</ThemeProvider>
+		</Provider>
+	);
 };
 
 export { App };

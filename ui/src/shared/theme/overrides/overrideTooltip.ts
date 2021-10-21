@@ -1,13 +1,13 @@
-import { Components } from '@material-ui/core/styles/components';
+import { Components } from '@shared/reexport';
 
 export function overrideTooltip(): Components {
-  return {
-    MuiTooltip: {
-      styleOverrides: {
-        tooltip: {
-          fontSize: 12,
-        },
-      },
-    },
-  };
+	return {
+		MuiTooltip: {
+			styleOverrides: {
+				tooltip: {
+					fontSize: 12,
+				},
+			},
+		},
+	};
 }

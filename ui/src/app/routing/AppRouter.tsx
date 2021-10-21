@@ -8,45 +8,32 @@ import { MenuPageContainer, EditMenuPageContainer } from '../menu';
 import { appUrls } from './appUrls';
 
 const AppRouter = () => (
-  <Router>
-    <HistoryRegistrator/>
+	<Router>
+		<HistoryRegistrator />
 
-    <Layout>
-      <Switch>
-        <Route
-          path={appUrls.menuDetails}
-          component={EditMenuPageContainer}
-        />
+		<Layout>
+			<Switch>
+				<Route path={appUrls.menuDetails} component={EditMenuPageContainer} />
 
-        <Route
-          path={appUrls.menu}
-          component={MenuPageContainer}
-        />
+				<Route path={appUrls.menu} component={MenuPageContainer} />
 
-        <Route
-          path={appUrls.root}
-          component={() => (
-            <div>
-              Root page
-            </div>
-          )}
-        />
-      </Switch>
-    </Layout>
-  </Router>
+				<Route path={appUrls.root} component={() => <div>Root page</div>} />
+			</Switch>
+		</Layout>
+	</Router>
 );
 
 const HistoryRegistrator = () => {
-  let history = useHistory();
+	let history = useHistory();
 
-  const historyRef = useRef<HistoryProvider>({ get: () => history });
-  historyRef.current.get = () => history;
+	const historyRef = useRef<HistoryProvider>({ get: () => history });
+	historyRef.current.get = () => history;
 
-  useEffect(() => {
-    container.registerInstance(historyRef.current).as(HistoryProvider);
-  }, []);
+	useEffect(() => {
+		container.registerInstance(historyRef.current).as(HistoryProvider);
+	}, []);
 
-  return null;
-}
+	return null;
+};
 
 export { AppRouter };

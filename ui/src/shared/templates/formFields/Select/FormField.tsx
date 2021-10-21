@@ -6,11 +6,6 @@ import { FormFieldProps } from '../FormFieldProps';
 
 type Props = FormFieldProps & SelectFieldComponentProps;
 
-const FormField = (props: Props) => (
-  <Field
-    component={SelectFieldComponent}
-    {...props}
-  />
-);
+const FormField = (props: Props) => <Field component={SelectFieldComponent} {...props} />;
 
 export { FormField };

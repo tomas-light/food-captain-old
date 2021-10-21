@@ -6,54 +6,57 @@ import { UserActions } from './User.actions';
 import { UserStore } from './User.store';
 
 export class UserController extends ControllerBase {
-  private updateStore(partialStore: Partial<UserStore>) {
-    this.dispatch(UserActions.updateStore(partialStore));
-  }
+	async loadUsers() {
+		this.updateStore({
+			usersAreLoading: true,
+		});
 
-  async loadUsers() {
-    this.updateStore({
-      usersAreLoading: true,
-    });
+		const response = await UserApi.getAllAsync();
+		if (response.hasError()) {
+			this.updateStore({
+				users: [],
+				userOptions: [],
+				usersAreLoading: false,
+			});
 
-    const response = await UserApi.getAllAsync();
-    if (response.hasError()) {
-      this.updateStore({
-        users: [],
-        userOptions: [],
-        usersAreLoading: false,
-      });
+			return;
+		}
 
-      return;
-    }
+		this.updateStore({
+			users: response.data,
+			userOptions: response.data.map(
+				(user) =>
+					new SelectFieldOption<number>({
+						id: user.id,
+						title: user.name,
+					})
+			),
+			usersAreLoading: false,
+		});
+	}
 
-    this.updateStore({
-      users: response.data,
-      userOptions: response.data.map(user => new SelectFieldOption<number>({
-        id: user.id,
-        title: user.name,
-      })),
-      usersAreLoading: false,
-    });
-  }
+	async loadCurrentUser() {
+		this.updateStore({
+			currentUserIsLoading: true,
+		});
 
-  async loadCurrentUser() {
-    this.updateStore({
-      currentUserIsLoading: true,
-    });
+		const response = await UserApi.getCurrentAsync();
+		if (response.hasError()) {
+			this.updateStore({
+				currentUser: null,
+				currentUserIsLoading: false,
+			});
 
-    const response = await UserApi.getCurrentAsync();
-    if (response.hasError()) {
-      this.updateStore({
-        currentUser: null,
-        currentUserIsLoading: false,
-      });
+			return;
+		}
 
-      return;
-    }
+		this.updateStore({
+			currentUser: response.data,
+			currentUserIsLoading: false,
+		});
+	}
 
-    this.updateStore({
-      currentUser: response.data,
-      currentUserIsLoading: false,
-    });
-  }
+	private updateStore(partialStore: Partial<UserStore>) {
+		this.dispatch(UserActions.updateStore(partialStore));
+	}
 }

@@ -1,4 +1,4 @@
 export interface SimpleColor {
-  main: string;
-  text: string;
+	main: string;
+	text: string;
 }

@@ -5,5 +5,5 @@ import { SelectWrapperProps } from '@select';
 import { FieldOption } from '@select/types';
 
 export interface SingleSelectProps extends SelectWrapperProps<FieldOption>, FieldBaseProps {
-  controlStyles?: CSSProperties;
+	controlStyles?: CSSProperties;
 }

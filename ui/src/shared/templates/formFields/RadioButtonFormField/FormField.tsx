@@ -6,11 +6,6 @@ import { FormFieldProps } from '../FormFieldProps';
 
 type Props = FormFieldProps & RadioButtonFieldComponentProps;
 
-const FormField = (props: Props) => (
-  <Field
-    component={RadioButtonFieldComponent}
-    {...props}
-  />
-);
+const FormField = (props: Props) => <Field component={RadioButtonFieldComponent} {...props} />;
 
 export { FormField };

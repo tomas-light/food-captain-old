@@ -6,14 +6,14 @@
  * and only set call this.setState({dragging: false}) once our cursor is all the way out
  * */
 export class EventHandler {
-  private counter: number;
+	private counter: number;
 
-  constructor() {
-    this.counter = 0;
-  }
+	constructor() {
+		this.counter = 0;
+	}
 
-  in = () => this.counter++;
-  out = () => this.counter--;
-  check = () => this.counter === 0;
-  done = () => this.counter = 0;
+	in = () => this.counter++;
+	out = () => this.counter--;
+	check = () => this.counter === 0;
+	done = () => (this.counter = 0);
 }
