@@ -1,29 +1,36 @@
-import { Dish, Menu, User } from '@models';
 import { IDBPDatabase, openDB } from 'idb';
 import { DBSchema, StoreKey, StoreNames, StoreValue } from 'idb/build/esm/entry';
+import { Dish, Image, Ingredient, Menu, User } from '~models';
 
-// type ImageTable = {
-//   key: string;
-//   value: string;
-// };
+export const CURRENT_USER_ID = 'current_user';
 
 type DishTable = {
-	key: number;
+	key: Dish['id'];
 	value: Dish;
 };
 type MenuTable = {
-	key: number;
+	key: Menu['id'];
 	value: Menu;
 };
 type UserTable = {
-	key: number;
+	key: User['id'];
 	value: User;
+};
+type IngredientTable = {
+	key: Ingredient['id'];
+	value: Ingredient;
+};
+type ImageTable = {
+	key: Image['id'];
+	value: Image;
 };
 
 interface DBTypes extends DBSchema {
 	dishes: DishTable;
 	menus: MenuTable;
 	users: UserTable;
+	ingredients: IngredientTable;
+	images: ImageTable;
 }
 
 type TableName = StoreNames<DBTypes>;
@@ -31,13 +38,15 @@ type TableName = StoreNames<DBTypes>;
 class IndexedDb {
 	private db: IDBPDatabase<DBTypes>;
 
-	constructor(private readonly dbName: string, private readonly dbVersion: number = 4) {}
+	constructor(private readonly dbName: string, private readonly dbVersion: number = 6) {}
 
 	async createObjectStore(tableNames: TableName[]): Promise<void | false> {
 		try {
+			let hasNeedUpdate = false;
+
 			this.db = await openDB<DBTypes>(this.dbName, this.dbVersion, {
 				upgrade(db: IDBPDatabase<DBTypes>, oldVersion: number, newVersion: number | null) {
-					const hasNeedUpdate = oldVersion != newVersion;
+					hasNeedUpdate = oldVersion != newVersion;
 
 					for (const tableName of tableNames) {
 						if (db.objectStoreNames.contains(tableName)) {
@@ -51,6 +60,21 @@ class IndexedDb {
 					}
 				},
 			});
+
+			if (hasNeedUpdate) {
+				const transaction = this.db.transaction('users', 'readwrite');
+				const store = transaction.objectStore('users');
+				store.put(
+					{
+						id: CURRENT_USER_ID,
+						name: 'Artem',
+						email: 'my@email.com',
+						password: '',
+						roleId: 1,
+					},
+					CURRENT_USER_ID
+				);
+			}
 		} catch (error) {
 			return false;
 		}

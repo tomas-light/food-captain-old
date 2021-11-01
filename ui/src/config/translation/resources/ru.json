@@ -1,20 +1,64 @@
 {
-  "menu": "меню",
   "id": "ID",
   "name": "имя",
   "title": "название",
   "author": "автор",
-  "create date": "дата создания {{date}}",
-  "last update": "последнее обновление {{date}}",
-  "dishes": "блюда",
-  "add new menu": "добавить новое меню",
-  "edit selected menu": "редактировать выбранное меню",
-  "remove selected menus": "удалить выбранные меню",
-  "menu added": "меню было добавлено.",
-  "menu updated": "меню было обновлено.",
-  "menu deleted": "было удалено {{count}} меню.",
-  "menu deleted_plural": "было удалено {{count}} меню.",
-  "required field": "oбязательное поле.",
-  "invalid field": "неправильно заполнено поле.",
-  "drag or click": "перетащите или кликните"
+
+  "drag or click": "перетащите или кликните",
+
+  "back": "назад",
+  "add": "добавить",
+  "edit": "изменить",
+  "save": "сохранить",
+  "delete": "удалить",
+  "open": "открыть",
+
+  "field": {
+    "required": "oбязательное поле.",
+    "invalid": "неправильно заполнено поле."
+  },
+
+  "menu": {
+    "one": "меню",
+    "many": "меню",
+
+    "create date": "дата создания {{date}}",
+    "last update": "последнее обновление {{date}}",
+
+    "add": "$t(add) новое $t(menu.one)",
+    "added": "$t(menu.one) было добавлено.",
+
+    "edit": "$t(edit) выбранное $t(menu.one)",
+    "updated": "$t(menu.one) было обновлено.",
+
+    "remove": "удалить выбранные $t(menu.many)",
+    "deleted": "было удалено {{count}} $t(menu.one).",
+    "deleted_plural": "было удалено {{count}} $t(menu.many)."
+  },
+
+  "dish": {
+    "one": "блюдо",
+    "many": "блюда",
+
+    "name": "$t(title)",
+    "image": "картинка",
+    "description": "короткое описание",
+    "recipe": "рецепт",
+
+    "open": "$t(open)",
+    "add": "$t(add) новый $t(dish.recipe)",
+    "edit": "$t(edit) $t(dish.recipe)"
+  },
+
+  "ingredient": {
+    "one": "ингредиент",
+    "many": "ингредиенты",
+
+    "name": "$t(title)",
+    "image": "картинка",
+
+    "open": "$t(open)",
+    "add": "$t(add) новый $t(ingredient.one)",
+    "edit": "$t(edit) $t(ingredient.one)"
+  }
 }

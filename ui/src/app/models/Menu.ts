@@ -2,7 +2,7 @@ import { Dish } from './Dish';
 import { User } from './User';
 
 export interface Menu {
-	id: number;
+	id: string;
 	name?: string;
 	createDate: Date;
 	lastUpdate: Date;
@@ -18,7 +18,7 @@ type MenuForConstructor =
 	  });
 
 export class MenuInstance implements Menu {
-	id: number;
+	id: string;
 	name?: string;
 	createDate: Date;
 	lastUpdate: Date;

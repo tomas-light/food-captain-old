@@ -2,8 +2,7 @@ import { controllerMiddleware } from 'app-redux-utils';
 import { container } from 'cheap-di';
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 
-import { ApiInterceptor } from './ApiInterceptor';
-import { controllerWatchers } from './redux/controllerWatchers';
+import { ApiInterceptor } from './api/ApiInterceptor';
 import { getReducers } from './redux/getReducers';
 import { configureTranslation } from './translation';
 
@@ -37,7 +36,7 @@ function makeReducers() {
 }
 
 function makeMiddleware() {
-	return applyMiddleware(controllerMiddleware(controllerWatchers, container));
+	return applyMiddleware(controllerMiddleware([], container));
 }
 
 export { configureApp };

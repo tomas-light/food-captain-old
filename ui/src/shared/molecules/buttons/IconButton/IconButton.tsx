@@ -1,47 +1,25 @@
-import React, { ComponentType, forwardRef, ForwardRefRenderFunction, ReactElement, Ref } from 'react';
-import {
-	IconButton as MuiIconButton,
-	IconButtonClassKey,
-	StyledComponentProps,
-	Tooltip,
-	IconButtonProps as MuiIconButtonProps,
-} from '@shared/reexport';
-import { withStyles } from '@shared/theme';
+import React, { ReactElement } from 'react';
+import { Tooltip, TooltipProps } from '~shared/atoms';
 
-import { Spinner } from '@shared/molecules/Spinner';
+// import { Spinner } from '~shared/molecules/Spinner';
 import { ButtonState } from '../ButtonState';
 
-type ClassKey = IconButtonClassKey | 'spinner';
-
-interface IconButtonProps {
+type Props = Partial<TooltipProps> & {
 	icon: ReactElement;
 	state?: ButtonState;
-}
+	onClick?: () => void;
+};
 
-type Props = Omit<MuiIconButtonProps, 'variant' | 'size' | 'children'> &
-	IconButtonProps &
-	StyledComponentProps<ClassKey>;
+const IconButton = (props: Props) => {
+	const { icon, state = {}, title } = props;
 
-const IconButton: ForwardRefRenderFunction<any, Props> = (props: Props, ref: Ref<any>) => {
-	const {
-		icon,
-		classes: { spinner, ...restClasses },
-		state = {},
-		title,
-		...rest
-	} = props;
-
-	const IconButtonBaseComponent = (
-		<MuiIconButton
-			disabled={state.loading || state.disabled || state.pristine}
-			ref={ref}
-			classes={restClasses}
-			{...rest}
-		>
-			<Spinner visible={state.loading} className={spinner} />
-			{icon}
-		</MuiIconButton>
-	);
+	// const IconButtonBaseComponent = (
+	// 	<MuiIconButton disabled={state.loading || state.disabled || state.pristine} ref={ref} classes={restClasses}>
+	// 		<Spinner visible={state.loading} />
+	// 		{icon}
+	// 	</MuiIconButton>
+	// );
+	const IconButtonBaseComponent = null;
 
 	if (title) {
 		if (state.disabled) {
@@ -58,24 +36,4 @@ const IconButton: ForwardRefRenderFunction<any, Props> = (props: Props, ref: Ref
 	return IconButtonBaseComponent;
 };
 
-const componentWithRef: ComponentType<Props> = forwardRef(IconButton);
-const componentWithStyles = withStyles<ClassKey>({
-	root: {
-		position: 'relative',
-	},
-	spinner: {
-		position: 'absolute',
-	},
-	edgeStart: {},
-	edgeEnd: {},
-	colorInherit: {},
-	colorPrimary: {},
-	colorSecondary: {},
-	disabled: {},
-	sizeSmall: {},
-	label: {},
-})(componentWithRef);
-
-export { componentWithStyles as IconButton };
-export type { Props as IconButtonProps, ClassKey as IconButtonClassKey };
-
+export { IconButton };

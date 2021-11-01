@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, ReactElement, useState } from 'react';
 
-import { SpinnerBlock } from '@shared/molecules';
+// import { SpinnerBlock } from '~shared/molecules';
 
 type Props = PropsWithChildren<{
 	initialized: boolean;
@@ -15,7 +15,8 @@ const AppInitter = (props: Props) => {
 	});
 
 	if (!initialized) {
-		return <SpinnerBlock visible />;
+		// return <SpinnerBlock visible />;
+		return 'Loading...' as unknown as ReactElement;
 	}
 
 	return children as ReactElement;

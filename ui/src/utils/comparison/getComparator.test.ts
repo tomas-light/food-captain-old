@@ -1,10 +1,10 @@
+import { ascendingComparator } from './ascendingComparator';
+import { descendingComparator } from './descendingComparator';
 import { getComparator } from './getComparator';
 
 jest.mock('./ascendingComparator');
-import { ascendingComparator } from './ascendingComparator';
 
 jest.mock('./descendingComparator');
-import { descendingComparator } from './descendingComparator';
 
 class NumberItem {
 	prop: number;

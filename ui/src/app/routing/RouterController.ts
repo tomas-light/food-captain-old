@@ -1,18 +1,18 @@
-import { State } from '@State';
-import { ControllerBase } from '@utils/controller';
-import { Action, createAction, watcher } from 'app-redux-utils';
+import { Action, DecoratedWatchedController, watch } from 'app-redux-utils';
+import { ControllerBase } from '~app/ControllerBase';
 
-class RouterActions {
-	static REDIRECT = 'ROUTER_REDIRECT';
-	static redirect = (appUrl: string) => createAction(RouterActions.REDIRECT, { appUrl });
-}
+type RedirectToPayload = {
+	url: string;
+};
 
+@watch
 class RouterController extends ControllerBase {
-	redirectTo(action: Action<{ appUrl: string }>) {
-		super.redirect(action.payload.appUrl);
+	@watch
+	redirectTo(action: Action<RedirectToPayload>) {
+		super.redirect(action.payload.url);
 	}
 }
 
-const routerWatcher = watcher<State, RouterController>(RouterController, [[RouterActions.REDIRECT, 'redirectTo']]);
+const routerController: DecoratedWatchedController<[['redirectTo', RedirectToPayload]]> = RouterController as any;
 
-export { RouterActions, routerWatcher };
+export { routerController as RouterController };

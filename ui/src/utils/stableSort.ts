@@ -1,4 +1,4 @@
-import { Comparator } from '@utils/comparison/Comparator';
+import { Comparator } from './comparison/Comparator';
 
 // description is here https://medium.com/@fsufitch/is-javascript-array-sort-stable-46b90822543f
 

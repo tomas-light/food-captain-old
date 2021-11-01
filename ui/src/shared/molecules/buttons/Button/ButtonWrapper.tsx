@@ -1,14 +1,11 @@
 import React, { FC } from 'react';
 
-import { Tooltip } from '@shared/reexport';
+import { Tooltip, TooltipProps } from '~shared/atoms';
 
-interface ButtonWrapperProps {
+type Props = Partial<TooltipProps> & {
 	className?: string;
-	title?: string;
 	disabled?: boolean;
-}
-
-type Props = ButtonWrapperProps;
+};
 
 const ButtonWrapper: FC<Props> = (props) => {
 	const { className, title, disabled, children } = props;
@@ -25,3 +22,4 @@ const ButtonWrapper: FC<Props> = (props) => {
 };
 
 export { ButtonWrapper };
+export type { Props as ButtonWrapperProps };

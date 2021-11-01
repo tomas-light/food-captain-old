@@ -1,8 +1,9 @@
-import { AppInitterStore } from '@app/AppInitter/redux';
-import { NotifierStore } from '@Notifier';
-import { MenuStore } from '@app/menu/redux';
-import { UserStore } from '@app/user/redux';
-import { DishStore } from '@app/dish/redux';
+import { AppInitterStore } from '~app/AppInitter/redux/AppInitter.store';
+import { DishStore } from '~app/dish/Dish.store';
+import { IngredientStore } from '~app/ingredient/Ingredient.store';
+import { MenuStore } from '~app/menu/Menu.store';
+import { UserStore } from '~app/user/User.store';
+import { NotifierStore } from '~Notifier/Notifier.store';
 
 export interface State {
 	appInitter: AppInitterStore;
@@ -10,4 +11,5 @@ export interface State {
 	menu: MenuStore;
 	user: UserStore;
 	dish: DishStore;
+	ingredient: IngredientStore;
 }

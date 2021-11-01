@@ -1,56 +1,32 @@
-import React, { FC } from 'react';
-
-import { makeStyles } from '@shared/theme';
-import { NotifierContainer } from '@Notifier';
-import { AppBar } from './AppBar';
-import { DrawerContainer } from './Drawer';
-
-const useStyles = makeStyles((theme) => ({
-	layout: {
-		backgroundColor: theme.colors.background,
-		height: '100vh',
-		position: 'relative',
-		display: 'grid',
-
-		gridTemplateAreas: `
-      "drawer navbar"
-      "drawer content"
-    `,
-		gridTemplateColumns: 'auto 1fr',
-		gridTemplateRows: 'auto 1fr',
-	},
-	navbar: {
-		gridArea: 'navbar',
-	},
-	drawer: {
-		gridArea: 'drawer',
-	},
-	content: {
-		gridArea: 'content',
-	},
-}));
+import { useStyletron } from 'baseui';
+import { FC } from 'react';
+import { Notifier } from '~Notifier/Notifier';
+import { Navbar } from './Navbar';
 
 const Layout: FC = ({ children }) => {
-	const classes = useStyles();
-
-	const [open, setOpen] = React.useState(false);
-	const toggle = () => setOpen((isOpen) => !isOpen);
+	const [css, theme] = useStyletron();
 
 	return (
-		<div className={classes.layout}>
-			<AppBar
-				className={classes.navbar}
-				// title={title}
-				// name={name}
-				open={open}
-				toggle={toggle}
-			/>
+		<div
+			className={css({
+				backgroundColor: theme.colors.background,
+				height: '100vh',
+				position: 'relative',
+			})}
+		>
+			<Navbar />
 
-			<DrawerContainer className={classes.drawer} open={open} onClose={() => setOpen(false)} />
+			<main className={css({ height: '100%', overflow: 'auto', padding: '16px' })}>
+				{/*<Breadcrumbs>
+					<StyledLink href="#parent">Parent Page</StyledLink>
+					<StyledLink href="#sub">Sub-Parent Page</StyledLink>
+					<span>Current Page</span>
+				</Breadcrumbs>*/}
 
-			<main className={classes.content}>{children}</main>
+				{children}
+			</main>
 
-			<NotifierContainer />
+			<Notifier />
 		</div>
 	);
 };

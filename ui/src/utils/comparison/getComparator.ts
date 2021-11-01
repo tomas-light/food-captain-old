@@ -1,4 +1,4 @@
-import { OrderVariant } from '@utils/types';
+import { OrderVariant } from '../types';
 import { ascendingComparator } from './ascendingComparator';
 import { Comparator } from './Comparator';
 import { descendingComparator } from './descendingComparator';

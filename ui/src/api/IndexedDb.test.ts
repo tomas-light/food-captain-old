@@ -1,7 +1,7 @@
 jest.mock('idb');
 import { openDB } from 'idb';
 import { StoreKey, StoreValue } from 'idb/build/esm/entry';
-import { IndexedDb, TableName, DBTypes } from './IndexedDb';
+import { DBTypes, IndexedDb, TableName } from './IndexedDb';
 
 class MockStore {
 	constructor(private readonly dbName: string, private readonly tableName: TableName) {
