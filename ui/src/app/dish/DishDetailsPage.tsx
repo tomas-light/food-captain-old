@@ -2,8 +2,10 @@ import { useStyletron } from 'baseui';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
+import { H1, H2 } from 'baseui/typography';
 import { appUrls, RouterController } from '~app/routing';
 import { Button } from '~shared/molecules';
+import { RecipeDetails } from './RecipeDetails';
 import { useDish } from './useDish';
 
 const DishDetailsPage = () => {
@@ -24,7 +26,7 @@ const DishDetailsPage = () => {
 		<div>
 			<Button onClick={() => redirect(appUrls.dish)}>{t('back')}</Button>
 
-			<h1>{dish.name}</h1>
+			<H1>{dish.name}</H1>
 
 			<img
 				className={css({
@@ -36,7 +38,8 @@ const DishDetailsPage = () => {
 
 			<p>{dish.description}</p>
 
-			<p>{dish.recipe}</p>
+			<H2>{t('dish.recipe')}</H2>
+			<RecipeDetails recipe={dish.recipe} />
 
 			<Button
 				onClick={() => {

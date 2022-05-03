@@ -3,6 +3,7 @@
   "name": "имя",
   "title": "название",
   "author": "автор",
+  "image": "картинка",
 
   "drag or click": "перетащите или кликните",
 
@@ -41,13 +42,23 @@
     "many": "блюда",
 
     "name": "$t(title)",
-    "image": "картинка",
+    "image": "$t(image)",
     "description": "короткое описание",
-    "recipe": "рецепт",
+    "recipe": "$t(recipe.one)",
 
     "open": "$t(open)",
     "add": "$t(add) новый $t(dish.recipe)",
     "edit": "$t(edit) $t(dish.recipe)"
+  },
+
+  "recipe": {
+    "one": "рецепт",
+    "many": "рецепты",
+
+    "name": "$t(title)",
+    "image": "$t(image)",
+    "description": "описание рецепта",
+    "ingredients": "$t(ingredient.many)"
   },
 
   "ingredient": {
@@ -55,10 +66,18 @@
     "many": "ингредиенты",
 
     "name": "$t(title)",
-    "image": "картинка",
+    "image": "$t(image)",
 
+    "new":  "новый $t(ingredient.one)",
     "open": "$t(open)",
     "add": "$t(add) новый $t(ingredient.one)",
     "edit": "$t(edit) $t(ingredient.one)"
+  },
+
+  "dimension": {
+    "one": "мера",
+    "many": "мера",
+
+    "size": "количество"
   }
 }

@@ -1,30 +1,50 @@
 import { TextAreaField, TextAreaFieldProps } from './TextAreaField';
 import { TextField, TextFieldProps } from './TextField';
+import { SelectField, SelectFieldProps } from './SelectField';
+import { MultiSelectField, MultiSelectFieldProps } from './MultiSelectField';
+import { NumberField, NumberFieldProps } from './NumberField';
+import { Option } from './Option';
 
 type FieldVariant =
 	// | 'checkbox'
 	// | 'date'
-	// | 'single-select'
-	// | 'multi-select'
-	// | 'number'
+	| 'select'
+	| 'multi-select'
+	| 'number'
 	// | 'radio-button'
-	'text-area' | 'text';
+	| 'text-area'
+  | 'text';
 
-type FieldPropsVariant<TFieldVariant extends FieldVariant = 'text'> =
-  TFieldVariant extends 'text-area'
-    ? TextAreaFieldProps
-    : TFieldVariant extends 'text'
-      ? TextFieldProps
-      : never;
+type FieldPropsVariant<TFieldVariant extends FieldVariant = 'text', TOption extends Option = Option> =
+  TFieldVariant extends 'select'
+    ? SelectFieldProps<TOption>
+    : TFieldVariant extends 'multi-select'
+			? MultiSelectFieldProps<TOption>
+			: TFieldVariant extends 'number'
+				? NumberFieldProps
+        : TFieldVariant extends 'text-area'
+          ? TextAreaFieldProps
+          : TFieldVariant extends 'text'
+            ? TextFieldProps
+            : never;
 
-type Props<TFieldVariant extends FieldVariant = 'text'> = {
+type Props<TFieldVariant extends FieldVariant = 'text', TOption extends Option = Option> = {
   variant?: TFieldVariant;
-} & FieldPropsVariant<TFieldVariant>;
+} & FieldPropsVariant<TFieldVariant, TOption>;
 
-function Field<TFieldVariant extends FieldVariant = 'text'>(props: Props<TFieldVariant>) {
+function Field<TFieldVariant extends FieldVariant = 'text', TOption extends Option = Option>(props: Props<TFieldVariant, TOption>) {
   const { variant = 'text', ...rest } = props;
 
   switch (variant) {
+    case 'select':
+      return <SelectField {...(rest as unknown as SelectFieldProps<TOption>)} />;
+
+    case 'multi-select':
+      return <MultiSelectField {...(rest as unknown as MultiSelectFieldProps<TOption>)} />;
+
+    case 'number':
+      return <NumberField {...(rest as unknown as NumberFieldProps)} />;
+
     case 'text-area':
       return <TextAreaField {...(rest as unknown as TextAreaFieldProps)} />;
 
@@ -35,4 +55,4 @@ function Field<TFieldVariant extends FieldVariant = 'text'>(props: Props<TFieldV
 }
 
 export { Field };
-export type { Props as FieldProps };
+export type { Props as FieldProps, Option };

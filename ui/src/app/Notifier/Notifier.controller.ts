@@ -1,4 +1,10 @@
-import { createAction, watch, ControllerBase, Action, DecoratedWatchedController } from 'app-redux-utils';
+import {
+  createAction,
+  watch,
+  ControllerBase,
+  Action,
+  WatchedController
+} from 'app-redux-utils';
 import { Notification } from '~Notifier/Notification';
 import { NotifierStore } from '~Notifier/Notifier.store';
 import { State } from '~State';
@@ -28,8 +34,5 @@ class NotifierController extends ControllerBase<State> {
   }
 }
 
-const notifierController: DecoratedWatchedController<[
-  ['notify', Notification],
-]> = NotifierController as any;
-
+const notifierController: WatchedController<NotifierController> = NotifierController as any;
 export { notifierController as NotifierController };

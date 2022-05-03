@@ -1,4 +1,4 @@
-import { Action, createAction, DecoratedWatchedController, watch } from 'app-redux-utils';
+import { Action, createAction, WatchedController, watch } from 'app-redux-utils';
 import i18n from 'i18next';
 
 import { MenuApi } from '~api';
@@ -252,16 +252,5 @@ class MenuController extends ControllerBase {
 	}
 }
 
-const menuController: DecoratedWatchedController<
-	[
-		'getMenus',
-		['selectMenu', SelectMenuActionPayload],
-		['loadMenu', LoadMenuActionPayload],
-		'addMenu',
-		'editMenu',
-		'deleteMenus',
-		['save', SaveActionPayload]
-	]
-> = MenuController as any;
-
+const menuController: WatchedController<MenuController> = MenuController as any;
 export { menuController as MenuController };

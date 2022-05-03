@@ -1,4 +1,4 @@
-import { Action, DecoratedWatchedController, watch } from 'app-redux-utils';
+import { Action, watch, WatchedController } from 'app-redux-utils';
 import { ControllerBase } from '~app/ControllerBase';
 
 type RedirectToPayload = {
@@ -13,6 +13,5 @@ class RouterController extends ControllerBase {
 	}
 }
 
-const routerController: DecoratedWatchedController<[['redirectTo', RedirectToPayload]]> = RouterController as any;
-
+const routerController: WatchedController<RouterController> = RouterController as any;
 export { routerController as RouterController };

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { BASE_API_URL } from '~env';
 import { ApiResponse } from '~utils/api';
-import { IndexedDb } from '../IndexedDb';
+import { IndexedDb } from './db/IndexedDb';
 
 export abstract class ApiBase {
 	protected static get<TData = any>(url: string): Promise<ApiResponse<TData>> {
@@ -32,7 +32,26 @@ export abstract class ApiBase {
 	protected static async openDb() {
 		const DB_NAME = 'food_captain';
 		const db = new IndexedDb(DB_NAME);
-		await db.createObjectStore(['menus', 'dishes', 'users', 'images', 'ingredients']);
+		await db.createObjectStore([
+			'image',
+			'ingredientSet',
+			'ingredient',
+			'ingredientInSet',
+			'dimension',
+			'ingredientInRecipe',
+			'recipe',
+			'recipeImage',
+			'dish',
+			'dishInSet',
+			'dishSet',
+			'dishInMenu',
+			'menu',
+			'menuInSchedule',
+			'schedule',
+			'user',
+			'userRole',
+			'role',
+		]);
 
 		return db;
 	}

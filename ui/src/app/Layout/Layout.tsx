@@ -12,11 +12,20 @@ const Layout: FC = ({ children }) => {
 				backgroundColor: theme.colors.background,
 				height: '100vh',
 				position: 'relative',
+				display: 'grid',
+				gridTemplateRows: 'auto 1fr',
 			})}
 		>
 			<Navbar />
 
-			<main className={css({ height: '100%', overflow: 'auto', padding: '16px' })}>
+			<main
+				className={css({
+					height: '100%',
+					overflow: 'auto',
+					padding: '16px',
+					boxSizing: 'border-box',
+				})}
+			>
 				{/*<Breadcrumbs>
 					<StyledLink href="#parent">Parent Page</StyledLink>
 					<StyledLink href="#sub">Sub-Parent Page</StyledLink>

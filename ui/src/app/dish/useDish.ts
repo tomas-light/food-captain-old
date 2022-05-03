@@ -9,7 +9,7 @@ function useDish(dishId: string) {
 	const dish = dishes.find((_dish) => _dish.id === dishId);
 
 	useEffect(() => {
-		if (!dish) {
+		if (!dish || !dish.recipe) {
 			dispatch(DishController.loadDish(dishId));
 		}
 	}, [dishId]);

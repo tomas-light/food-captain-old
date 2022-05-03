@@ -18,14 +18,16 @@ const AddIngredientPage = () => {
 		image: '',
 	});
 
-	const save = () => {
-		dispatch(IngredientController.addIngredient(ingredient));
-		redirect(appUrls.ingredient);
+	const add = () => {
+		dispatch(IngredientController.addIngredient({
+			ingredient,
+			callback: () => redirect(appUrls.ingredient),
+		}));
 	};
 
 	return (
 		<div>
-			<Button onClick={() => redirect(appUrls.dish)}>{t('back')}</Button>
+			<Button onClick={() => redirect(appUrls.ingredient)}>{t('back')}</Button>
 
 			<h1>{t('ingredient.add')}</h1>
 
@@ -40,7 +42,7 @@ const AddIngredientPage = () => {
 				onChange={(value) => setIngredient((_dish) => ({ ..._dish, image: value }))}
 			/>
 
-			<Button onClick={save}>{t('save')}</Button>
+			<Button onClick={add}>{t('save')}</Button>
 		</div>
 	);
 };

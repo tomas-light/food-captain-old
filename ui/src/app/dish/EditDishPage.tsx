@@ -1,3 +1,4 @@
+import { useStyletron } from 'baseui';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -13,6 +14,7 @@ const EditDishPage = () => {
 	const { dishId } = useParams();
 
 	const { t } = useTranslation();
+	const [css] = useStyletron();
 	const dispatch = useDispatch();
 	const redirect = (url: string) => dispatch(RouterController.redirectTo({ url }));
 
@@ -26,8 +28,17 @@ const EditDishPage = () => {
 	}, [storedDish]);
 
 	const save = () => {
-		dispatch(DishController.updateDish(dish));
-		redirect(appUrls.dish);
+		dispatch(DishController.updateDish({
+			dish,
+			callback: () => redirect(appUrls.dish)
+		}));
+	};
+
+	const remove = () => {
+		dispatch(DishController.removeDish({
+			dishId: dish.id,
+			callback: () => redirect(appUrls.dish)
+		}));
 	};
 
 	if (!dish) {
@@ -35,7 +46,12 @@ const EditDishPage = () => {
 	}
 
 	return (
-		<div>
+		<div className={css({
+			display: 'flex',
+			flexDirection: 'column',
+			flexWrap: 'wrap',
+			rowGap: '16px',
+		})}>
 			<Button onClick={() => redirect(appUrls.dish)}>Back</Button>
 
 			<h1>{t('dish.edit')}</h1>
@@ -55,14 +71,54 @@ const EditDishPage = () => {
 				value={dish.description}
 				onChange={(value) => setDish((_dish) => ({ ..._dish, description: value }))}
 			/>
+
+			<h2>{t('dish.recipe')}</h2>
+
+			<Field
+				label={t('recipe.name')}
+				value={dish.recipe?.name}
+				onChange={(value) =>
+					setDish((_dish) => ({
+						..._dish,
+						recipe: {
+							..._dish.recipe,
+							name: value,
+						},
+					}))
+				}
+			/>
+
+			<Field
+				label={t('recipe.image')}
+				value={dish.recipe?.image}
+				onChange={(value) =>
+					setDish((_dish) => ({
+						..._dish,
+						recipe: {
+							..._dish.recipe,
+							image: value,
+						},
+					}))
+				}
+			/>
+
 			<Field
 				variant={'text-area'}
-				label={t('dish.recipe')}
-				value={dish.recipe}
-				onChange={(value) => setDish((_dish) => ({ ..._dish, recipe: value }))}
+				label={t('recipe.description')}
+				value={dish.recipe?.description}
+				onChange={(value) =>
+					setDish((_dish) => ({
+						..._dish,
+						recipe: {
+							..._dish.recipe,
+							description: value,
+						},
+					}))
+				}
 			/>
 
 			<Button onClick={save}>{t('save')}</Button>
+			<Button onClick={remove}>{t('delete')}</Button>
 		</div>
 	);
 };

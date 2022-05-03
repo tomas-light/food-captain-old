@@ -1,4 +1,6 @@
+import { useStyletron } from 'baseui';
 import { Textarea } from 'baseui/textarea';
+import { Label2 } from 'baseui/typography';
 
 type Props = {
 	label: string;
@@ -9,9 +11,17 @@ type Props = {
 function TextAreaField(props: Props) {
   const { label, value, onChange } = props;
 
+  const [css] = useStyletron();
+
   return (
-    <div>
-      <label>{label}</label>
+    <div
+      className={css({
+        display: 'flex',
+        flexDirection: 'column',
+        rowGap: '6px',
+      })}
+    >
+      <Label2>{label}</Label2>
       <Textarea
         placeholder={label}
         value={value}

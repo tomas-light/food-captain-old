@@ -1,6 +1,6 @@
 import { AppNavBar, NavItemT, setItemActive } from 'baseui/app-nav-bar';
 import { Overflow } from 'baseui/icon';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { appUrls, RouterController } from '~app/routing';
@@ -9,9 +9,11 @@ type NavItem = NavItemT & {
 	url: string;
 };
 
-const typedSetActiveItem = (items: NavItem[], item: NavItem) => {
-	const result = setItemActive(items, item);
-	return result as NavItem[];
+const activateItem = (item: NavItem) => {
+	return (state: NavItem[]) => {
+		const result = setItemActive(state, item);
+		return result as NavItem[];
+	}
 };
 
 const Navbar = () => {
@@ -37,13 +39,25 @@ const Navbar = () => {
 		// }
 	]);
 
+	useEffect(() => {
+		const currentItem = mainItems.find(item => location.pathname.startsWith(item.url));
+		if (currentItem) {
+			setMainItems(activateItem(currentItem));
+		} else {
+			const menuItem = mainItems.find(item => item.url === appUrls.menu);
+			if (menuItem) {
+				setMainItems(activateItem(menuItem));
+			}
+		}
+	}, [location]);
+
 	return (
 		<AppNavBar
 			title="Food captain"
 			mainItems={mainItems}
 			onMainItemSelect={(item: NavItem) => {
 				redirect(item.url)
-				setMainItems(prev => typedSetActiveItem(prev, item));
+				setMainItems(activateItem(item));
 			}}
 			username={currentUser?.name ?? 'loading...'}
 			usernameSubtitle={currentUser?.email ?? 'loading...'}

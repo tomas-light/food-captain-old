@@ -7,7 +7,7 @@ type Props = PropsWithChildren<{
 	initialize: () => void;
 }>;
 
-const AppInitter = (props: Props) => {
+const AppInitter = (props: Props): ReactElement => {
 	const { initialized, initialize, children } = props;
 
 	useState(() => {
@@ -16,10 +16,10 @@ const AppInitter = (props: Props) => {
 
 	if (!initialized) {
 		// return <SpinnerBlock visible />;
-		return 'Loading...' as unknown as ReactElement;
+		return 'Loading...' as any;
 	}
 
-	return children as ReactElement;
+	return children as any;
 };
 
 export { AppInitter };

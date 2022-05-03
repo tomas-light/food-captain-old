@@ -1,4 +1,4 @@
-import { Action, createAction, DecoratedWatchedController, watch } from 'app-redux-utils';
+import { Action, createAction, WatchedController, watch } from 'app-redux-utils';
 import { DishApi } from '~api';
 import { Dish } from '~models';
 import { ControllerBase } from '~app/ControllerBase';
@@ -28,7 +28,7 @@ class DishController extends ControllerBase {
 
 	@watch
 	async loadDish(action: Action<string>) {
-		const response = await DishApi.getAsync(action.payload);
+		const response = await DishApi.getByIdAsync(action.payload);
 		if (response.hasError()) {
 			return;
 		}
@@ -41,8 +41,10 @@ class DishController extends ControllerBase {
 	}
 
 	@watch
-	async addDish(action: Action<Dish>) {
-		const response = await DishApi.addAsync(action.payload);
+	async addDish(action: Action<{ dish: Dish, callback?: () => void }>) {
+		const { dish, callback } = action.payload;
+
+		const response = await DishApi.addAsync(dish);
 		if (response.hasError()) {
 			return;
 		}
@@ -52,11 +54,15 @@ class DishController extends ControllerBase {
 		this.updateStore({
 			dishes: dishes.concat(response.data),
 		});
+
+		callback && callback();
 	}
 
 	@watch
-	async updateDish(action: Action<Dish>) {
-		const response = await DishApi.updateAsync(action.payload);
+	async updateDish(action: Action<{ dish: Dish, callback?: () => void }>) {
+		const { dish, callback } = action.payload;
+
+		const response = await DishApi.updateAsync(dish);
 		if (response.hasError()) {
 			return;
 		}
@@ -64,13 +70,17 @@ class DishController extends ControllerBase {
 		const { dishes } = this.getState().dish;
 
 		this.updateStore({
-			dishes: dishes.filter((dish) => dish.id !== action.payload.id).concat(response.data),
+			dishes: dishes.filter((_dish) => _dish.id !== dish.id).concat(response.data),
 		});
+
+		callback && callback();
 	}
 
 	@watch
-	async removeDish(action: Action<Dish['id']>) {
-		const response = await DishApi.deleteAsync(action.payload);
+	async removeDish(action: Action<{ dishId: Dish['id'], callback?: () => void }>) {
+		const { dishId, callback } = action.payload;
+
+		const response = await DishApi.deleteAsync(dishId);
 		if (response.hasError()) {
 			return;
 		}
@@ -78,16 +88,12 @@ class DishController extends ControllerBase {
 		const { dishes } = this.getState().dish;
 
 		this.updateStore({
-			dishes: dishes.filter((dish) => dish.id !== action.payload),
+			dishes: dishes.filter((dish) => dish.id !== dishId),
 		});
+
+		callback && callback();
 	}
 }
 
-const dishController: DecoratedWatchedController<[
-	'loadDishes',
-	['loadDish', Dish['id']],
-	['addDish', Dish],
-	['updateDish', Dish],
-	['removeDish', Dish['id']],
-]> = DishController as any;
+const dishController: WatchedController<DishController> = DishController as any;
 export { dishController as DishController };

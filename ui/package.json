@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@tomas_light/mapper-js": "1.0.3",
-    "app-redux-utils": "1.5.0",
+    "app-redux-utils": "1.5.4",
     "axios": "0.21.4",
     "baseui": "^10.5.0",
     "cheap-di": "3.2.1",
