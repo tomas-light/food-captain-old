@@ -1,39 +1,26 @@
-import React, { FC, useState } from 'react';
+import React, { PropsWithChildren, ReactElement, useState } from 'react';
 
-import { SpinnerBlock } from '@shared/molecules';
+// import { SpinnerBlock } from '~shared/molecules';
 
-export interface AppInitterProps {
-  initialized: boolean;
-}
+type Props = PropsWithChildren<{
+	initialized: boolean;
+	initialize: () => void;
+}>;
 
-export interface AppInitterCallProps {
-  initialize: () => void;
-}
+const AppInitter = (props: Props): ReactElement => {
+	const { initialized, initialize, children } = props;
 
-type Props = AppInitterProps & AppInitterCallProps;
+	useState(() => {
+		initialize();
+	});
 
-const AppInitter: FC<Props> = props => {
-  const {
-    initialized,
-    initialize,
-    children,
-  } = props;
+	if (!initialized) {
+		// return <SpinnerBlock visible />;
+		return 'Loading...' as any;
+	}
 
-  useState(() => {
-    initialize();
-  });
-
-  if (!initialized) {
-    return (
-      <SpinnerBlock visible/>
-    );
-  }
-
-  return (
-    <>
-      {children}
-    </>
-  );
+	return children as any;
 };
 
 export { AppInitter };
+export type { Props as AppInitterProps };

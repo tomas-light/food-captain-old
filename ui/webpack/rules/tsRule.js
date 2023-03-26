@@ -1,3 +1,5 @@
+import tsNameof from 'ts-nameof';
+
 export function tsRule() {
   return {
     module: {
@@ -7,7 +9,13 @@ export function tsRule() {
           exclude: /node_modules/,
           use: [
             'babel-loader',
-            'ts-loader',
+            {
+              loader: 'ts-loader',
+              options: {
+                transpileOnly: true,
+                getCustomTransformers: () => ({ before: [tsNameof] }),
+              },
+            },
           ],
         },
       ],

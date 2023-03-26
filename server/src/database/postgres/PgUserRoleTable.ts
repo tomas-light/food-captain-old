@@ -12,7 +12,7 @@ export class PgUserRoleTable extends PgTableBase<UserRoleEntity> implements User
   }
 
   // todo: possible redundant
-  async getAsync(user_id: number, role_id: number): Promise<UserRoleEntity | undefined> {
+  async getAsync(user_id: number, role_id: number): Promise<UserRoleEntity | null | undefined> {
     const queryConfig: QueryConfig = {
       text: `
         SELECT * 
@@ -25,6 +25,20 @@ export class PgUserRoleTable extends PgTableBase<UserRoleEntity> implements User
 
     const queryResult = await this.query<UserRoleEntity>(queryConfig);
     return queryResult.rows[0];
+  }
+
+  async getByUserIdAsync(user_id: number): Promise<UserRoleEntity[]> {
+    const queryConfig: QueryConfig = {
+      text: `
+        SELECT * 
+        FROM ${this.tableName} 
+        WHERE ${nameof<UserRoleEntity>(o => o.user_id)} = $1;
+      `,
+      values: [user_id]
+    };
+
+    const queryResult = await this.query<UserRoleEntity>(queryConfig);
+    return queryResult.rows;
   }
 
   async insertAsync(entity: UserRoleEntity): Promise<boolean> {

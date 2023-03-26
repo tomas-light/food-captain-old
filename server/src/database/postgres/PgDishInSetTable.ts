@@ -12,7 +12,7 @@ export class PgDishInSetTable extends PgTableBase<DishInSetEntity> implements Di
   }
 
   // todo: possible redundant
-  async getAsync(dish_set_id: number, dish_id: number): Promise<DishInSetEntity | undefined> {
+  async getAsync(dish_set_id: number, dish_id: number): Promise<DishInSetEntity | null | undefined> {
     const queryConfig: QueryConfig = {
       text: `
         SELECT * 

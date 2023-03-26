@@ -11,12 +11,12 @@ interface ScheduleWithMenuEntity extends ScheduleEntity, Omit<MenuWithDateEntity
 
 interface ScheduleTable {
   allAsync(): Promise<ScheduleEntity[]>;
-  byIdAsync(id: number): Promise<ScheduleEntity | undefined>;
+  byIdAsync(id: number): Promise<ScheduleEntity | null | undefined>;
 
-  getWithMenuByIdAsync(id: number): Promise<ScheduleWithMenuEntity | undefined>;
+  getWithMenuByIdAsync(id: number): Promise<ScheduleWithMenuEntity[]>;
 
-  insertAsync(entity: Omit<ScheduleEntity, 'id'>): Promise<number | undefined>;
-  updateAsync(entity: MakeOptional<ScheduleEntity, 'author_id' | 'name'>): Promise<ScheduleEntity | undefined>;
+  insertAsync(entity: Omit<ScheduleEntity, 'id'>): Promise<number | null | undefined>;
+  updateAsync(entity: MakeOptional<ScheduleEntity, 'author_id' | 'name'>): Promise<ScheduleEntity | null | undefined>;
   deleteAsync(id: number): Promise<boolean>;
 }
 

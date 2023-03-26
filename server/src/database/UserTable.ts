@@ -7,12 +7,13 @@ export interface UserWithRoleEntity extends UserEntity {
 
 export interface UserTable {
   allAsync(): Promise<UserEntity[]>;
-  byIdAsync(id: number): Promise<UserEntity | undefined>;
+  byIdsAsync(ids: number[]): Promise<UserEntity[]>;
+  byIdAsync(id: number): Promise<UserEntity | null | undefined>;
 
   allWithRoleAsync(): Promise<UserWithRoleEntity[]>;
-  byIdWithRoleAsync(id: number): Promise<UserWithRoleEntity | undefined>;
+  byIdWithRoleAsync(id: number): Promise<UserWithRoleEntity | null | undefined>;
 
-  insertAsync(entity: Omit<UserEntity, 'id'>): Promise<number | undefined>;
-  updateAsync(entity: MakeOptional<UserEntity, 'name' | 'email' | 'password'>): Promise<UserEntity | undefined>;
+  insertAsync(entity: Omit<UserEntity, 'id'>): Promise<number | null | undefined>;
+  updateAsync(entity: MakeOptional<UserEntity, 'name' | 'email' | 'password'>): Promise<UserWithRoleEntity | null | undefined>;
   deleteAsync(id: number): Promise<boolean>;
 }

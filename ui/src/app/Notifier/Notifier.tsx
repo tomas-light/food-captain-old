@@ -1,31 +1,64 @@
-import { SnackbarKey } from 'notistack';
+import { useStyletron } from 'baseui';
+import { CSSProperties } from 'react';
+import { useSelector } from 'react-redux';
+import { Notification } from './Notification';
 
-import { Notification } from './models';
-import { useNotifications } from './utils';
+const Notifier = () => {
+	const [css] = useStyletron();
+	const { notifications } = useSelector((state) => state.notifier);
 
-interface NotifierProps {
-  notifications: Notification[];
-}
+	if (!notifications.length) {
+		return null;
+	}
 
-interface NotificationCallProps {
-  removeSnackbar: (key: SnackbarKey) => void;
-}
-
-type Props = NotifierProps & NotificationCallProps;
-
-const Notifier = (props: Props) => {
-  const {
-    notifications = [],
-    removeSnackbar,
-  } = props;
-
-  useNotifications(notifications, removeSnackbar);
-
-  return null;
+	return (
+		<div
+			className={css({
+				position: 'absolute',
+				bottom: '16px',
+				right: '16px',
+				display: 'flex',
+				flexDirection: 'column',
+				gap: '16px'
+			})}
+		>
+			{notifications.map((notification) => (
+				<p
+					key={notification.key}
+					className={css({
+						...makeStyles(notification.variant),
+					})}
+				>
+					{notification.message}
+				</p>
+			))}
+		</div>
+	);
 };
+
+function makeStyles(notificationVariant: Notification['variant']): CSSProperties {
+	switch (notificationVariant) {
+		case 'success':
+			return {
+				color: 'green',
+			};
+
+		case 'warning':
+			return {
+				color: 'orange',
+			};
+
+		case 'error':
+			return {
+				color: 'red',
+			};
+
+		case 'info':
+		default:
+			return {
+				color: 'black',
+			};
+	}
+}
 
 export { Notifier };
-export type {
-  NotifierProps,
-  NotificationCallProps,
-};

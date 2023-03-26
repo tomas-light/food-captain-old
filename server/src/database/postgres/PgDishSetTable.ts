@@ -15,11 +15,11 @@ export class PgDishSetTable extends PgTableBase<DishSetEntity> implements DishSe
     return super.allAsync();
   }
 
-  async byIdAsync(id: number): Promise<DishSetEntity | undefined> {
+  async byIdAsync(id: number): Promise<DishSetEntity | null | undefined> {
     return super.byIdAsync(id);
   }
 
-  async getWithDishesByIdAsync(id: number): Promise<DishSetWithDishesEntity | undefined> {
+  async getWithDishesByIdAsync(id: number): Promise<DishSetWithDishesEntity | null | undefined> {
     const queryConfig: QueryConfig = {
       text: `
         SELECT 
@@ -42,7 +42,7 @@ export class PgDishSetTable extends PgTableBase<DishSetEntity> implements DishSe
     return queryResult.rows[0];
   }
 
-  async insertAsync(entity: Omit<DishSetEntity, 'id'>): Promise<number | undefined> {
+  async insertAsync(entity: Omit<DishSetEntity, 'id'>): Promise<number | null | undefined> {
     const queryConfig: QueryConfig = {
       text: `
         INSERT INTO ${this.tableName} (
@@ -51,14 +51,14 @@ export class PgDishSetTable extends PgTableBase<DishSetEntity> implements DishSe
         ) 
         VALUES($1, $2) RETURNING id;
       `,
-      values: [entity.name, entity.image_id || 'NULL' ]
+      values: [entity.name, entity.image_id ]
     };
 
     const queryResult = await this.query<DishSetEntity>(queryConfig);
     return queryResult.rows[0].id || undefined;
   }
 
-  async updateAsync(entity: MakeOptional<DishSetEntity, 'name' | 'image_id'>): Promise<DishSetEntity | undefined> {
+  async updateAsync(entity: MakeOptional<DishSetEntity, 'name' | 'image_id'>): Promise<DishSetEntity | null | undefined> {
     const queryConfig = this.buildConfigForUpdate(entity);
     if (!queryConfig) {
       return undefined;

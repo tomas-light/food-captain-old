@@ -12,11 +12,11 @@ export class PgIngredientTable extends PgTableBase<IngredientEntity> implements 
     return super.allAsync();
   }
 
-  async byIdAsync(id: number): Promise<IngredientEntity | undefined> {
+  async byIdAsync(id: number): Promise<IngredientEntity | null | undefined> {
     return super.byIdAsync(id);
   }
 
-  async insertAsync(entity: Omit<IngredientEntity, 'id'>): Promise<number | undefined> {
+  async insertAsync(entity: Omit<IngredientEntity, 'id'>): Promise<number | null | undefined> {
     const queryConfig: QueryConfig = {
       text: `
         INSERT INTO ${this.tableName} (
@@ -27,7 +27,7 @@ export class PgIngredientTable extends PgTableBase<IngredientEntity> implements 
       `,
       values: [
         entity.name,
-        entity.image_id || 'NULL',
+        entity.image_id,
       ]
     };
 
@@ -35,7 +35,7 @@ export class PgIngredientTable extends PgTableBase<IngredientEntity> implements 
     return queryResult.rows[0].id || undefined;
   }
 
-  async updateAsync(entity: MakeOptional<IngredientEntity, 'name'>): Promise<IngredientEntity | undefined> {
+  async updateAsync(entity: MakeOptional<IngredientEntity, 'name'>): Promise<IngredientEntity | null | undefined> {
     const queryConfig = this.buildConfigForUpdate(entity);
     if (!queryConfig) {
       return undefined;

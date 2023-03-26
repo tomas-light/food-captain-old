@@ -1,7 +1,7 @@
 import { Dish } from './Dish';
 import { User } from './User';
 
-interface DishInMenu extends Dish {
+export interface DishInMenu extends Dish {
   order?: number;
 }
 

@@ -8,28 +8,29 @@
     "prod": "ts-node --compiler ttypescript src/index.ts"
   },
   "dependencies": {
+    "@tomas_light/mapper-js": "1.0.3",
     "body-parser": "1.19.0",
-    "cheap-di": "1.1.0",
+    "cheap-di": "3.2.1",
     "express": "4.17.1",
-    "module-alias": "^2.2.2",
-    "mvc-middleware": "1.1.3",
-    "pg": "8.5.1"
+    "module-alias": "2.2.2",
+    "mvc-middleware": "1.1.4",
+    "pg": "8.7.1"
   },
   "devDependencies": {
-    "@types/express": "4.17.11",
-    "@types/jest": "26.0.20",
-    "@types/module-alias": "^2.0.0",
-    "@types/node": "14.14.31",
-    "@types/pg": "^7.14.10",
+    "@types/express": "4.17.13",
+    "@types/jest": "27.0.1",
+    "@types/module-alias": "2.0.1",
+    "@types/node": "16.9.2",
+    "@types/pg": "8.6.1",
     "@types/ts-nameof": "4.2.1",
-    "@typescript-eslint/eslint-plugin": "4.15.1",
-    "@typescript-eslint/parser": "4.15.1",
-    "dotenv": "^8.2.0",
-    "eslint": "7.20.0",
-    "nodemon": "2.0.7",
+    "@typescript-eslint/eslint-plugin": "4.31.1",
+    "@typescript-eslint/parser": "4.31.1",
+    "dotenv": "10.0.0",
+    "eslint": "7.32.0",
+    "nodemon": "2.0.12",
     "ts-nameof": "5.0.0",
-    "ts-node": "9.1.1",
-    "tslib": "2.1.0",
+    "ts-node": "10.2.1",
+    "tslib": "2.3.1",
     "ttypescript": "1.5.12"
   }
 }

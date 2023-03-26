@@ -1,5 +1,3 @@
-import { Logger } from '@utils/loggers';
-
 import { DimensionTable } from './DimensionTable';
 import { DishTable } from './DishTable';
 import { DishInMenuTable } from './DishInMenuTable';
@@ -20,8 +18,6 @@ import { UserTable } from './UserTable';
 import { UserRoleTable } from './UserRoleTable';
 
 export abstract class Database {
-  static __constructorParams: InstanceType<any>[] = [Logger];
-
   constructor(
     readonly dimension: DimensionTable,
     readonly dish: DishTable,

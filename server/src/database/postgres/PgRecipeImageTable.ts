@@ -12,7 +12,7 @@ export class PgRecipeImageTable extends PgTableBase<RecipeImageEntity> implement
   }
 
   // todo: possible redundant
-  async getAsync(recipe_id: number, image_id: number): Promise<RecipeImageEntity | undefined> {
+  async getAsync(recipe_id: number, image_id: number): Promise<RecipeImageEntity | null | undefined> {
     const queryConfig: QueryConfig = {
       text: `
         SELECT * 

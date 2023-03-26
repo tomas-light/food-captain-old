@@ -2,7 +2,7 @@ import { Menu } from './Menu';
 import { User } from './User';
 
 interface MenuInSchedule extends Menu {
-  data: Date;
+  date: Date;
 }
 
 export interface Schedule {

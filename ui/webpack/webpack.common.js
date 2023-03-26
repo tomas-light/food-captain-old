@@ -13,7 +13,6 @@ const staticPath = path.join(rootPath, 'static');
 const paths = {
   dist: path.join(rootPath, '..', 'dist'),
   htmlTemplate: path.join(staticPath, 'index.html'),
-  outputFilename: path.join(staticPath, 'index.html'),
   favicon: path.join(staticPath, 'img', 'favicon.svg'),
   env: path.join(rootPath, '.env'),
   config: path.join(rootPath, 'src', 'config', 'environment', 'index.ts'),

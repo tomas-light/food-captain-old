@@ -9,12 +9,12 @@ interface DishSetWithDishesEntity extends DishSetEntity, Omit<DishEntity, 'id' |
 
 interface DishSetTable {
   allAsync(): Promise<DishSetEntity[]>;
-  byIdAsync(id: number): Promise<DishSetEntity | undefined>;
+  byIdAsync(id: number): Promise<DishSetEntity | null | undefined>;
 
-  getWithDishesByIdAsync(id: number): Promise<DishSetWithDishesEntity | undefined>;
+  getWithDishesByIdAsync(id: number): Promise<DishSetWithDishesEntity | null | undefined>;
 
-  insertAsync(entity: Omit<DishSetEntity, 'id'>): Promise<number | undefined>;
-  updateAsync(entity: MakeOptional<DishSetEntity, 'name' | 'image_id'>): Promise<DishSetEntity | undefined>;
+  insertAsync(entity: Omit<DishSetEntity, 'id'>): Promise<number | null | undefined>;
+  updateAsync(entity: MakeOptional<DishSetEntity, 'name' | 'image_id'>): Promise<DishSetEntity | null | undefined>;
   deleteAsync(id: number): Promise<boolean>;
 }
 

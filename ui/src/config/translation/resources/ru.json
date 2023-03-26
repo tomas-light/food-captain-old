@@ -1,0 +1,83 @@
+{
+  "id": "ID",
+  "name": "имя",
+  "title": "название",
+  "author": "автор",
+  "image": "картинка",
+
+  "drag or click": "перетащите или кликните",
+
+  "back": "назад",
+  "add": "добавить",
+  "edit": "изменить",
+  "save": "сохранить",
+  "delete": "удалить",
+  "open": "открыть",
+
+  "field": {
+    "required": "oбязательное поле.",
+    "invalid": "неправильно заполнено поле."
+  },
+
+  "menu": {
+    "one": "меню",
+    "many": "меню",
+
+    "create date": "дата создания {{date}}",
+    "last update": "последнее обновление {{date}}",
+
+    "add": "$t(add) новое $t(menu.one)",
+    "added": "$t(menu.one) было добавлено.",
+
+    "edit": "$t(edit) выбранное $t(menu.one)",
+    "updated": "$t(menu.one) было обновлено.",
+
+    "remove": "удалить выбранные $t(menu.many)",
+    "deleted": "было удалено {{count}} $t(menu.one).",
+    "deleted_plural": "было удалено {{count}} $t(menu.many)."
+  },
+
+  "dish": {
+    "one": "блюдо",
+    "many": "блюда",
+
+    "name": "$t(title)",
+    "image": "$t(image)",
+    "description": "короткое описание",
+    "recipe": "$t(recipe.one)",
+
+    "open": "$t(open)",
+    "add": "$t(add) новый $t(dish.recipe)",
+    "edit": "$t(edit) $t(dish.recipe)"
+  },
+
+  "recipe": {
+    "one": "рецепт",
+    "many": "рецепты",
+
+    "name": "$t(title)",
+    "image": "$t(image)",
+    "description": "описание рецепта",
+    "ingredients": "$t(ingredient.many)"
+  },
+
+  "ingredient": {
+    "one": "ингредиент",
+    "many": "ингредиенты",
+
+    "name": "$t(title)",
+    "image": "$t(image)",
+
+    "new":  "новый $t(ingredient.one)",
+    "open": "$t(open)",
+    "add": "$t(add) новый $t(ingredient.one)",
+    "edit": "$t(edit) $t(ingredient.one)"
+  },
+
+  "dimension": {
+    "one": "мера",
+    "many": "мера",
+
+    "size": "количество"
+  }
+}

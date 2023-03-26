@@ -5,14 +5,17 @@ const presets = [
 ];
 
 const alias = {
-  '@api': './src/api',
-  '@app': './src/app',
-  '@config': './src/config',
-  '@env': './src/config/environment',
-  '@Notifier': './src/app/Notifier',
-  '@shared': './src/shared',
-  '@State': './src/config/redux/State',
-  '@utils': './src/utils',
+  '~api': './src/api',
+  '~app': './src/app',
+  '~config': './src/config',
+  '~env': './src/config/environment',
+  '~models': './src/app/models',
+  '~Notifier': './src/app/Notifier',
+  '~select': './src/shared/organisms/fields/Select',
+  '~selectors': './src/selectors',
+  '~shared': './src/shared',
+  '~State': './src/config/redux/State',
+  '~utils': './src/utils',
 };
 
 const plugins = [

@@ -5,4 +5,7 @@ export interface DishEntity extends Entity {
   name: string;
   description?: string;
   image_id?: number;
+
+  order_number?: number;
+  menu_id?: number;
 }

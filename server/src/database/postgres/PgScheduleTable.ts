@@ -15,11 +15,11 @@ export class PgScheduleTable extends PgTableBase<ScheduleEntity> implements Sche
     return super.allAsync();
   }
 
-  async byIdAsync(id: number): Promise<ScheduleEntity | undefined> {
+  async byIdAsync(id: number): Promise<ScheduleEntity | null | undefined> {
     return super.byIdAsync(id);
   }
 
-  async getWithMenuByIdAsync(id: number): Promise<ScheduleWithMenuEntity> {
+  async getWithMenuByIdAsync(id: number): Promise<ScheduleWithMenuEntity[]> {
     const queryConfig: QueryConfig = {
       text: `
         SELECT 
@@ -39,10 +39,10 @@ export class PgScheduleTable extends PgTableBase<ScheduleEntity> implements Sche
     };
 
     const queryResult = await this.query<ScheduleWithMenuEntity>(queryConfig);
-    return queryResult.rows[0];
+    return queryResult.rows;
   }
 
-  async insertAsync(entity: Omit<ScheduleEntity, 'id'>): Promise<number | undefined> {
+  async insertAsync(entity: Omit<ScheduleEntity, 'id'>): Promise<number | null | undefined> {
     const queryConfig: QueryConfig = {
       text: `
         INSERT INTO ${this.tableName} (
@@ -58,7 +58,7 @@ export class PgScheduleTable extends PgTableBase<ScheduleEntity> implements Sche
     return queryResult.rows[0].id || undefined;
   }
 
-  async updateAsync(entity: MakeOptional<ScheduleEntity, 'author_id' | 'name'>): Promise<ScheduleEntity | undefined> {
+  async updateAsync(entity: MakeOptional<ScheduleEntity, 'author_id' | 'name'>): Promise<ScheduleEntity | null | undefined> {
     const queryConfig = this.buildConfigForUpdate(entity);
     if (!queryConfig) {
       return undefined;

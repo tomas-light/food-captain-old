@@ -1,19 +1,15 @@
-/*******************************************************************************
- * Copyright (c) 2021 EPAM Systems, Inc. All Rights Reserved. All information contained herein is, and remains the
- * property of EPAM Systems, Inc. and/or its suppliers and is protected by international intellectual
- * property law. Dissemination of this information or reproduction of this material is strictly forbidden,
- * unless prior written permission is obtained from EPAM Systems, Inc
- ******************************************************************************/
+import { Logger } from '@utils/loggers';
+import { metadata } from '@utils/metadata';
 import { UserService } from '../services';
+import { User } from '../services/models';
 import { ControllerBase } from './base';
 
+@metadata
 class UserController extends ControllerBase {
-  static __constructorParams: InstanceType<any>[] = [UserService]
-    .concat(ControllerBase.__constructorParams);
-
   static area = '/api/user';
   static get = {
     '': nameof<UserController>(o => o.getUsersAsync),
+    'current': nameof<UserController>(o => o.getCurrentUserAsync),
   };
   static post = {
     '': nameof<UserController>(o => o.addUserAsync),
@@ -27,7 +23,7 @@ class UserController extends ControllerBase {
 
   constructor(
     private readonly userService: UserService,
-    logger,
+    logger: Logger,
     request,
     response
   ) {
@@ -39,12 +35,17 @@ class UserController extends ControllerBase {
     return this.ok(result);
   }
 
-  async addUserAsync(user) {
+  async getCurrentUserAsync() {
+    const result = await this.userService.getUserByIdAsync(1); // todo: get authorized user
+    return this.ok(result);
+  }
+
+  async addUserAsync(user: User) {
     const result = await this.userService.addAsync(user);
     return this.ok(result);
   }
 
-  async updateUserAsync(userId: number, user) {
+  async updateUserAsync(userId: number, user: User) {
     const result = await this.userService.updateAsync(user);
     return this.ok(result);
   }
@@ -56,7 +57,10 @@ class UserController extends ControllerBase {
     }
 
     const result = await this.userService.deleteAsync(user);
-    return this.ok(`Deleted ${result} user(-s)`);
+    if (result) {
+      return this.noContent();
+    }
+    return this.badRequest('Deletion is failed');
   }
 }
 

@@ -16,11 +16,11 @@ export class PgIngredientSetTable extends PgTableBase<IngredientSetEntity> imple
     return super.allAsync();
   }
 
-  async byIdAsync(id: number): Promise<IngredientSetWithImageEntity | undefined> {
+  async byIdAsync(id: number): Promise<IngredientSetWithImageEntity | null | undefined> {
     return super.byIdAsync(id);
   }
 
-  async getWithIngredientsByIdAsync(id: number): Promise<IngredientSetWithIngredientsEntity | undefined> {
+  async getWithIngredientsByIdAsync(id: number): Promise<IngredientSetWithIngredientsEntity | null | undefined> {
     const queryConfig: QueryConfig = {
       text: `
         SELECT 
@@ -44,7 +44,7 @@ export class PgIngredientSetTable extends PgTableBase<IngredientSetEntity> imple
     return queryResult.rows[0];
   }
 
-  async insertAsync(entity: Omit<IngredientSetEntity, 'id'>): Promise<number | undefined> {
+  async insertAsync(entity: Omit<IngredientSetEntity, 'id'>): Promise<number | null | undefined> {
     const queryConfig: QueryConfig = {
       text: `
         INSERT INTO ${this.tableName} (
@@ -53,14 +53,14 @@ export class PgIngredientSetTable extends PgTableBase<IngredientSetEntity> imple
         ) 
         VALUES($1, $2) RETURNING ${nameof<IngredientSetEntity>(o => o.id)};
       `,
-      values: [entity.name, entity.image_id || 'NULL' ]
+      values: [entity.name, entity.image_id ]
     };
 
     const queryResult = await this.query<IngredientSetEntity>(queryConfig);
     return queryResult.rows[0].id || undefined;
   }
 
-  async updateAsync(entity: MakeOptional<IngredientSetEntity, 'name' | 'image_id'>): Promise<IngredientSetWithImageEntity | undefined> {
+  async updateAsync(entity: MakeOptional<IngredientSetEntity, 'name' | 'image_id'>): Promise<IngredientSetWithImageEntity | null | undefined> {
     const queryConfig = this.buildConfigForUpdate(entity);
     if (!queryConfig) {
       return undefined;

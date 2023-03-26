@@ -1,55 +1,42 @@
 import { controllerMiddleware } from 'app-redux-utils';
-import {
-  applyMiddleware,
-  combineReducers,
-  compose,
-  createStore,
-} from 'redux';
-import { routerMiddleware } from 'connected-react-router';
-import { createBrowserHistory, History } from 'history';
+import { container } from 'cheap-di';
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 
-import { controllerWatchers } from './redux/controllerWatchers';
+import { ApiInterceptor } from './api/ApiInterceptor';
 import { getReducers } from './redux/getReducers';
-import { ApiInterceptor } from './ApiInterceptor';
+import { configureTranslation } from './translation';
 
 function configureApp() {
-  const composer = getComposer();
+	const composer = getComposer();
+	const reducers = makeReducers();
+	const middleware = makeMiddleware();
+	const enhancer = composer(middleware);
 
-  const history: History = createBrowserHistory();
-  const reducers = makeReducers(history);
+	const store = createStore(reducers, enhancer);
 
-  const middleware = makeMiddleware(history);
-  const enhancer = composer(middleware);
+	ApiInterceptor.init(store.dispatch);
 
-  const store = createStore(reducers, enhancer);
+	configureTranslation();
 
-  ApiInterceptor.init(store.dispatch);
-
-  return {
-    store,
-    history,
-  };
+	return store;
 }
 
 function getComposer() {
-  const devtoolsComposer = window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'];
-  if (devtoolsComposer) {
-    return devtoolsComposer;
-  }
+	const devtoolsComposer = window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'];
+	if (devtoolsComposer) {
+		return devtoolsComposer;
+	}
 
-  return compose;
+	return compose;
 }
 
-function makeMiddleware(history: History) {
-  return applyMiddleware(
-    routerMiddleware(history),
-    controllerMiddleware(controllerWatchers)
-  );
+function makeReducers() {
+	const reducers = getReducers();
+	return combineReducers(reducers);
 }
 
-function makeReducers(history: History) {
-  const reducers = getReducers(history);
-  return combineReducers(reducers);
+function makeMiddleware() {
+	return applyMiddleware(controllerMiddleware([], container));
 }
 
 export { configureApp };
